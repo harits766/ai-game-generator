@@ -74,7 +74,8 @@ def _closest(v, options):
 def create_room_service(ctx: AgentContext, game_id: str, params: dict) -> dict:
     game = library.find_game(game_id)
     if not game:
-        return {"error": f"Game '{game_id}' tidak ada di library."}
+        ids = ", ".join(f"{g['id']} ({g['name']})" for g in library.active_games())
+        return {"error": f"Game '{game_id}' tidak ditemukan. Pakai salah satu game_id: {ids}"}
     params = normalize_params(params)
     doc = ctx.doc
     if doc is None:
@@ -254,12 +255,14 @@ Cara kerja:
 1. Ambil parameter dari pesan user: jumlah pemain, durasi, jenis acara ({', '.join(EVENT_TYPES)}),
    mode (offline/online/hybrid), lokasi, topik. Kalau ada yang kosong, pakai default wajar
    (10 pemain, 20 menit, offline) dan sebutkan asumsinya. Jangan bertanya lebih dari 1 kali.
-2. Panggil recommend_games, pilih game teratas (boleh sebut 2 alternatif singkat).
-3. Kalau user ingin langsung main / minta room / link, panggil create_room.
-4. Kalau user ingin bikin game sendiri, panggil design_custom_game (atau susun spec lalu validate_custom_game). Kalau valid dan user
+2. Panggil recommend_games, lalu LANGSUNG panggil create_room dengan game_id rekomendasi teratas
+   di giliran yang sama. JANGAN bertanya "mau langsung main?": user datang untuk dapat link.
+   Kalau user menyebut nama game tertentu, langsung create_room dengan game itu.
+   game_id adalah field "game_id" dari hasil tool (mis. voting_meme), bukan nama tampilan.
+3. Kalau user ingin bikin game sendiri, panggil design_custom_game (atau susun spec lalu validate_custom_game). Kalau valid dan user
    setuju/minta, register_custom_game lalu create_room dengan game_id baru. Aturan kunci: 4-7 aturan,
    wajib peran host & peserta, maks 30 pemain, 3-15 ronde, 10-120 detik/ronde, total <= 60 menit.
-5. Kalau user tanya game apa yang lagi rame, panggil get_trends.
+4. Kalau user hanya tanya game apa yang lagi rame, panggil get_trends (tanpa create_room).
 Jawab singkat, bahasa Indonesia santai. Saat room dibuat, WAJIB tampilkan host_url dan player_url apa adanya
 dan jelaskan: host buka link host di laptop/HP host, bagikan link peserta ke teman.
 Jangan mengarang link, skor, atau data: semua angka & link harus berasal dari hasil tool.
@@ -370,7 +373,8 @@ def chat(ctx: AgentContext, history: list[dict]) -> tuple[str, list[dict], str]:
             from .lc_agent import run_agent
             try:
                 answer, trace = run_agent(models, build_tools(ctx), SYSTEM, hist[-10:])
-                if answer:
+                if answer or trace:
+                    answer = ensure_room(ctx, history, answer, trace)
                     return answer, trace, f"LangChain agent · {status_label()}"
                 fallback_reason = "agent tidak memberi jawaban"
             except Exception as e:
@@ -381,6 +385,82 @@ def chat(ctx: AgentContext, history: list[dict]) -> tuple[str, list[dict], str]:
         fallback_reason = "LLM dimatikan"
     answer, trace = offline_agent(ctx, text)
     return answer, trace, f"offline planner ({fallback_reason})"
+
+
+TREND_WORDS = ("rame", "ramai", "trend", "tren", "populer", "viral")
+DESIGN_WORDS = ("custom", "desain", "rancang", "game sendiri", "game baru", "bikin aturan", "multiverse")
+GO_WORDS = ("game", "main", "room", "link", "buat", "bikin", "gas", "ayo", "oke", "ok", "ya", "iya",
+            "boleh", "mau", "lanjut", "jadi", "setuju", "sip", "yang itu", "itu aja")
+
+
+def _wants_room(text: str, params: dict) -> bool:
+    t = text.lower()
+    if any(w in t for w in DESIGN_WORDS):
+        return False
+    if any(w in t for w in TREND_WORDS) and not any(k in params for k in ("players", "event_type")):
+        return False
+    return bool(params) or bool(re.search(r"\b(" + "|".join(GO_WORDS) + r")\b", t))
+
+
+def _room_block(room: dict) -> str:
+    return (f"Room **{room['room_code']}** siap ({room['game']}, {room['rounds']} ronde).\n\n"
+            f"- Link HOST (buka di laptop/HP kamu): {room['host_url']}\n"
+            f"- Link PESERTA (bagikan ke teman / scan QR): {room['player_url']}")
+
+
+def ensure_room(ctx: AgentContext, history: list[dict], answer: str, trace: list[dict]) -> str:
+    """Pengaman deterministik: user minta game -> pasti dapat room + link host/peserta.
+
+    LLM kadang berhenti di rekomendasi ("mau langsung main?") atau salah membaca nama game.
+    Kalau itu terjadi, kode yang membuat room (game yang disebut user > rekomendasi teratas),
+    dan link selalu ditempel dari hasil tool, bukan dari tulisan LLM.
+    """
+    text = history[-1]["content"]
+    ok_rooms = [t["result"] for t in trace if t["tool"] == "create_room" and "room_code" in t["result"]]
+    if ok_rooms:
+        room = ok_rooms[-1]
+        return answer if room["host_url"] in answer else (answer + "\n\n" + _room_block(room)).strip()
+    if any(t["tool"] in ("design_custom_game", "register_custom_game", "validate_custom_game") for t in trace):
+        return answer
+    params = extract_params(text)
+    prev = next((m["content"] for m in reversed(history[:-1]) if m["role"] == "assistant"), "")
+    recs = next((t["result"].get("recommendations") for t in reversed(trace)
+                 if t["tool"] == "recommend_games" and t["result"].get("recommendations")), None)
+    named = library.game_mentioned(text)
+    if not (named or recs or _wants_room(text, params)):
+        return answer
+    if recs is None and not named:
+        prev_game = library.game_mentioned(prev) if prev else None
+        if prev_game and re.search(r"\b(" + "|".join(GO_WORDS) + r")\b", text.lower()):
+            named = prev_game
+    tools = build_tools(ctx)
+    if recs and not named:
+        game = recs[0]
+        params = next((t["args"] for t in reversed(trace) if t["tool"] == "recommend_games"), params)
+    elif named:
+        game = {"game_id": named["id"], "name": named["name"]}
+    else:
+        rec = tools["recommend_games"][2](**params)
+        trace.append({"tool": "recommend_games", "args": params, "result": rec})
+        if not rec["recommendations"]:
+            return answer
+        game = rec["recommendations"][0]
+    if ctx.doc and not params.get("topic"):
+        params = {**params, "topic": ctx.doc.name.rsplit(".", 1)[0].replace("_", " ")}
+    args = {k: v for k, v in params.items() if k in ("players", "duration_min", "event_type", "mode",
+                                                       "location", "topic")}
+    room = tools["create_room"][2](game_id=game["game_id"], **args)
+    trace.append({"tool": "create_room", "args": {"game_id": game["game_id"], **args}, "result": room,
+                  "auto": True})
+    if "error" in room:
+        return (answer + f"\n\nGagal bikin room: {room['error']}").strip()
+    lead = f"Langsung aku buatin room **{game['name']}** ya."
+    if named and recs is None:
+        lead = f"Siap, pakai **{game['name']}**."
+    # teks LLM dibuang kalau isinya menolak/membantah game yang barusan dibuat
+    keep = answer and not re.search(r"(tidak|belum|gak|nggak) (ada|terdaftar|ditemukan)|maaf", answer.lower())
+    body = (answer.split("Mau langsung")[0].strip() + "\n\n") if keep else ""
+    return f"{body}{lead}\n\n{_room_block(room)}".strip()
 
 
 def sample_doc_for(topic: str) -> Document:

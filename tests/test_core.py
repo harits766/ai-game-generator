@@ -269,3 +269,78 @@ def test_compare_verdicts():
     b = a[:7] + ["x", "y", "z"]
     c = compare(a, b)
     assert c["verdict"] == "BERUBAH" and c["overlap"] == 7 and c["masuk"] == ["x", "y", "z"]
+
+
+# ------------------------------------------------------- regresi bug live
+def _fake_agent_run(monkeypatch, scripted):
+    """Jalankan chat() lewat jalur LangChain dengan model palsu (meniru perilaku Gemini)."""
+    from langchain_core.language_models.fake_chat_models import GenericFakeChatModel
+
+    import core.agent as A
+
+    class Fake(GenericFakeChatModel):
+        def bind_tools(self, tools, **kw):
+            return self
+
+    monkeypatch.setattr(A, "chat_models", lambda temperature=0.2: [Fake(messages=iter(scripted))])
+    monkeypatch.setattr(A, "status_label", lambda: "fake")
+    return A
+
+
+def test_agent_that_only_recommends_still_gets_room(monkeypatch):
+    from langchain_core.messages import AIMessage
+    A = _fake_agent_run(monkeypatch, [
+        AIMessage("", tool_calls=[{"name": "recommend_games",
+                                   "args": {"players": 10, "mode": "offline"}, "id": "1"}]),
+        AIMessage('Aku rekomendasikan "Caption Meme". Mau langsung main "Caption Meme"?'),
+    ])
+    ctx = A.AgentContext(base_url="https://x.app", use_llm=True)
+    answer, trace, eng = A.chat(ctx, [{"role": "user", "content": "Buat sebuah Game offline utk 10 orang"}])
+    assert eng.startswith("LangChain")
+    assert "role=host" in answer and "https://x.app/?room=" in answer
+    assert "Mau langsung" not in answer
+    assert any(t["tool"] == "create_room" and "room_code" in t["result"] for t in trace)
+
+
+def test_agent_display_name_resolves(monkeypatch):
+    from langchain_core.messages import AIMessage
+    A = _fake_agent_run(monkeypatch, [
+        AIMessage("", tool_calls=[{"name": "create_room", "args": {"game_id": "Caption Meme"}, "id": "1"}]),
+        AIMessage("Room siap"),
+    ])
+    ctx = A.AgentContext(base_url="https://x.app", use_llm=True)
+    answer, trace, _ = A.chat(ctx, [{"role": "user", "content": "caption meme"}])
+    assert trace[0]["result"]["game"] == "Caption Meme"
+    assert "role=host" in answer
+
+
+def test_agent_denies_named_game_but_room_still_made(monkeypatch):
+    from langchain_core.messages import AIMessage
+    A = _fake_agent_run(monkeypatch, [
+        AIMessage('Maaf, game "Caption Meme" belum terdaftar di library.'),
+    ])
+    ctx = A.AgentContext(base_url="https://x.app", use_llm=True)
+    hist = [{"role": "user", "content": "Buat game offline 10 orang"},
+            {"role": "assistant", "content": 'Aku rekomendasikan "Caption Meme". Mau langsung main?'},
+            {"role": "user", "content": "caption meme"}]
+    answer, trace, _ = A.chat(ctx, hist)
+    assert "belum terdaftar" not in answer and "role=host" in answer
+    assert ctx.rooms and ctx.rooms[0]["game"] == "Caption Meme"
+
+
+def test_trend_question_does_not_force_room(monkeypatch):
+    from langchain_core.messages import AIMessage
+    A = _fake_agent_run(monkeypatch, [
+        AIMessage("", tool_calls=[{"name": "get_trends", "args": {}, "id": "1"}]),
+        AIMessage("Yang lagi rame: Kuis Kilat"),
+    ])
+    ctx = A.AgentContext(base_url="https://x.app", use_llm=True)
+    answer, trace, _ = A.chat(ctx, [{"role": "user", "content": "game apa yang lagi rame minggu ini?"}])
+    assert not ctx.rooms
+
+
+def test_find_game_by_name():
+    assert library.find_game("Caption Meme")["id"] == "voting_meme"
+    assert library.find_game("caption-meme")["id"] == "voting_meme"
+    assert library.find_game("voting_meme")["id"] == "voting_meme"
+    assert library.find_game("catur") is None

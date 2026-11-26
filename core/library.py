@@ -7,6 +7,8 @@ Alur:
 """
 from __future__ import annotations
 
+import re
+
 import csv
 import json
 import threading
@@ -291,8 +293,39 @@ def active_games(state: dict | None = None) -> list[dict]:
     return [g for g in out if g]
 
 
+def _norm(s) -> str:
+    return re.sub(r"[^a-z0-9]+", "_", str(s or "").lower()).strip("_")
+
+
+def all_games() -> list[dict]:
+    from .catalog import GAMES
+    return list(GAMES) + list(load_state()["custom_games"].values())
+
+
 def find_game(game_id: str) -> dict | None:
-    return get_game(game_id, load_state()["custom_games"])
+    """Cari game dari id ATAU nama tampilan (LLM sering mengirim 'Caption Meme' bukan 'voting_meme')."""
+    state = load_state()
+    g = get_game(game_id, state["custom_games"])
+    if g:
+        return g
+    key = _norm(game_id)
+    if not key:
+        return None
+    games = all_games()
+    for g in games:
+        if key in (_norm(g["id"]), _norm(g["name"])):
+            return g
+    for g in games:
+        if key in _norm(g["name"]) or _norm(g["name"]) in key:
+            return g
+    return None
+
+
+def game_mentioned(text: str) -> dict | None:
+    """Game pertama (posisi paling awal) yang namanya disebut di teks."""
+    t = _norm(text)
+    hits = [(t.find(_norm(g["name"])), g) for g in all_games() if _norm(g["name"]) and _norm(g["name"]) in t]
+    return min(hits, key=lambda x: x[0])[1] if hits else None
 
 
 # ---------------------------------------------------------------------------
