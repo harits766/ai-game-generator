@@ -1,0 +1,45 @@
+name: Refresh real data + retrain + ground truth
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 1 * * 1"   # tiap Senin 08:00 WIB
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-real-data
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt pytrends requests
+      - name: Ambil log request in-app dari branch data (kalau ada)
+        run: |
+          git fetch origin data:data || true
+          mkdir -p data/runtime
+          git show data:requests_runtime.csv > data/runtime/requests_runtime.csv 2>/dev/null || true
+          wc -l data/runtime/requests_runtime.csv 2>/dev/null || echo "belum ada log in-app"
+      - name: Tarik Wikipedia pageviews + Google Trends
+        run: python scripts/fetch_real_signals.py
+      - name: Latih ulang model + update ground truth
+        run: |
+          python scripts/train_model.py
+          python scripts/update_ground_truth.py
+      - name: Commit hasil
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/real models docs data/processed
+          git diff --cached --quiet && echo "tidak ada perubahan" && exit 0
+          git commit -m "data: refresh sinyal real + retrain + ground truth ($(date -u +%F))"
+          git push
