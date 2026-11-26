@@ -1,0 +1,1561 @@
+week,game_id,keyword,google_trends
+2024-11-25,kuis_kilat,kahoot,41.0
+2024-12-02,kuis_kilat,kahoot,37.0
+2024-12-09,kuis_kilat,kahoot,32.0
+2024-12-16,kuis_kilat,kahoot,16.0
+2024-12-23,kuis_kilat,kahoot,16.0
+2024-12-30,kuis_kilat,kahoot,47.0
+2025-01-06,kuis_kilat,kahoot,65.0
+2025-01-13,kuis_kilat,kahoot,64.0
+2025-01-20,kuis_kilat,kahoot,29.0
+2025-01-27,kuis_kilat,kahoot,66.0
+2025-02-03,kuis_kilat,kahoot,76.0
+2025-02-10,kuis_kilat,kahoot,74.0
+2025-02-17,kuis_kilat,kahoot,50.0
+2025-02-24,kuis_kilat,kahoot,31.0
+2025-03-03,kuis_kilat,kahoot,42.0
+2025-03-10,kuis_kilat,kahoot,50.0
+2025-03-17,kuis_kilat,kahoot,17.0
+2025-03-24,kuis_kilat,kahoot,6.0
+2025-03-31,kuis_kilat,kahoot,26.0
+2025-04-07,kuis_kilat,kahoot,39.0
+2025-04-14,kuis_kilat,kahoot,48.0
+2025-04-21,kuis_kilat,kahoot,47.0
+2025-04-28,kuis_kilat,kahoot,54.0
+2025-05-05,kuis_kilat,kahoot,42.0
+2025-05-12,kuis_kilat,kahoot,61.0
+2025-05-19,kuis_kilat,kahoot,39.0
+2025-05-26,kuis_kilat,kahoot,26.0
+2025-06-02,kuis_kilat,kahoot,26.0
+2025-06-09,kuis_kilat,kahoot,26.0
+2025-06-16,kuis_kilat,kahoot,19.0
+2025-06-23,kuis_kilat,kahoot,17.0
+2025-06-30,kuis_kilat,kahoot,26.0
+2025-07-07,kuis_kilat,kahoot,51.0
+2025-07-14,kuis_kilat,kahoot,76.0
+2025-07-21,kuis_kilat,kahoot,79.0
+2025-07-28,kuis_kilat,kahoot,95.0
+2025-08-04,kuis_kilat,kahoot,84.0
+2025-08-11,kuis_kilat,kahoot,85.0
+2025-08-18,kuis_kilat,kahoot,100.0
+2025-08-25,kuis_kilat,kahoot,86.0
+2025-09-01,kuis_kilat,kahoot,95.0
+2025-09-08,kuis_kilat,kahoot,94.0
+2025-09-15,kuis_kilat,kahoot,83.0
+2025-09-22,kuis_kilat,kahoot,90.0
+2025-09-29,kuis_kilat,kahoot,93.0
+2025-10-06,kuis_kilat,kahoot,94.0
+2025-10-13,kuis_kilat,kahoot,93.0
+2025-10-20,kuis_kilat,kahoot,89.0
+2025-10-27,kuis_kilat,kahoot,81.0
+2025-11-03,kuis_kilat,kahoot,95.0
+2025-11-10,kuis_kilat,kahoot,91.0
+2025-11-17,kuis_kilat,kahoot,69.0
+2025-11-24,kuis_kilat,kahoot,45.0
+2025-12-01,kuis_kilat,kahoot,36.0
+2025-12-08,kuis_kilat,kahoot,33.0
+2025-12-15,kuis_kilat,kahoot,17.0
+2025-12-22,kuis_kilat,kahoot,15.0
+2025-12-29,kuis_kilat,kahoot,38.0
+2026-01-05,kuis_kilat,kahoot,45.0
+2026-01-12,kuis_kilat,kahoot,59.0
+2026-01-19,kuis_kilat,kahoot,65.0
+2026-01-26,kuis_kilat,kahoot,61.0
+2026-02-02,kuis_kilat,kahoot,64.0
+2026-02-09,kuis_kilat,kahoot,15.0
+2026-02-16,kuis_kilat,kahoot,61.0
+2026-02-23,kuis_kilat,kahoot,60.0
+2026-03-02,kuis_kilat,kahoot,53.0
+2026-03-09,kuis_kilat,kahoot,13.0
+2026-03-16,kuis_kilat,kahoot,14.0
+2026-03-23,kuis_kilat,kahoot,41.0
+2026-03-30,kuis_kilat,kahoot,51.0
+2026-04-06,kuis_kilat,kahoot,67.0
+2026-04-13,kuis_kilat,kahoot,59.0
+2026-04-20,kuis_kilat,kahoot,59.0
+2026-04-27,kuis_kilat,kahoot,53.0
+2026-05-04,kuis_kilat,kahoot,44.0
+2026-05-11,kuis_kilat,kahoot,51.0
+2026-05-18,kuis_kilat,kahoot,27.0
+2026-05-25,kuis_kilat,kahoot,27.0
+2026-06-01,kuis_kilat,kahoot,27.0
+2026-06-08,kuis_kilat,kahoot,20.0
+2026-06-15,kuis_kilat,kahoot,22.0
+2026-06-22,kuis_kilat,kahoot,16.0
+2026-06-29,kuis_kilat,kahoot,20.0
+2026-07-06,kuis_kilat,kahoot,42.0
+2026-07-13,kuis_kilat,kahoot,72.0
+2026-07-20,kuis_kilat,kahoot,75.0
+2026-07-27,kuis_kilat,kahoot,78.0
+2026-08-03,kuis_kilat,kahoot,79.0
+2026-08-10,kuis_kilat,kahoot,76.0
+2026-08-17,kuis_kilat,kahoot,70.0
+2026-08-24,kuis_kilat,kahoot,86.0
+2026-08-31,kuis_kilat,kahoot,84.0
+2026-09-07,kuis_kilat,kahoot,81.0
+2026-09-14,kuis_kilat,kahoot,80.0
+2026-09-21,kuis_kilat,kahoot,83.0
+2026-09-28,kuis_kilat,kahoot,81.0
+2026-10-05,kuis_kilat,kahoot,80.0
+2026-10-12,kuis_kilat,kahoot,90.0
+2026-10-19,kuis_kilat,kahoot,76.0
+2026-10-26,kuis_kilat,kahoot,74.0
+2026-11-02,kuis_kilat,kahoot,81.0
+2026-11-09,kuis_kilat,kahoot,85.0
+2026-11-16,kuis_kilat,kahoot,71.0
+2024-11-25,fakta_hoaks,hoaks,72.0
+2024-12-02,fakta_hoaks,hoaks,39.0
+2024-12-09,fakta_hoaks,hoaks,18.0
+2024-12-16,fakta_hoaks,hoaks,13.0
+2024-12-23,fakta_hoaks,hoaks,15.0
+2024-12-30,fakta_hoaks,hoaks,28.0
+2025-01-06,fakta_hoaks,hoaks,40.0
+2025-01-13,fakta_hoaks,hoaks,37.0
+2025-01-20,fakta_hoaks,hoaks,19.0
+2025-01-27,fakta_hoaks,hoaks,45.0
+2025-02-03,fakta_hoaks,hoaks,42.0
+2025-02-10,fakta_hoaks,hoaks,47.0
+2025-02-17,fakta_hoaks,hoaks,27.0
+2025-02-24,fakta_hoaks,hoaks,27.0
+2025-03-03,fakta_hoaks,hoaks,61.0
+2025-03-10,fakta_hoaks,hoaks,35.0
+2025-03-17,fakta_hoaks,hoaks,15.0
+2025-03-24,fakta_hoaks,hoaks,7.0
+2025-03-31,fakta_hoaks,hoaks,26.0
+2025-04-07,fakta_hoaks,hoaks,45.0
+2025-04-14,fakta_hoaks,hoaks,39.0
+2025-04-21,fakta_hoaks,hoaks,41.0
+2025-04-28,fakta_hoaks,hoaks,43.0
+2025-05-05,fakta_hoaks,hoaks,33.0
+2025-05-12,fakta_hoaks,hoaks,46.0
+2025-05-19,fakta_hoaks,hoaks,59.0
+2025-05-26,fakta_hoaks,hoaks,59.0
+2025-06-02,fakta_hoaks,hoaks,56.0
+2025-06-09,fakta_hoaks,hoaks,32.0
+2025-06-16,fakta_hoaks,hoaks,19.0
+2025-06-23,fakta_hoaks,hoaks,21.0
+2025-06-30,fakta_hoaks,hoaks,14.0
+2025-07-07,fakta_hoaks,hoaks,21.0
+2025-07-14,fakta_hoaks,hoaks,28.0
+2025-07-21,fakta_hoaks,hoaks,27.0
+2025-07-28,fakta_hoaks,hoaks,34.0
+2025-08-04,fakta_hoaks,hoaks,35.0
+2025-08-11,fakta_hoaks,hoaks,36.0
+2025-08-18,fakta_hoaks,hoaks,46.0
+2025-08-25,fakta_hoaks,hoaks,49.0
+2025-09-01,fakta_hoaks,hoaks,55.0
+2025-09-08,fakta_hoaks,hoaks,48.0
+2025-09-15,fakta_hoaks,hoaks,49.0
+2025-09-22,fakta_hoaks,hoaks,48.0
+2025-09-29,fakta_hoaks,hoaks,55.0
+2025-10-06,fakta_hoaks,hoaks,50.0
+2025-10-13,fakta_hoaks,hoaks,52.0
+2025-10-20,fakta_hoaks,hoaks,51.0
+2025-10-27,fakta_hoaks,hoaks,47.0
+2025-11-03,fakta_hoaks,hoaks,53.0
+2025-11-10,fakta_hoaks,hoaks,64.0
+2025-11-17,fakta_hoaks,hoaks,65.0
+2025-11-24,fakta_hoaks,hoaks,100.0
+2025-12-01,fakta_hoaks,hoaks,66.0
+2025-12-08,fakta_hoaks,hoaks,28.0
+2025-12-15,fakta_hoaks,hoaks,17.0
+2025-12-22,fakta_hoaks,hoaks,15.0
+2025-12-29,fakta_hoaks,hoaks,30.0
+2026-01-05,fakta_hoaks,hoaks,36.0
+2026-01-12,fakta_hoaks,hoaks,49.0
+2026-01-19,fakta_hoaks,hoaks,59.0
+2026-01-26,fakta_hoaks,hoaks,63.0
+2026-02-02,fakta_hoaks,hoaks,58.0
+2026-02-09,fakta_hoaks,hoaks,21.0
+2026-02-16,fakta_hoaks,hoaks,49.0
+2026-02-23,fakta_hoaks,hoaks,78.0
+2026-03-02,fakta_hoaks,hoaks,93.0
+2026-03-09,fakta_hoaks,hoaks,23.0
+2026-03-16,fakta_hoaks,hoaks,36.0
+2026-03-23,fakta_hoaks,hoaks,47.0
+2026-03-30,fakta_hoaks,hoaks,77.0
+2026-04-06,fakta_hoaks,hoaks,75.0
+2026-04-13,fakta_hoaks,hoaks,71.0
+2026-04-20,fakta_hoaks,hoaks,63.0
+2026-04-27,fakta_hoaks,hoaks,74.0
+2026-05-04,fakta_hoaks,hoaks,59.0
+2026-05-11,fakta_hoaks,hoaks,76.0
+2026-05-18,fakta_hoaks,hoaks,61.0
+2026-05-25,fakta_hoaks,hoaks,98.0
+2026-06-01,fakta_hoaks,hoaks,84.0
+2026-06-08,fakta_hoaks,hoaks,30.0
+2026-06-15,fakta_hoaks,hoaks,23.0
+2026-06-22,fakta_hoaks,hoaks,22.0
+2026-06-29,fakta_hoaks,hoaks,21.0
+2026-07-06,fakta_hoaks,hoaks,35.0
+2026-07-13,fakta_hoaks,hoaks,45.0
+2026-07-20,fakta_hoaks,hoaks,47.0
+2026-07-27,fakta_hoaks,hoaks,49.0
+2026-08-03,fakta_hoaks,hoaks,47.0
+2026-08-10,fakta_hoaks,hoaks,45.0
+2026-08-17,fakta_hoaks,hoaks,47.0
+2026-08-24,fakta_hoaks,hoaks,60.0
+2026-08-31,fakta_hoaks,hoaks,61.0
+2026-09-07,fakta_hoaks,hoaks,74.0
+2026-09-14,fakta_hoaks,hoaks,66.0
+2026-09-21,fakta_hoaks,hoaks,63.0
+2026-09-28,fakta_hoaks,hoaks,63.0
+2026-10-05,fakta_hoaks,hoaks,59.0
+2026-10-12,fakta_hoaks,hoaks,59.0
+2026-10-19,fakta_hoaks,hoaks,64.0
+2026-10-26,fakta_hoaks,hoaks,63.0
+2026-11-02,fakta_hoaks,hoaks,73.0
+2026-11-09,fakta_hoaks,hoaks,64.0
+2026-11-16,fakta_hoaks,hoaks,67.0
+2024-11-25,satu_frekuensi,family 100,66.0
+2024-12-02,satu_frekuensi,family 100,64.0
+2024-12-09,satu_frekuensi,family 100,57.0
+2024-12-16,satu_frekuensi,family 100,75.0
+2024-12-23,satu_frekuensi,family 100,100.0
+2024-12-30,satu_frekuensi,family 100,78.0
+2025-01-06,satu_frekuensi,family 100,70.0
+2025-01-13,satu_frekuensi,family 100,65.0
+2025-01-20,satu_frekuensi,family 100,66.0
+2025-01-27,satu_frekuensi,family 100,59.0
+2025-02-03,satu_frekuensi,family 100,55.0
+2025-02-10,satu_frekuensi,family 100,63.0
+2025-02-17,satu_frekuensi,family 100,51.0
+2025-02-24,satu_frekuensi,family 100,49.0
+2025-03-03,satu_frekuensi,family 100,41.0
+2025-03-10,satu_frekuensi,family 100,48.0
+2025-03-17,satu_frekuensi,family 100,45.0
+2025-03-24,satu_frekuensi,family 100,46.0
+2025-03-31,satu_frekuensi,family 100,38.0
+2025-04-07,satu_frekuensi,family 100,41.0
+2025-04-14,satu_frekuensi,family 100,41.0
+2025-04-21,satu_frekuensi,family 100,50.0
+2025-04-28,satu_frekuensi,family 100,46.0
+2025-05-05,satu_frekuensi,family 100,54.0
+2025-05-12,satu_frekuensi,family 100,49.0
+2025-05-19,satu_frekuensi,family 100,39.0
+2025-05-26,satu_frekuensi,family 100,32.0
+2025-06-02,satu_frekuensi,family 100,40.0
+2025-06-09,satu_frekuensi,family 100,35.0
+2025-06-16,satu_frekuensi,family 100,36.0
+2025-06-23,satu_frekuensi,family 100,41.0
+2025-06-30,satu_frekuensi,family 100,31.0
+2025-07-07,satu_frekuensi,family 100,38.0
+2025-07-14,satu_frekuensi,family 100,25.0
+2025-07-21,satu_frekuensi,family 100,35.0
+2025-07-28,satu_frekuensi,family 100,34.0
+2025-08-04,satu_frekuensi,family 100,35.0
+2025-08-11,satu_frekuensi,family 100,26.0
+2025-08-18,satu_frekuensi,family 100,21.0
+2025-08-25,satu_frekuensi,family 100,22.0
+2025-09-01,satu_frekuensi,family 100,25.0
+2025-09-08,satu_frekuensi,family 100,25.0
+2025-09-15,satu_frekuensi,family 100,27.0
+2025-09-22,satu_frekuensi,family 100,31.0
+2025-09-29,satu_frekuensi,family 100,28.0
+2025-10-06,satu_frekuensi,family 100,28.0
+2025-10-13,satu_frekuensi,family 100,25.0
+2025-10-20,satu_frekuensi,family 100,31.0
+2025-10-27,satu_frekuensi,family 100,34.0
+2025-11-03,satu_frekuensi,family 100,39.0
+2025-11-10,satu_frekuensi,family 100,44.0
+2025-11-17,satu_frekuensi,family 100,47.0
+2025-11-24,satu_frekuensi,family 100,42.0
+2025-12-01,satu_frekuensi,family 100,47.0
+2025-12-08,satu_frekuensi,family 100,36.0
+2025-12-15,satu_frekuensi,family 100,43.0
+2025-12-22,satu_frekuensi,family 100,40.0
+2025-12-29,satu_frekuensi,family 100,35.0
+2026-01-05,satu_frekuensi,family 100,33.0
+2026-01-12,satu_frekuensi,family 100,40.0
+2026-01-19,satu_frekuensi,family 100,42.0
+2026-01-26,satu_frekuensi,family 100,47.0
+2026-02-02,satu_frekuensi,family 100,60.0
+2026-02-09,satu_frekuensi,family 100,57.0
+2026-02-16,satu_frekuensi,family 100,56.0
+2026-02-23,satu_frekuensi,family 100,40.0
+2026-03-02,satu_frekuensi,family 100,43.0
+2026-03-09,satu_frekuensi,family 100,40.0
+2026-03-16,satu_frekuensi,family 100,52.0
+2026-03-23,satu_frekuensi,family 100,47.0
+2026-03-30,satu_frekuensi,family 100,51.0
+2026-04-06,satu_frekuensi,family 100,51.0
+2026-04-13,satu_frekuensi,family 100,47.0
+2026-04-20,satu_frekuensi,family 100,51.0
+2026-04-27,satu_frekuensi,family 100,41.0
+2026-05-04,satu_frekuensi,family 100,54.0
+2026-05-11,satu_frekuensi,family 100,43.0
+2026-05-18,satu_frekuensi,family 100,46.0
+2026-05-25,satu_frekuensi,family 100,53.0
+2026-06-01,satu_frekuensi,family 100,46.0
+2026-06-08,satu_frekuensi,family 100,51.0
+2026-06-15,satu_frekuensi,family 100,52.0
+2026-06-22,satu_frekuensi,family 100,50.0
+2026-06-29,satu_frekuensi,family 100,53.0
+2026-07-06,satu_frekuensi,family 100,42.0
+2026-07-13,satu_frekuensi,family 100,34.0
+2026-07-20,satu_frekuensi,family 100,44.0
+2026-07-27,satu_frekuensi,family 100,31.0
+2026-08-03,satu_frekuensi,family 100,39.0
+2026-08-10,satu_frekuensi,family 100,38.0
+2026-08-17,satu_frekuensi,family 100,30.0
+2026-08-24,satu_frekuensi,family 100,59.0
+2026-08-31,satu_frekuensi,family 100,65.0
+2026-09-07,satu_frekuensi,family 100,88.0
+2026-09-14,satu_frekuensi,family 100,40.0
+2026-09-21,satu_frekuensi,family 100,36.0
+2026-09-28,satu_frekuensi,family 100,39.0
+2026-10-05,satu_frekuensi,family 100,40.0
+2026-10-12,satu_frekuensi,family 100,33.0
+2026-10-19,satu_frekuensi,family 100,37.0
+2026-10-26,satu_frekuensi,family 100,39.0
+2026-11-02,satu_frekuensi,family 100,40.0
+2026-11-09,satu_frekuensi,family 100,34.0
+2026-11-16,satu_frekuensi,family 100,30.0
+2024-11-25,tebak_angka,tebak angka,54.0
+2024-12-02,tebak_angka,tebak angka,87.0
+2024-12-09,tebak_angka,tebak angka,44.0
+2024-12-16,tebak_angka,tebak angka,71.0
+2024-12-23,tebak_angka,tebak angka,0.0
+2024-12-30,tebak_angka,tebak angka,69.0
+2025-01-06,tebak_angka,tebak angka,54.0
+2025-01-13,tebak_angka,tebak angka,83.0
+2025-01-20,tebak_angka,tebak angka,61.0
+2025-01-27,tebak_angka,tebak angka,58.0
+2025-02-03,tebak_angka,tebak angka,80.0
+2025-02-10,tebak_angka,tebak angka,66.0
+2025-02-17,tebak_angka,tebak angka,69.0
+2025-02-24,tebak_angka,tebak angka,73.0
+2025-03-03,tebak_angka,tebak angka,73.0
+2025-03-10,tebak_angka,tebak angka,63.0
+2025-03-17,tebak_angka,tebak angka,63.0
+2025-03-24,tebak_angka,tebak angka,83.0
+2025-03-31,tebak_angka,tebak angka,36.0
+2025-04-07,tebak_angka,tebak angka,47.0
+2025-04-14,tebak_angka,tebak angka,68.0
+2025-04-21,tebak_angka,tebak angka,56.0
+2025-04-28,tebak_angka,tebak angka,84.0
+2025-05-05,tebak_angka,tebak angka,56.0
+2025-05-12,tebak_angka,tebak angka,76.0
+2025-05-19,tebak_angka,tebak angka,81.0
+2025-05-26,tebak_angka,tebak angka,91.0
+2025-06-02,tebak_angka,tebak angka,69.0
+2025-06-09,tebak_angka,tebak angka,73.0
+2025-06-16,tebak_angka,tebak angka,50.0
+2025-06-23,tebak_angka,tebak angka,56.0
+2025-06-30,tebak_angka,tebak angka,70.0
+2025-07-07,tebak_angka,tebak angka,100.0
+2025-07-14,tebak_angka,tebak angka,81.0
+2025-07-21,tebak_angka,tebak angka,59.0
+2025-07-28,tebak_angka,tebak angka,58.0
+2025-08-04,tebak_angka,tebak angka,47.0
+2025-08-11,tebak_angka,tebak angka,66.0
+2025-08-18,tebak_angka,tebak angka,88.0
+2025-08-25,tebak_angka,tebak angka,77.0
+2025-09-01,tebak_angka,tebak angka,96.0
+2025-09-08,tebak_angka,tebak angka,59.0
+2025-09-15,tebak_angka,tebak angka,73.0
+2025-09-22,tebak_angka,tebak angka,54.0
+2025-09-29,tebak_angka,tebak angka,94.0
+2025-10-06,tebak_angka,tebak angka,96.0
+2025-10-13,tebak_angka,tebak angka,76.0
+2025-10-20,tebak_angka,tebak angka,75.0
+2025-10-27,tebak_angka,tebak angka,55.0
+2025-11-03,tebak_angka,tebak angka,53.0
+2025-11-10,tebak_angka,tebak angka,61.0
+2025-11-17,tebak_angka,tebak angka,70.0
+2025-11-24,tebak_angka,tebak angka,78.0
+2025-12-01,tebak_angka,tebak angka,71.0
+2025-12-08,tebak_angka,tebak angka,46.0
+2025-12-15,tebak_angka,tebak angka,72.0
+2025-12-22,tebak_angka,tebak angka,54.0
+2025-12-29,tebak_angka,tebak angka,83.0
+2026-01-05,tebak_angka,tebak angka,70.0
+2026-01-12,tebak_angka,tebak angka,75.0
+2026-01-19,tebak_angka,tebak angka,45.0
+2026-01-26,tebak_angka,tebak angka,57.0
+2026-02-02,tebak_angka,tebak angka,69.0
+2026-02-09,tebak_angka,tebak angka,51.0
+2026-02-16,tebak_angka,tebak angka,53.0
+2026-02-23,tebak_angka,tebak angka,59.0
+2026-03-02,tebak_angka,tebak angka,63.0
+2026-03-09,tebak_angka,tebak angka,76.0
+2026-03-16,tebak_angka,tebak angka,61.0
+2026-03-23,tebak_angka,tebak angka,62.0
+2026-03-30,tebak_angka,tebak angka,71.0
+2026-04-06,tebak_angka,tebak angka,56.0
+2026-04-13,tebak_angka,tebak angka,71.0
+2026-04-20,tebak_angka,tebak angka,54.0
+2026-04-27,tebak_angka,tebak angka,56.0
+2026-05-04,tebak_angka,tebak angka,65.0
+2026-05-11,tebak_angka,tebak angka,39.0
+2026-05-18,tebak_angka,tebak angka,54.0
+2026-05-25,tebak_angka,tebak angka,57.0
+2026-06-01,tebak_angka,tebak angka,49.0
+2026-06-08,tebak_angka,tebak angka,58.0
+2026-06-15,tebak_angka,tebak angka,28.0
+2026-06-22,tebak_angka,tebak angka,48.0
+2026-06-29,tebak_angka,tebak angka,42.0
+2026-07-06,tebak_angka,tebak angka,74.0
+2026-07-13,tebak_angka,tebak angka,0.0
+2026-07-20,tebak_angka,tebak angka,51.0
+2026-07-27,tebak_angka,tebak angka,53.0
+2026-08-03,tebak_angka,tebak angka,42.0
+2026-08-10,tebak_angka,tebak angka,72.0
+2026-08-17,tebak_angka,tebak angka,69.0
+2026-08-24,tebak_angka,tebak angka,74.0
+2026-08-31,tebak_angka,tebak angka,57.0
+2026-09-07,tebak_angka,tebak angka,63.0
+2026-09-14,tebak_angka,tebak angka,65.0
+2026-09-21,tebak_angka,tebak angka,41.0
+2026-09-28,tebak_angka,tebak angka,64.0
+2026-10-05,tebak_angka,tebak angka,55.0
+2026-10-12,tebak_angka,tebak angka,65.0
+2026-10-19,tebak_angka,tebak angka,62.0
+2026-10-26,tebak_angka,tebak angka,42.0
+2026-11-02,tebak_angka,tebak angka,74.0
+2026-11-09,tebak_angka,tebak angka,61.0
+2026-11-16,tebak_angka,tebak angka,51.0
+2024-11-25,adu_receh,jokes bapak bapak,45.0
+2024-12-02,adu_receh,jokes bapak bapak,43.0
+2024-12-09,adu_receh,jokes bapak bapak,47.0
+2024-12-16,adu_receh,jokes bapak bapak,47.0
+2024-12-23,adu_receh,jokes bapak bapak,58.0
+2024-12-30,adu_receh,jokes bapak bapak,100.0
+2025-01-06,adu_receh,jokes bapak bapak,75.0
+2025-01-13,adu_receh,jokes bapak bapak,62.0
+2025-01-20,adu_receh,jokes bapak bapak,54.0
+2025-01-27,adu_receh,jokes bapak bapak,41.0
+2025-02-03,adu_receh,jokes bapak bapak,64.0
+2025-02-10,adu_receh,jokes bapak bapak,63.0
+2025-02-17,adu_receh,jokes bapak bapak,61.0
+2025-02-24,adu_receh,jokes bapak bapak,59.0
+2025-03-03,adu_receh,jokes bapak bapak,48.0
+2025-03-10,adu_receh,jokes bapak bapak,64.0
+2025-03-17,adu_receh,jokes bapak bapak,39.0
+2025-03-24,adu_receh,jokes bapak bapak,48.0
+2025-03-31,adu_receh,jokes bapak bapak,43.0
+2025-04-07,adu_receh,jokes bapak bapak,36.0
+2025-04-14,adu_receh,jokes bapak bapak,33.0
+2025-04-21,adu_receh,jokes bapak bapak,44.0
+2025-04-28,adu_receh,jokes bapak bapak,50.0
+2025-05-05,adu_receh,jokes bapak bapak,44.0
+2025-05-12,adu_receh,jokes bapak bapak,39.0
+2025-05-19,adu_receh,jokes bapak bapak,42.0
+2025-05-26,adu_receh,jokes bapak bapak,41.0
+2025-06-02,adu_receh,jokes bapak bapak,44.0
+2025-06-09,adu_receh,jokes bapak bapak,47.0
+2025-06-16,adu_receh,jokes bapak bapak,51.0
+2025-06-23,adu_receh,jokes bapak bapak,42.0
+2025-06-30,adu_receh,jokes bapak bapak,56.0
+2025-07-07,adu_receh,jokes bapak bapak,51.0
+2025-07-14,adu_receh,jokes bapak bapak,54.0
+2025-07-21,adu_receh,jokes bapak bapak,58.0
+2025-07-28,adu_receh,jokes bapak bapak,55.0
+2025-08-04,adu_receh,jokes bapak bapak,55.0
+2025-08-11,adu_receh,jokes bapak bapak,57.0
+2025-08-18,adu_receh,jokes bapak bapak,49.0
+2025-08-25,adu_receh,jokes bapak bapak,50.0
+2025-09-01,adu_receh,jokes bapak bapak,49.0
+2025-09-08,adu_receh,jokes bapak bapak,50.0
+2025-09-15,adu_receh,jokes bapak bapak,58.0
+2025-09-22,adu_receh,jokes bapak bapak,52.0
+2025-09-29,adu_receh,jokes bapak bapak,48.0
+2025-10-06,adu_receh,jokes bapak bapak,64.0
+2025-10-13,adu_receh,jokes bapak bapak,59.0
+2025-10-20,adu_receh,jokes bapak bapak,64.0
+2025-10-27,adu_receh,jokes bapak bapak,52.0
+2025-11-03,adu_receh,jokes bapak bapak,64.0
+2025-11-10,adu_receh,jokes bapak bapak,49.0
+2025-11-17,adu_receh,jokes bapak bapak,48.0
+2025-11-24,adu_receh,jokes bapak bapak,48.0
+2025-12-01,adu_receh,jokes bapak bapak,57.0
+2025-12-08,adu_receh,jokes bapak bapak,50.0
+2025-12-15,adu_receh,jokes bapak bapak,56.0
+2025-12-22,adu_receh,jokes bapak bapak,66.0
+2025-12-29,adu_receh,jokes bapak bapak,56.0
+2026-01-05,adu_receh,jokes bapak bapak,45.0
+2026-01-12,adu_receh,jokes bapak bapak,44.0
+2026-01-19,adu_receh,jokes bapak bapak,60.0
+2026-01-26,adu_receh,jokes bapak bapak,50.0
+2026-02-02,adu_receh,jokes bapak bapak,48.0
+2026-02-09,adu_receh,jokes bapak bapak,49.0
+2026-02-16,adu_receh,jokes bapak bapak,58.0
+2026-02-23,adu_receh,jokes bapak bapak,55.0
+2026-03-02,adu_receh,jokes bapak bapak,49.0
+2026-03-09,adu_receh,jokes bapak bapak,54.0
+2026-03-16,adu_receh,jokes bapak bapak,55.0
+2026-03-23,adu_receh,jokes bapak bapak,46.0
+2026-03-30,adu_receh,jokes bapak bapak,44.0
+2026-04-06,adu_receh,jokes bapak bapak,35.0
+2026-04-13,adu_receh,jokes bapak bapak,43.0
+2026-04-20,adu_receh,jokes bapak bapak,44.0
+2026-04-27,adu_receh,jokes bapak bapak,52.0
+2026-05-04,adu_receh,jokes bapak bapak,55.0
+2026-05-11,adu_receh,jokes bapak bapak,53.0
+2026-05-18,adu_receh,jokes bapak bapak,45.0
+2026-05-25,adu_receh,jokes bapak bapak,44.0
+2026-06-01,adu_receh,jokes bapak bapak,36.0
+2026-06-08,adu_receh,jokes bapak bapak,34.0
+2026-06-15,adu_receh,jokes bapak bapak,43.0
+2026-06-22,adu_receh,jokes bapak bapak,37.0
+2026-06-29,adu_receh,jokes bapak bapak,40.0
+2026-07-06,adu_receh,jokes bapak bapak,37.0
+2026-07-13,adu_receh,jokes bapak bapak,37.0
+2026-07-20,adu_receh,jokes bapak bapak,36.0
+2026-07-27,adu_receh,jokes bapak bapak,28.0
+2026-08-03,adu_receh,jokes bapak bapak,37.0
+2026-08-10,adu_receh,jokes bapak bapak,37.0
+2026-08-17,adu_receh,jokes bapak bapak,42.0
+2026-08-24,adu_receh,jokes bapak bapak,37.0
+2026-08-31,adu_receh,jokes bapak bapak,33.0
+2026-09-07,adu_receh,jokes bapak bapak,39.0
+2026-09-14,adu_receh,jokes bapak bapak,26.0
+2026-09-21,adu_receh,jokes bapak bapak,34.0
+2026-09-28,adu_receh,jokes bapak bapak,29.0
+2026-10-05,adu_receh,jokes bapak bapak,31.0
+2026-10-12,adu_receh,jokes bapak bapak,41.0
+2026-10-19,adu_receh,jokes bapak bapak,35.0
+2026-10-26,adu_receh,jokes bapak bapak,45.0
+2026-11-02,adu_receh,jokes bapak bapak,37.0
+2026-11-09,adu_receh,jokes bapak bapak,34.0
+2026-11-16,adu_receh,jokes bapak bapak,30.0
+2024-11-25,debat_kilat,debat,96.0
+2024-12-02,debat_kilat,debat,78.0
+2024-12-09,debat_kilat,debat,73.0
+2024-12-16,debat_kilat,debat,61.0
+2024-12-23,debat_kilat,debat,57.0
+2024-12-30,debat_kilat,debat,76.0
+2025-01-06,debat_kilat,debat,80.0
+2025-01-13,debat_kilat,debat,82.0
+2025-01-20,debat_kilat,debat,64.0
+2025-01-27,debat_kilat,debat,93.0
+2025-02-03,debat_kilat,debat,98.0
+2025-02-10,debat_kilat,debat,100.0
+2025-02-17,debat_kilat,debat,74.0
+2025-02-24,debat_kilat,debat,67.0
+2025-03-03,debat_kilat,debat,95.0
+2025-03-10,debat_kilat,debat,65.0
+2025-03-17,debat_kilat,debat,49.0
+2025-03-24,debat_kilat,debat,46.0
+2025-03-31,debat_kilat,debat,60.0
+2025-04-07,debat_kilat,debat,77.0
+2025-04-14,debat_kilat,debat,71.0
+2025-04-21,debat_kilat,debat,76.0
+2025-04-28,debat_kilat,debat,72.0
+2025-05-05,debat_kilat,debat,62.0
+2025-05-12,debat_kilat,debat,73.0
+2025-05-19,debat_kilat,debat,70.0
+2025-05-26,debat_kilat,debat,72.0
+2025-06-02,debat_kilat,debat,66.0
+2025-06-09,debat_kilat,debat,57.0
+2025-06-16,debat_kilat,debat,46.0
+2025-06-23,debat_kilat,debat,40.0
+2025-06-30,debat_kilat,debat,42.0
+2025-07-07,debat_kilat,debat,45.0
+2025-07-14,debat_kilat,debat,51.0
+2025-07-21,debat_kilat,debat,58.0
+2025-07-28,debat_kilat,debat,59.0
+2025-08-04,debat_kilat,debat,56.0
+2025-08-11,debat_kilat,debat,55.0
+2025-08-18,debat_kilat,debat,78.0
+2025-08-25,debat_kilat,debat,69.0
+2025-09-01,debat_kilat,debat,65.0
+2025-09-08,debat_kilat,debat,65.0
+2025-09-15,debat_kilat,debat,66.0
+2025-09-22,debat_kilat,debat,68.0
+2025-09-29,debat_kilat,debat,69.0
+2025-10-06,debat_kilat,debat,66.0
+2025-10-13,debat_kilat,debat,75.0
+2025-10-20,debat_kilat,debat,70.0
+2025-10-27,debat_kilat,debat,66.0
+2025-11-03,debat_kilat,debat,71.0
+2025-11-10,debat_kilat,debat,65.0
+2025-11-17,debat_kilat,debat,58.0
+2025-11-24,debat_kilat,debat,61.0
+2025-12-01,debat_kilat,debat,57.0
+2025-12-08,debat_kilat,debat,50.0
+2025-12-15,debat_kilat,debat,43.0
+2025-12-22,debat_kilat,debat,41.0
+2025-12-29,debat_kilat,debat,47.0
+2026-01-05,debat_kilat,debat,55.0
+2026-01-12,debat_kilat,debat,65.0
+2026-01-19,debat_kilat,debat,65.0
+2026-01-26,debat_kilat,debat,67.0
+2026-02-02,debat_kilat,debat,66.0
+2026-02-09,debat_kilat,debat,41.0
+2026-02-16,debat_kilat,debat,65.0
+2026-02-23,debat_kilat,debat,67.0
+2026-03-02,debat_kilat,debat,67.0
+2026-03-09,debat_kilat,debat,39.0
+2026-03-16,debat_kilat,debat,45.0
+2026-03-23,debat_kilat,debat,57.0
+2026-03-30,debat_kilat,debat,68.0
+2026-04-06,debat_kilat,debat,66.0
+2026-04-13,debat_kilat,debat,64.0
+2026-04-20,debat_kilat,debat,67.0
+2026-04-27,debat_kilat,debat,66.0
+2026-05-04,debat_kilat,debat,67.0
+2026-05-11,debat_kilat,debat,69.0
+2026-05-18,debat_kilat,debat,56.0
+2026-05-25,debat_kilat,debat,62.0
+2026-06-01,debat_kilat,debat,53.0
+2026-06-08,debat_kilat,debat,44.0
+2026-06-15,debat_kilat,debat,42.0
+2026-06-22,debat_kilat,debat,39.0
+2026-06-29,debat_kilat,debat,39.0
+2026-07-06,debat_kilat,debat,44.0
+2026-07-13,debat_kilat,debat,55.0
+2026-07-20,debat_kilat,debat,47.0
+2026-07-27,debat_kilat,debat,50.0
+2026-08-03,debat_kilat,debat,49.0
+2026-08-10,debat_kilat,debat,51.0
+2026-08-17,debat_kilat,debat,52.0
+2026-08-24,debat_kilat,debat,67.0
+2026-08-31,debat_kilat,debat,63.0
+2026-09-07,debat_kilat,debat,74.0
+2026-09-14,debat_kilat,debat,80.0
+2026-09-21,debat_kilat,debat,68.0
+2026-09-28,debat_kilat,debat,64.0
+2026-10-05,debat_kilat,debat,65.0
+2026-10-12,debat_kilat,debat,78.0
+2026-10-19,debat_kilat,debat,70.0
+2026-10-26,debat_kilat,debat,72.0
+2026-11-02,debat_kilat,debat,77.0
+2026-11-09,debat_kilat,debat,68.0
+2026-11-16,debat_kilat,debat,57.0
+2024-11-25,survival_kuis,squid game,1.0
+2024-12-02,survival_kuis,squid game,2.0
+2024-12-09,survival_kuis,squid game,3.0
+2024-12-16,survival_kuis,squid game,67.0
+2024-12-23,survival_kuis,squid game,100.0
+2024-12-30,survival_kuis,squid game,57.0
+2025-01-06,survival_kuis,squid game,29.0
+2025-01-13,survival_kuis,squid game,18.0
+2025-01-20,survival_kuis,squid game,17.0
+2025-01-27,survival_kuis,squid game,10.0
+2025-02-03,survival_kuis,squid game,8.0
+2025-02-10,survival_kuis,squid game,7.0
+2025-02-17,survival_kuis,squid game,12.0
+2025-02-24,survival_kuis,squid game,11.0
+2025-03-03,survival_kuis,squid game,8.0
+2025-03-10,survival_kuis,squid game,6.0
+2025-03-17,survival_kuis,squid game,6.0
+2025-03-24,survival_kuis,squid game,6.0
+2025-03-31,survival_kuis,squid game,4.0
+2025-04-07,survival_kuis,squid game,3.0
+2025-04-14,survival_kuis,squid game,2.0
+2025-04-21,survival_kuis,squid game,2.0
+2025-04-28,survival_kuis,squid game,2.0
+2025-05-05,survival_kuis,squid game,2.0
+2025-05-12,survival_kuis,squid game,2.0
+2025-05-19,survival_kuis,squid game,2.0
+2025-05-26,survival_kuis,squid game,3.0
+2025-06-02,survival_kuis,squid game,2.0
+2025-06-09,survival_kuis,squid game,3.0
+2025-06-16,survival_kuis,squid game,32.0
+2025-06-23,survival_kuis,squid game,34.0
+2025-06-30,survival_kuis,squid game,14.0
+2025-07-07,survival_kuis,squid game,6.0
+2025-07-14,survival_kuis,squid game,5.0
+2025-07-21,survival_kuis,squid game,3.0
+2025-07-28,survival_kuis,squid game,3.0
+2025-08-04,survival_kuis,squid game,2.0
+2025-08-11,survival_kuis,squid game,2.0
+2025-08-18,survival_kuis,squid game,1.0
+2025-08-25,survival_kuis,squid game,2.0
+2025-09-01,survival_kuis,squid game,1.0
+2025-09-08,survival_kuis,squid game,1.0
+2025-09-15,survival_kuis,squid game,1.0
+2025-09-22,survival_kuis,squid game,1.0
+2025-09-29,survival_kuis,squid game,1.0
+2025-10-06,survival_kuis,squid game,1.0
+2025-10-13,survival_kuis,squid game,1.0
+2025-10-20,survival_kuis,squid game,1.0
+2025-10-27,survival_kuis,squid game,1.0
+2025-11-03,survival_kuis,squid game,1.0
+2025-11-10,survival_kuis,squid game,1.0
+2025-11-17,survival_kuis,squid game,1.0
+2025-11-24,survival_kuis,squid game,1.0
+2025-12-01,survival_kuis,squid game,1.0
+2025-12-08,survival_kuis,squid game,1.0
+2025-12-15,survival_kuis,squid game,1.0
+2025-12-22,survival_kuis,squid game,1.0
+2025-12-29,survival_kuis,squid game,1.0
+2026-01-05,survival_kuis,squid game,1.0
+2026-01-12,survival_kuis,squid game,1.0
+2026-01-19,survival_kuis,squid game,1.0
+2026-01-26,survival_kuis,squid game,1.0
+2026-02-02,survival_kuis,squid game,1.0
+2026-02-09,survival_kuis,squid game,1.0
+2026-02-16,survival_kuis,squid game,1.0
+2026-02-23,survival_kuis,squid game,1.0
+2026-03-02,survival_kuis,squid game,1.0
+2026-03-09,survival_kuis,squid game,1.0
+2026-03-16,survival_kuis,squid game,1.0
+2026-03-23,survival_kuis,squid game,1.0
+2026-03-30,survival_kuis,squid game,1.0
+2026-04-06,survival_kuis,squid game,1.0
+2026-04-13,survival_kuis,squid game,1.0
+2026-04-20,survival_kuis,squid game,1.0
+2026-04-27,survival_kuis,squid game,1.0
+2026-05-04,survival_kuis,squid game,1.0
+2026-05-11,survival_kuis,squid game,1.0
+2026-05-18,survival_kuis,squid game,1.0
+2026-05-25,survival_kuis,squid game,1.0
+2026-06-01,survival_kuis,squid game,1.0
+2026-06-08,survival_kuis,squid game,1.0
+2026-06-15,survival_kuis,squid game,1.0
+2026-06-22,survival_kuis,squid game,1.0
+2026-06-29,survival_kuis,squid game,1.0
+2026-07-06,survival_kuis,squid game,1.0
+2026-07-13,survival_kuis,squid game,1.0
+2026-07-20,survival_kuis,squid game,1.0
+2026-07-27,survival_kuis,squid game,1.0
+2026-08-03,survival_kuis,squid game,1.0
+2026-08-10,survival_kuis,squid game,1.0
+2026-08-17,survival_kuis,squid game,1.0
+2026-08-24,survival_kuis,squid game,1.0
+2026-08-31,survival_kuis,squid game,1.0
+2026-09-07,survival_kuis,squid game,1.0
+2026-09-14,survival_kuis,squid game,1.0
+2026-09-21,survival_kuis,squid game,0.0
+2026-09-28,survival_kuis,squid game,1.0
+2026-10-05,survival_kuis,squid game,1.0
+2026-10-12,survival_kuis,squid game,1.0
+2026-10-19,survival_kuis,squid game,1.0
+2026-10-26,survival_kuis,squid game,1.0
+2026-11-02,survival_kuis,squid game,1.0
+2026-11-09,survival_kuis,squid game,1.0
+2026-11-16,survival_kuis,squid game,1.0
+2024-11-25,tim_vs_tim,cerdas cermat,10.0
+2024-12-02,tim_vs_tim,cerdas cermat,16.0
+2024-12-09,tim_vs_tim,cerdas cermat,12.0
+2024-12-16,tim_vs_tim,cerdas cermat,4.0
+2024-12-23,tim_vs_tim,cerdas cermat,5.0
+2024-12-30,tim_vs_tim,cerdas cermat,7.0
+2025-01-06,tim_vs_tim,cerdas cermat,8.0
+2025-01-13,tim_vs_tim,cerdas cermat,13.0
+2025-01-20,tim_vs_tim,cerdas cermat,12.0
+2025-01-27,tim_vs_tim,cerdas cermat,13.0
+2025-02-03,tim_vs_tim,cerdas cermat,12.0
+2025-02-10,tim_vs_tim,cerdas cermat,11.0
+2025-02-17,tim_vs_tim,cerdas cermat,6.0
+2025-02-24,tim_vs_tim,cerdas cermat,9.0
+2025-03-03,tim_vs_tim,cerdas cermat,15.0
+2025-03-10,tim_vs_tim,cerdas cermat,15.0
+2025-03-17,tim_vs_tim,cerdas cermat,7.0
+2025-03-24,tim_vs_tim,cerdas cermat,4.0
+2025-03-31,tim_vs_tim,cerdas cermat,6.0
+2025-04-07,tim_vs_tim,cerdas cermat,12.0
+2025-04-14,tim_vs_tim,cerdas cermat,13.0
+2025-04-21,tim_vs_tim,cerdas cermat,15.0
+2025-04-28,tim_vs_tim,cerdas cermat,8.0
+2025-05-05,tim_vs_tim,cerdas cermat,6.0
+2025-05-12,tim_vs_tim,cerdas cermat,7.0
+2025-05-19,tim_vs_tim,cerdas cermat,6.0
+2025-05-26,tim_vs_tim,cerdas cermat,5.0
+2025-06-02,tim_vs_tim,cerdas cermat,8.0
+2025-06-09,tim_vs_tim,cerdas cermat,11.0
+2025-06-16,tim_vs_tim,cerdas cermat,6.0
+2025-06-23,tim_vs_tim,cerdas cermat,5.0
+2025-06-30,tim_vs_tim,cerdas cermat,6.0
+2025-07-07,tim_vs_tim,cerdas cermat,8.0
+2025-07-14,tim_vs_tim,cerdas cermat,10.0
+2025-07-21,tim_vs_tim,cerdas cermat,12.0
+2025-07-28,tim_vs_tim,cerdas cermat,17.0
+2025-08-04,tim_vs_tim,cerdas cermat,32.0
+2025-08-11,tim_vs_tim,cerdas cermat,19.0
+2025-08-18,tim_vs_tim,cerdas cermat,12.0
+2025-08-25,tim_vs_tim,cerdas cermat,13.0
+2025-09-01,tim_vs_tim,cerdas cermat,13.0
+2025-09-08,tim_vs_tim,cerdas cermat,13.0
+2025-09-15,tim_vs_tim,cerdas cermat,12.0
+2025-09-22,tim_vs_tim,cerdas cermat,10.0
+2025-09-29,tim_vs_tim,cerdas cermat,12.0
+2025-10-06,tim_vs_tim,cerdas cermat,12.0
+2025-10-13,tim_vs_tim,cerdas cermat,16.0
+2025-10-20,tim_vs_tim,cerdas cermat,13.0
+2025-10-27,tim_vs_tim,cerdas cermat,10.0
+2025-11-03,tim_vs_tim,cerdas cermat,13.0
+2025-11-10,tim_vs_tim,cerdas cermat,12.0
+2025-11-17,tim_vs_tim,cerdas cermat,8.0
+2025-11-24,tim_vs_tim,cerdas cermat,7.0
+2025-12-01,tim_vs_tim,cerdas cermat,13.0
+2025-12-08,tim_vs_tim,cerdas cermat,12.0
+2025-12-15,tim_vs_tim,cerdas cermat,4.0
+2025-12-22,tim_vs_tim,cerdas cermat,3.0
+2025-12-29,tim_vs_tim,cerdas cermat,5.0
+2026-01-05,tim_vs_tim,cerdas cermat,10.0
+2026-01-12,tim_vs_tim,cerdas cermat,10.0
+2026-01-19,tim_vs_tim,cerdas cermat,9.0
+2026-01-26,tim_vs_tim,cerdas cermat,9.0
+2026-02-02,tim_vs_tim,cerdas cermat,9.0
+2026-02-09,tim_vs_tim,cerdas cermat,4.0
+2026-02-16,tim_vs_tim,cerdas cermat,10.0
+2026-02-23,tim_vs_tim,cerdas cermat,13.0
+2026-03-02,tim_vs_tim,cerdas cermat,15.0
+2026-03-09,tim_vs_tim,cerdas cermat,6.0
+2026-03-16,tim_vs_tim,cerdas cermat,4.0
+2026-03-23,tim_vs_tim,cerdas cermat,10.0
+2026-03-30,tim_vs_tim,cerdas cermat,10.0
+2026-04-06,tim_vs_tim,cerdas cermat,11.0
+2026-04-13,tim_vs_tim,cerdas cermat,12.0
+2026-04-20,tim_vs_tim,cerdas cermat,11.0
+2026-04-27,tim_vs_tim,cerdas cermat,10.0
+2026-05-04,tim_vs_tim,cerdas cermat,100.0
+2026-05-11,tim_vs_tim,cerdas cermat,22.0
+2026-05-18,tim_vs_tim,cerdas cermat,9.0
+2026-05-25,tim_vs_tim,cerdas cermat,8.0
+2026-06-01,tim_vs_tim,cerdas cermat,11.0
+2026-06-08,tim_vs_tim,cerdas cermat,9.0
+2026-06-15,tim_vs_tim,cerdas cermat,8.0
+2026-06-22,tim_vs_tim,cerdas cermat,5.0
+2026-06-29,tim_vs_tim,cerdas cermat,5.0
+2026-07-06,tim_vs_tim,cerdas cermat,8.0
+2026-07-13,tim_vs_tim,cerdas cermat,10.0
+2026-07-20,tim_vs_tim,cerdas cermat,12.0
+2026-07-27,tim_vs_tim,cerdas cermat,16.0
+2026-08-03,tim_vs_tim,cerdas cermat,27.0
+2026-08-10,tim_vs_tim,cerdas cermat,21.0
+2026-08-17,tim_vs_tim,cerdas cermat,16.0
+2026-08-24,tim_vs_tim,cerdas cermat,12.0
+2026-08-31,tim_vs_tim,cerdas cermat,11.0
+2026-09-07,tim_vs_tim,cerdas cermat,13.0
+2026-09-14,tim_vs_tim,cerdas cermat,12.0
+2026-09-21,tim_vs_tim,cerdas cermat,11.0
+2026-09-28,tim_vs_tim,cerdas cermat,10.0
+2026-10-05,tim_vs_tim,cerdas cermat,12.0
+2026-10-12,tim_vs_tim,cerdas cermat,14.0
+2026-10-19,tim_vs_tim,cerdas cermat,15.0
+2026-10-26,tim_vs_tim,cerdas cermat,10.0
+2026-11-02,tim_vs_tim,cerdas cermat,13.0
+2026-11-09,tim_vs_tim,cerdas cermat,10.0
+2026-11-16,tim_vs_tim,cerdas cermat,9.0
+2024-11-25,emoji_tebak,tebak emoji,0.0
+2024-12-02,emoji_tebak,tebak emoji,0.0
+2024-12-09,emoji_tebak,tebak emoji,0.0
+2024-12-16,emoji_tebak,tebak emoji,0.0
+2024-12-23,emoji_tebak,tebak emoji,0.0
+2024-12-30,emoji_tebak,tebak emoji,0.0
+2025-01-06,emoji_tebak,tebak emoji,0.0
+2025-01-13,emoji_tebak,tebak emoji,0.0
+2025-01-20,emoji_tebak,tebak emoji,0.0
+2025-01-27,emoji_tebak,tebak emoji,0.0
+2025-02-03,emoji_tebak,tebak emoji,0.0
+2025-02-10,emoji_tebak,tebak emoji,0.0
+2025-02-17,emoji_tebak,tebak emoji,0.0
+2025-02-24,emoji_tebak,tebak emoji,68.0
+2025-03-03,emoji_tebak,tebak emoji,77.0
+2025-03-10,emoji_tebak,tebak emoji,0.0
+2025-03-17,emoji_tebak,tebak emoji,0.0
+2025-03-24,emoji_tebak,tebak emoji,0.0
+2025-03-31,emoji_tebak,tebak emoji,0.0
+2025-04-07,emoji_tebak,tebak emoji,0.0
+2025-04-14,emoji_tebak,tebak emoji,0.0
+2025-04-21,emoji_tebak,tebak emoji,0.0
+2025-04-28,emoji_tebak,tebak emoji,0.0
+2025-05-05,emoji_tebak,tebak emoji,75.0
+2025-05-12,emoji_tebak,tebak emoji,0.0
+2025-05-19,emoji_tebak,tebak emoji,0.0
+2025-05-26,emoji_tebak,tebak emoji,0.0
+2025-06-02,emoji_tebak,tebak emoji,0.0
+2025-06-09,emoji_tebak,tebak emoji,0.0
+2025-06-16,emoji_tebak,tebak emoji,0.0
+2025-06-23,emoji_tebak,tebak emoji,0.0
+2025-06-30,emoji_tebak,tebak emoji,0.0
+2025-07-07,emoji_tebak,tebak emoji,0.0
+2025-07-14,emoji_tebak,tebak emoji,0.0
+2025-07-21,emoji_tebak,tebak emoji,0.0
+2025-07-28,emoji_tebak,tebak emoji,0.0
+2025-08-04,emoji_tebak,tebak emoji,0.0
+2025-08-11,emoji_tebak,tebak emoji,0.0
+2025-08-18,emoji_tebak,tebak emoji,0.0
+2025-08-25,emoji_tebak,tebak emoji,0.0
+2025-09-01,emoji_tebak,tebak emoji,0.0
+2025-09-08,emoji_tebak,tebak emoji,0.0
+2025-09-15,emoji_tebak,tebak emoji,0.0
+2025-09-22,emoji_tebak,tebak emoji,0.0
+2025-09-29,emoji_tebak,tebak emoji,0.0
+2025-10-06,emoji_tebak,tebak emoji,0.0
+2025-10-13,emoji_tebak,tebak emoji,0.0
+2025-10-20,emoji_tebak,tebak emoji,0.0
+2025-10-27,emoji_tebak,tebak emoji,0.0
+2025-11-03,emoji_tebak,tebak emoji,0.0
+2025-11-10,emoji_tebak,tebak emoji,0.0
+2025-11-17,emoji_tebak,tebak emoji,0.0
+2025-11-24,emoji_tebak,tebak emoji,0.0
+2025-12-01,emoji_tebak,tebak emoji,0.0
+2025-12-08,emoji_tebak,tebak emoji,0.0
+2025-12-15,emoji_tebak,tebak emoji,0.0
+2025-12-22,emoji_tebak,tebak emoji,0.0
+2025-12-29,emoji_tebak,tebak emoji,0.0
+2026-01-05,emoji_tebak,tebak emoji,0.0
+2026-01-12,emoji_tebak,tebak emoji,0.0
+2026-01-19,emoji_tebak,tebak emoji,0.0
+2026-01-26,emoji_tebak,tebak emoji,0.0
+2026-02-02,emoji_tebak,tebak emoji,64.0
+2026-02-09,emoji_tebak,tebak emoji,0.0
+2026-02-16,emoji_tebak,tebak emoji,0.0
+2026-02-23,emoji_tebak,tebak emoji,57.0
+2026-03-02,emoji_tebak,tebak emoji,65.0
+2026-03-09,emoji_tebak,tebak emoji,0.0
+2026-03-16,emoji_tebak,tebak emoji,0.0
+2026-03-23,emoji_tebak,tebak emoji,0.0
+2026-03-30,emoji_tebak,tebak emoji,0.0
+2026-04-06,emoji_tebak,tebak emoji,62.0
+2026-04-13,emoji_tebak,tebak emoji,0.0
+2026-04-20,emoji_tebak,tebak emoji,57.0
+2026-04-27,emoji_tebak,tebak emoji,0.0
+2026-05-04,emoji_tebak,tebak emoji,56.0
+2026-05-11,emoji_tebak,tebak emoji,62.0
+2026-05-18,emoji_tebak,tebak emoji,0.0
+2026-05-25,emoji_tebak,tebak emoji,0.0
+2026-06-01,emoji_tebak,tebak emoji,0.0
+2026-06-08,emoji_tebak,tebak emoji,0.0
+2026-06-15,emoji_tebak,tebak emoji,0.0
+2026-06-22,emoji_tebak,tebak emoji,0.0
+2026-06-29,emoji_tebak,tebak emoji,0.0
+2026-07-06,emoji_tebak,tebak emoji,100.0
+2026-07-13,emoji_tebak,tebak emoji,0.0
+2026-07-20,emoji_tebak,tebak emoji,0.0
+2026-07-27,emoji_tebak,tebak emoji,0.0
+2026-08-03,emoji_tebak,tebak emoji,0.0
+2026-08-10,emoji_tebak,tebak emoji,0.0
+2026-08-17,emoji_tebak,tebak emoji,0.0
+2026-08-24,emoji_tebak,tebak emoji,0.0
+2026-08-31,emoji_tebak,tebak emoji,0.0
+2026-09-07,emoji_tebak,tebak emoji,0.0
+2026-09-14,emoji_tebak,tebak emoji,0.0
+2026-09-21,emoji_tebak,tebak emoji,0.0
+2026-09-28,emoji_tebak,tebak emoji,0.0
+2026-10-05,emoji_tebak,tebak emoji,0.0
+2026-10-12,emoji_tebak,tebak emoji,0.0
+2026-10-19,emoji_tebak,tebak emoji,0.0
+2026-10-26,emoji_tebak,tebak emoji,63.0
+2026-11-02,emoji_tebak,tebak emoji,16.0
+2026-11-09,emoji_tebak,tebak emoji,28.0
+2026-11-16,emoji_tebak,tebak emoji,30.0
+2024-11-25,siapa_paling,never have i ever,75.0
+2024-12-02,siapa_paling,never have i ever,65.0
+2024-12-09,siapa_paling,never have i ever,66.0
+2024-12-16,siapa_paling,never have i ever,62.0
+2024-12-23,siapa_paling,never have i ever,80.0
+2024-12-30,siapa_paling,never have i ever,38.0
+2025-01-06,siapa_paling,never have i ever,49.0
+2025-01-13,siapa_paling,never have i ever,69.0
+2025-01-20,siapa_paling,never have i ever,43.0
+2025-01-27,siapa_paling,never have i ever,55.0
+2025-02-03,siapa_paling,never have i ever,63.0
+2025-02-10,siapa_paling,never have i ever,64.0
+2025-02-17,siapa_paling,never have i ever,57.0
+2025-02-24,siapa_paling,never have i ever,66.0
+2025-03-03,siapa_paling,never have i ever,64.0
+2025-03-10,siapa_paling,never have i ever,46.0
+2025-03-17,siapa_paling,never have i ever,75.0
+2025-03-24,siapa_paling,never have i ever,67.0
+2025-03-31,siapa_paling,never have i ever,32.0
+2025-04-07,siapa_paling,never have i ever,55.0
+2025-04-14,siapa_paling,never have i ever,48.0
+2025-04-21,siapa_paling,never have i ever,66.0
+2025-04-28,siapa_paling,never have i ever,50.0
+2025-05-05,siapa_paling,never have i ever,64.0
+2025-05-12,siapa_paling,never have i ever,62.0
+2025-05-19,siapa_paling,never have i ever,77.0
+2025-05-26,siapa_paling,never have i ever,59.0
+2025-06-02,siapa_paling,never have i ever,53.0
+2025-06-09,siapa_paling,never have i ever,58.0
+2025-06-16,siapa_paling,never have i ever,71.0
+2025-06-23,siapa_paling,never have i ever,44.0
+2025-06-30,siapa_paling,never have i ever,67.0
+2025-07-07,siapa_paling,never have i ever,57.0
+2025-07-14,siapa_paling,never have i ever,54.0
+2025-07-21,siapa_paling,never have i ever,48.0
+2025-07-28,siapa_paling,never have i ever,63.0
+2025-08-04,siapa_paling,never have i ever,74.0
+2025-08-11,siapa_paling,never have i ever,60.0
+2025-08-18,siapa_paling,never have i ever,52.0
+2025-08-25,siapa_paling,never have i ever,51.0
+2025-09-01,siapa_paling,never have i ever,72.0
+2025-09-08,siapa_paling,never have i ever,62.0
+2025-09-15,siapa_paling,never have i ever,79.0
+2025-09-22,siapa_paling,never have i ever,36.0
+2025-09-29,siapa_paling,never have i ever,76.0
+2025-10-06,siapa_paling,never have i ever,62.0
+2025-10-13,siapa_paling,never have i ever,64.0
+2025-10-20,siapa_paling,never have i ever,49.0
+2025-10-27,siapa_paling,never have i ever,48.0
+2025-11-03,siapa_paling,never have i ever,61.0
+2025-11-10,siapa_paling,never have i ever,61.0
+2025-11-17,siapa_paling,never have i ever,68.0
+2025-11-24,siapa_paling,never have i ever,64.0
+2025-12-01,siapa_paling,never have i ever,59.0
+2025-12-08,siapa_paling,never have i ever,64.0
+2025-12-15,siapa_paling,never have i ever,69.0
+2025-12-22,siapa_paling,never have i ever,59.0
+2025-12-29,siapa_paling,never have i ever,53.0
+2026-01-05,siapa_paling,never have i ever,67.0
+2026-01-12,siapa_paling,never have i ever,57.0
+2026-01-19,siapa_paling,never have i ever,41.0
+2026-01-26,siapa_paling,never have i ever,49.0
+2026-02-02,siapa_paling,never have i ever,68.0
+2026-02-09,siapa_paling,never have i ever,56.0
+2026-02-16,siapa_paling,never have i ever,80.0
+2026-02-23,siapa_paling,never have i ever,54.0
+2026-03-02,siapa_paling,never have i ever,61.0
+2026-03-09,siapa_paling,never have i ever,67.0
+2026-03-16,siapa_paling,never have i ever,59.0
+2026-03-23,siapa_paling,never have i ever,60.0
+2026-03-30,siapa_paling,never have i ever,74.0
+2026-04-06,siapa_paling,never have i ever,68.0
+2026-04-13,siapa_paling,never have i ever,44.0
+2026-04-20,siapa_paling,never have i ever,62.0
+2026-04-27,siapa_paling,never have i ever,48.0
+2026-05-04,siapa_paling,never have i ever,57.0
+2026-05-11,siapa_paling,never have i ever,46.0
+2026-05-18,siapa_paling,never have i ever,69.0
+2026-05-25,siapa_paling,never have i ever,79.0
+2026-06-01,siapa_paling,never have i ever,100.0
+2026-06-08,siapa_paling,never have i ever,49.0
+2026-06-15,siapa_paling,never have i ever,64.0
+2026-06-22,siapa_paling,never have i ever,47.0
+2026-06-29,siapa_paling,never have i ever,54.0
+2026-07-06,siapa_paling,never have i ever,44.0
+2026-07-13,siapa_paling,never have i ever,42.0
+2026-07-20,siapa_paling,never have i ever,49.0
+2026-07-27,siapa_paling,never have i ever,59.0
+2026-08-03,siapa_paling,never have i ever,66.0
+2026-08-10,siapa_paling,never have i ever,32.0
+2026-08-17,siapa_paling,never have i ever,34.0
+2026-08-24,siapa_paling,never have i ever,57.0
+2026-08-31,siapa_paling,never have i ever,59.0
+2026-09-07,siapa_paling,never have i ever,52.0
+2026-09-14,siapa_paling,never have i ever,79.0
+2026-09-21,siapa_paling,never have i ever,76.0
+2026-09-28,siapa_paling,never have i ever,59.0
+2026-10-05,siapa_paling,never have i ever,57.0
+2026-10-12,siapa_paling,never have i ever,60.0
+2026-10-19,siapa_paling,never have i ever,68.0
+2026-10-26,siapa_paling,never have i ever,59.0
+2026-11-02,siapa_paling,never have i ever,67.0
+2026-11-09,siapa_paling,never have i ever,72.0
+2026-11-16,siapa_paling,never have i ever,65.0
+2024-11-25,cerita_berantai,cerita berantai,0.0
+2024-12-02,cerita_berantai,cerita berantai,70.0
+2024-12-09,cerita_berantai,cerita berantai,0.0
+2024-12-16,cerita_berantai,cerita berantai,0.0
+2024-12-23,cerita_berantai,cerita berantai,0.0
+2024-12-30,cerita_berantai,cerita berantai,0.0
+2025-01-06,cerita_berantai,cerita berantai,0.0
+2025-01-13,cerita_berantai,cerita berantai,0.0
+2025-01-20,cerita_berantai,cerita berantai,0.0
+2025-01-27,cerita_berantai,cerita berantai,0.0
+2025-02-03,cerita_berantai,cerita berantai,0.0
+2025-02-10,cerita_berantai,cerita berantai,0.0
+2025-02-17,cerita_berantai,cerita berantai,0.0
+2025-02-24,cerita_berantai,cerita berantai,0.0
+2025-03-03,cerita_berantai,cerita berantai,0.0
+2025-03-10,cerita_berantai,cerita berantai,0.0
+2025-03-17,cerita_berantai,cerita berantai,0.0
+2025-03-24,cerita_berantai,cerita berantai,0.0
+2025-03-31,cerita_berantai,cerita berantai,0.0
+2025-04-07,cerita_berantai,cerita berantai,0.0
+2025-04-14,cerita_berantai,cerita berantai,0.0
+2025-04-21,cerita_berantai,cerita berantai,0.0
+2025-04-28,cerita_berantai,cerita berantai,0.0
+2025-05-05,cerita_berantai,cerita berantai,0.0
+2025-05-12,cerita_berantai,cerita berantai,0.0
+2025-05-19,cerita_berantai,cerita berantai,0.0
+2025-05-26,cerita_berantai,cerita berantai,0.0
+2025-06-02,cerita_berantai,cerita berantai,0.0
+2025-06-09,cerita_berantai,cerita berantai,0.0
+2025-06-16,cerita_berantai,cerita berantai,0.0
+2025-06-23,cerita_berantai,cerita berantai,0.0
+2025-06-30,cerita_berantai,cerita berantai,0.0
+2025-07-07,cerita_berantai,cerita berantai,0.0
+2025-07-14,cerita_berantai,cerita berantai,0.0
+2025-07-21,cerita_berantai,cerita berantai,0.0
+2025-07-28,cerita_berantai,cerita berantai,0.0
+2025-08-04,cerita_berantai,cerita berantai,0.0
+2025-08-11,cerita_berantai,cerita berantai,0.0
+2025-08-18,cerita_berantai,cerita berantai,0.0
+2025-08-25,cerita_berantai,cerita berantai,0.0
+2025-09-01,cerita_berantai,cerita berantai,0.0
+2025-09-08,cerita_berantai,cerita berantai,0.0
+2025-09-15,cerita_berantai,cerita berantai,0.0
+2025-09-22,cerita_berantai,cerita berantai,0.0
+2025-09-29,cerita_berantai,cerita berantai,0.0
+2025-10-06,cerita_berantai,cerita berantai,0.0
+2025-10-13,cerita_berantai,cerita berantai,0.0
+2025-10-20,cerita_berantai,cerita berantai,0.0
+2025-10-27,cerita_berantai,cerita berantai,0.0
+2025-11-03,cerita_berantai,cerita berantai,0.0
+2025-11-10,cerita_berantai,cerita berantai,0.0
+2025-11-17,cerita_berantai,cerita berantai,0.0
+2025-11-24,cerita_berantai,cerita berantai,0.0
+2025-12-01,cerita_berantai,cerita berantai,0.0
+2025-12-08,cerita_berantai,cerita berantai,0.0
+2025-12-15,cerita_berantai,cerita berantai,0.0
+2025-12-22,cerita_berantai,cerita berantai,0.0
+2025-12-29,cerita_berantai,cerita berantai,0.0
+2026-01-05,cerita_berantai,cerita berantai,0.0
+2026-01-12,cerita_berantai,cerita berantai,0.0
+2026-01-19,cerita_berantai,cerita berantai,0.0
+2026-01-26,cerita_berantai,cerita berantai,0.0
+2026-02-02,cerita_berantai,cerita berantai,0.0
+2026-02-09,cerita_berantai,cerita berantai,0.0
+2026-02-16,cerita_berantai,cerita berantai,0.0
+2026-02-23,cerita_berantai,cerita berantai,0.0
+2026-03-02,cerita_berantai,cerita berantai,0.0
+2026-03-09,cerita_berantai,cerita berantai,0.0
+2026-03-16,cerita_berantai,cerita berantai,0.0
+2026-03-23,cerita_berantai,cerita berantai,0.0
+2026-03-30,cerita_berantai,cerita berantai,0.0
+2026-04-06,cerita_berantai,cerita berantai,0.0
+2026-04-13,cerita_berantai,cerita berantai,0.0
+2026-04-20,cerita_berantai,cerita berantai,0.0
+2026-04-27,cerita_berantai,cerita berantai,0.0
+2026-05-04,cerita_berantai,cerita berantai,0.0
+2026-05-11,cerita_berantai,cerita berantai,0.0
+2026-05-18,cerita_berantai,cerita berantai,0.0
+2026-05-25,cerita_berantai,cerita berantai,0.0
+2026-06-01,cerita_berantai,cerita berantai,0.0
+2026-06-08,cerita_berantai,cerita berantai,0.0
+2026-06-15,cerita_berantai,cerita berantai,0.0
+2026-06-22,cerita_berantai,cerita berantai,0.0
+2026-06-29,cerita_berantai,cerita berantai,0.0
+2026-07-06,cerita_berantai,cerita berantai,0.0
+2026-07-13,cerita_berantai,cerita berantai,0.0
+2026-07-20,cerita_berantai,cerita berantai,0.0
+2026-07-27,cerita_berantai,cerita berantai,0.0
+2026-08-03,cerita_berantai,cerita berantai,0.0
+2026-08-10,cerita_berantai,cerita berantai,0.0
+2026-08-17,cerita_berantai,cerita berantai,0.0
+2026-08-24,cerita_berantai,cerita berantai,0.0
+2026-08-31,cerita_berantai,cerita berantai,0.0
+2026-09-07,cerita_berantai,cerita berantai,0.0
+2026-09-14,cerita_berantai,cerita berantai,100.0
+2026-09-21,cerita_berantai,cerita berantai,0.0
+2026-09-28,cerita_berantai,cerita berantai,0.0
+2026-10-05,cerita_berantai,cerita berantai,0.0
+2026-10-12,cerita_berantai,cerita berantai,0.0
+2026-10-19,cerita_berantai,cerita berantai,0.0
+2026-10-26,cerita_berantai,cerita berantai,0.0
+2026-11-02,cerita_berantai,cerita berantai,5.0
+2026-11-09,cerita_berantai,cerita berantai,17.0
+2026-11-16,cerita_berantai,cerita berantai,22.0
+2024-11-25,mitos_sains,mitos atau fakta,38.0
+2024-12-02,mitos_sains,mitos atau fakta,38.0
+2024-12-09,mitos_sains,mitos atau fakta,30.0
+2024-12-16,mitos_sains,mitos atau fakta,37.0
+2024-12-23,mitos_sains,mitos atau fakta,39.0
+2024-12-30,mitos_sains,mitos atau fakta,45.0
+2025-01-06,mitos_sains,mitos atau fakta,42.0
+2025-01-13,mitos_sains,mitos atau fakta,45.0
+2025-01-20,mitos_sains,mitos atau fakta,50.0
+2025-01-27,mitos_sains,mitos atau fakta,48.0
+2025-02-03,mitos_sains,mitos atau fakta,54.0
+2025-02-10,mitos_sains,mitos atau fakta,57.0
+2025-02-17,mitos_sains,mitos atau fakta,57.0
+2025-02-24,mitos_sains,mitos atau fakta,43.0
+2025-03-03,mitos_sains,mitos atau fakta,51.0
+2025-03-10,mitos_sains,mitos atau fakta,56.0
+2025-03-17,mitos_sains,mitos atau fakta,33.0
+2025-03-24,mitos_sains,mitos atau fakta,38.0
+2025-03-31,mitos_sains,mitos atau fakta,46.0
+2025-04-07,mitos_sains,mitos atau fakta,64.0
+2025-04-14,mitos_sains,mitos atau fakta,55.0
+2025-04-21,mitos_sains,mitos atau fakta,49.0
+2025-04-28,mitos_sains,mitos atau fakta,45.0
+2025-05-05,mitos_sains,mitos atau fakta,46.0
+2025-05-12,mitos_sains,mitos atau fakta,35.0
+2025-05-19,mitos_sains,mitos atau fakta,43.0
+2025-05-26,mitos_sains,mitos atau fakta,42.0
+2025-06-02,mitos_sains,mitos atau fakta,43.0
+2025-06-09,mitos_sains,mitos atau fakta,38.0
+2025-06-16,mitos_sains,mitos atau fakta,47.0
+2025-06-23,mitos_sains,mitos atau fakta,33.0
+2025-06-30,mitos_sains,mitos atau fakta,38.0
+2025-07-07,mitos_sains,mitos atau fakta,32.0
+2025-07-14,mitos_sains,mitos atau fakta,39.0
+2025-07-21,mitos_sains,mitos atau fakta,46.0
+2025-07-28,mitos_sains,mitos atau fakta,40.0
+2025-08-04,mitos_sains,mitos atau fakta,36.0
+2025-08-11,mitos_sains,mitos atau fakta,45.0
+2025-08-18,mitos_sains,mitos atau fakta,42.0
+2025-08-25,mitos_sains,mitos atau fakta,42.0
+2025-09-01,mitos_sains,mitos atau fakta,60.0
+2025-09-08,mitos_sains,mitos atau fakta,45.0
+2025-09-15,mitos_sains,mitos atau fakta,53.0
+2025-09-22,mitos_sains,mitos atau fakta,54.0
+2025-09-29,mitos_sains,mitos atau fakta,42.0
+2025-10-06,mitos_sains,mitos atau fakta,47.0
+2025-10-13,mitos_sains,mitos atau fakta,55.0
+2025-10-20,mitos_sains,mitos atau fakta,56.0
+2025-10-27,mitos_sains,mitos atau fakta,53.0
+2025-11-03,mitos_sains,mitos atau fakta,54.0
+2025-11-10,mitos_sains,mitos atau fakta,52.0
+2025-11-17,mitos_sains,mitos atau fakta,57.0
+2025-11-24,mitos_sains,mitos atau fakta,54.0
+2025-12-01,mitos_sains,mitos atau fakta,58.0
+2025-12-08,mitos_sains,mitos atau fakta,45.0
+2025-12-15,mitos_sains,mitos atau fakta,56.0
+2025-12-22,mitos_sains,mitos atau fakta,51.0
+2025-12-29,mitos_sains,mitos atau fakta,58.0
+2026-01-05,mitos_sains,mitos atau fakta,57.0
+2026-01-12,mitos_sains,mitos atau fakta,54.0
+2026-01-19,mitos_sains,mitos atau fakta,65.0
+2026-01-26,mitos_sains,mitos atau fakta,58.0
+2026-02-02,mitos_sains,mitos atau fakta,49.0
+2026-02-09,mitos_sains,mitos atau fakta,54.0
+2026-02-16,mitos_sains,mitos atau fakta,61.0
+2026-02-23,mitos_sains,mitos atau fakta,61.0
+2026-03-02,mitos_sains,mitos atau fakta,58.0
+2026-03-09,mitos_sains,mitos atau fakta,60.0
+2026-03-16,mitos_sains,mitos atau fakta,62.0
+2026-03-23,mitos_sains,mitos atau fakta,69.0
+2026-03-30,mitos_sains,mitos atau fakta,83.0
+2026-04-06,mitos_sains,mitos atau fakta,69.0
+2026-04-13,mitos_sains,mitos atau fakta,67.0
+2026-04-20,mitos_sains,mitos atau fakta,71.0
+2026-04-27,mitos_sains,mitos atau fakta,71.0
+2026-05-04,mitos_sains,mitos atau fakta,62.0
+2026-05-11,mitos_sains,mitos atau fakta,55.0
+2026-05-18,mitos_sains,mitos atau fakta,61.0
+2026-05-25,mitos_sains,mitos atau fakta,65.0
+2026-06-01,mitos_sains,mitos atau fakta,60.0
+2026-06-08,mitos_sains,mitos atau fakta,55.0
+2026-06-15,mitos_sains,mitos atau fakta,80.0
+2026-06-22,mitos_sains,mitos atau fakta,91.0
+2026-06-29,mitos_sains,mitos atau fakta,69.0
+2026-07-06,mitos_sains,mitos atau fakta,61.0
+2026-07-13,mitos_sains,mitos atau fakta,72.0
+2026-07-20,mitos_sains,mitos atau fakta,69.0
+2026-07-27,mitos_sains,mitos atau fakta,69.0
+2026-08-03,mitos_sains,mitos atau fakta,74.0
+2026-08-10,mitos_sains,mitos atau fakta,73.0
+2026-08-17,mitos_sains,mitos atau fakta,81.0
+2026-08-24,mitos_sains,mitos atau fakta,75.0
+2026-08-31,mitos_sains,mitos atau fakta,85.0
+2026-09-07,mitos_sains,mitos atau fakta,92.0
+2026-09-14,mitos_sains,mitos atau fakta,96.0
+2026-09-21,mitos_sains,mitos atau fakta,82.0
+2026-09-28,mitos_sains,mitos atau fakta,100.0
+2026-10-05,mitos_sains,mitos atau fakta,90.0
+2026-10-12,mitos_sains,mitos atau fakta,98.0
+2026-10-19,mitos_sains,mitos atau fakta,87.0
+2026-10-26,mitos_sains,mitos atau fakta,87.0
+2026-11-02,mitos_sains,mitos atau fakta,85.0
+2026-11-09,mitos_sains,mitos atau fakta,80.0
+2026-11-16,mitos_sains,mitos atau fakta,76.0
+2024-11-25,harga_pas,tebak harga,0.0
+2024-12-02,harga_pas,tebak harga,0.0
+2024-12-09,harga_pas,tebak harga,0.0
+2024-12-16,harga_pas,tebak harga,0.0
+2024-12-23,harga_pas,tebak harga,0.0
+2024-12-30,harga_pas,tebak harga,0.0
+2025-01-06,harga_pas,tebak harga,0.0
+2025-01-13,harga_pas,tebak harga,0.0
+2025-01-20,harga_pas,tebak harga,0.0
+2025-01-27,harga_pas,tebak harga,0.0
+2025-02-03,harga_pas,tebak harga,0.0
+2025-02-10,harga_pas,tebak harga,0.0
+2025-02-17,harga_pas,tebak harga,0.0
+2025-02-24,harga_pas,tebak harga,0.0
+2025-03-03,harga_pas,tebak harga,0.0
+2025-03-10,harga_pas,tebak harga,0.0
+2025-03-17,harga_pas,tebak harga,0.0
+2025-03-24,harga_pas,tebak harga,0.0
+2025-03-31,harga_pas,tebak harga,0.0
+2025-04-07,harga_pas,tebak harga,0.0
+2025-04-14,harga_pas,tebak harga,0.0
+2025-04-21,harga_pas,tebak harga,0.0
+2025-04-28,harga_pas,tebak harga,0.0
+2025-05-05,harga_pas,tebak harga,0.0
+2025-05-12,harga_pas,tebak harga,0.0
+2025-05-19,harga_pas,tebak harga,0.0
+2025-05-26,harga_pas,tebak harga,0.0
+2025-06-02,harga_pas,tebak harga,0.0
+2025-06-09,harga_pas,tebak harga,82.0
+2025-06-16,harga_pas,tebak harga,0.0
+2025-06-23,harga_pas,tebak harga,0.0
+2025-06-30,harga_pas,tebak harga,0.0
+2025-07-07,harga_pas,tebak harga,0.0
+2025-07-14,harga_pas,tebak harga,0.0
+2025-07-21,harga_pas,tebak harga,0.0
+2025-07-28,harga_pas,tebak harga,78.0
+2025-08-04,harga_pas,tebak harga,0.0
+2025-08-11,harga_pas,tebak harga,0.0
+2025-08-18,harga_pas,tebak harga,0.0
+2025-08-25,harga_pas,tebak harga,81.0
+2025-09-01,harga_pas,tebak harga,0.0
+2025-09-08,harga_pas,tebak harga,0.0
+2025-09-15,harga_pas,tebak harga,0.0
+2025-09-22,harga_pas,tebak harga,0.0
+2025-09-29,harga_pas,tebak harga,0.0
+2025-10-06,harga_pas,tebak harga,0.0
+2025-10-13,harga_pas,tebak harga,0.0
+2025-10-20,harga_pas,tebak harga,0.0
+2025-10-27,harga_pas,tebak harga,0.0
+2025-11-03,harga_pas,tebak harga,0.0
+2025-11-10,harga_pas,tebak harga,0.0
+2025-11-17,harga_pas,tebak harga,0.0
+2025-11-24,harga_pas,tebak harga,0.0
+2025-12-01,harga_pas,tebak harga,69.0
+2025-12-08,harga_pas,tebak harga,0.0
+2025-12-15,harga_pas,tebak harga,87.0
+2025-12-22,harga_pas,tebak harga,0.0
+2025-12-29,harga_pas,tebak harga,0.0
+2026-01-05,harga_pas,tebak harga,0.0
+2026-01-12,harga_pas,tebak harga,0.0
+2026-01-19,harga_pas,tebak harga,69.0
+2026-01-26,harga_pas,tebak harga,69.0
+2026-02-02,harga_pas,tebak harga,0.0
+2026-02-09,harga_pas,tebak harga,0.0
+2026-02-16,harga_pas,tebak harga,0.0
+2026-02-23,harga_pas,tebak harga,0.0
+2026-03-02,harga_pas,tebak harga,0.0
+2026-03-09,harga_pas,tebak harga,0.0
+2026-03-16,harga_pas,tebak harga,0.0
+2026-03-23,harga_pas,tebak harga,73.0
+2026-03-30,harga_pas,tebak harga,0.0
+2026-04-06,harga_pas,tebak harga,75.0
+2026-04-13,harga_pas,tebak harga,0.0
+2026-04-20,harga_pas,tebak harga,0.0
+2026-04-27,harga_pas,tebak harga,0.0
+2026-05-04,harga_pas,tebak harga,0.0
+2026-05-11,harga_pas,tebak harga,0.0
+2026-05-18,harga_pas,tebak harga,0.0
+2026-05-25,harga_pas,tebak harga,0.0
+2026-06-01,harga_pas,tebak harga,0.0
+2026-06-08,harga_pas,tebak harga,83.0
+2026-06-15,harga_pas,tebak harga,88.0
+2026-06-22,harga_pas,tebak harga,90.0
+2026-06-29,harga_pas,tebak harga,77.0
+2026-07-06,harga_pas,tebak harga,100.0
+2026-07-13,harga_pas,tebak harga,0.0
+2026-07-20,harga_pas,tebak harga,0.0
+2026-07-27,harga_pas,tebak harga,0.0
+2026-08-03,harga_pas,tebak harga,0.0
+2026-08-10,harga_pas,tebak harga,87.0
+2026-08-17,harga_pas,tebak harga,0.0
+2026-08-24,harga_pas,tebak harga,70.0
+2026-08-31,harga_pas,tebak harga,0.0
+2026-09-07,harga_pas,tebak harga,0.0
+2026-09-14,harga_pas,tebak harga,0.0
+2026-09-21,harga_pas,tebak harga,0.0
+2026-09-28,harga_pas,tebak harga,0.0
+2026-10-05,harga_pas,tebak harga,0.0
+2026-10-12,harga_pas,tebak harga,0.0
+2026-10-19,harga_pas,tebak harga,0.0
+2026-10-26,harga_pas,tebak harga,0.0
+2026-11-02,harga_pas,tebak harga,20.0
+2026-11-09,harga_pas,tebak harga,59.0
+2026-11-16,harga_pas,tebak harga,55.0
+2024-11-25,tebak_kata_kunci,teka teki,17.0
+2024-12-02,tebak_kata_kunci,teka teki,19.0
+2024-12-09,tebak_kata_kunci,teka teki,19.0
+2024-12-16,tebak_kata_kunci,teka teki,18.0
+2024-12-23,tebak_kata_kunci,teka teki,20.0
+2024-12-30,tebak_kata_kunci,teka teki,23.0
+2025-01-06,tebak_kata_kunci,teka teki,24.0
+2025-01-13,tebak_kata_kunci,teka teki,23.0
+2025-01-20,tebak_kata_kunci,teka teki,20.0
+2025-01-27,tebak_kata_kunci,teka teki,23.0
+2025-02-03,tebak_kata_kunci,teka teki,24.0
+2025-02-10,tebak_kata_kunci,teka teki,23.0
+2025-02-17,tebak_kata_kunci,teka teki,19.0
+2025-02-24,tebak_kata_kunci,teka teki,18.0
+2025-03-03,tebak_kata_kunci,teka teki,20.0
+2025-03-10,tebak_kata_kunci,teka teki,17.0
+2025-03-17,tebak_kata_kunci,teka teki,15.0
+2025-03-24,tebak_kata_kunci,teka teki,15.0
+2025-03-31,tebak_kata_kunci,teka teki,15.0
+2025-04-07,tebak_kata_kunci,teka teki,16.0
+2025-04-14,tebak_kata_kunci,teka teki,17.0
+2025-04-21,tebak_kata_kunci,teka teki,17.0
+2025-04-28,tebak_kata_kunci,teka teki,17.0
+2025-05-05,tebak_kata_kunci,teka teki,17.0
+2025-05-12,tebak_kata_kunci,teka teki,18.0
+2025-05-19,tebak_kata_kunci,teka teki,14.0
+2025-05-26,tebak_kata_kunci,teka teki,13.0
+2025-06-02,tebak_kata_kunci,teka teki,16.0
+2025-06-09,tebak_kata_kunci,teka teki,15.0
+2025-06-16,tebak_kata_kunci,teka teki,16.0
+2025-06-23,tebak_kata_kunci,teka teki,16.0
+2025-06-30,tebak_kata_kunci,teka teki,47.0
+2025-07-07,tebak_kata_kunci,teka teki,97.0
+2025-07-14,tebak_kata_kunci,teka teki,22.0
+2025-07-21,tebak_kata_kunci,teka teki,20.0
+2025-07-28,tebak_kata_kunci,teka teki,21.0
+2025-08-04,tebak_kata_kunci,teka teki,21.0
+2025-08-11,tebak_kata_kunci,teka teki,22.0
+2025-08-18,tebak_kata_kunci,teka teki,24.0
+2025-08-25,tebak_kata_kunci,teka teki,23.0
+2025-09-01,tebak_kata_kunci,teka teki,23.0
+2025-09-08,tebak_kata_kunci,teka teki,22.0
+2025-09-15,tebak_kata_kunci,teka teki,20.0
+2025-09-22,tebak_kata_kunci,teka teki,21.0
+2025-09-29,tebak_kata_kunci,teka teki,20.0
+2025-10-06,tebak_kata_kunci,teka teki,22.0
+2025-10-13,tebak_kata_kunci,teka teki,21.0
+2025-10-20,tebak_kata_kunci,teka teki,19.0
+2025-10-27,tebak_kata_kunci,teka teki,20.0
+2025-11-03,tebak_kata_kunci,teka teki,21.0
+2025-11-10,tebak_kata_kunci,teka teki,21.0
+2025-11-17,tebak_kata_kunci,teka teki,17.0
+2025-11-24,tebak_kata_kunci,teka teki,14.0
+2025-12-01,tebak_kata_kunci,teka teki,16.0
+2025-12-08,tebak_kata_kunci,teka teki,17.0
+2025-12-15,tebak_kata_kunci,teka teki,16.0
+2025-12-22,tebak_kata_kunci,teka teki,15.0
+2025-12-29,tebak_kata_kunci,teka teki,16.0
+2026-01-05,tebak_kata_kunci,teka teki,17.0
+2026-01-12,tebak_kata_kunci,teka teki,17.0
+2026-01-19,tebak_kata_kunci,teka teki,18.0
+2026-01-26,tebak_kata_kunci,teka teki,18.0
+2026-02-02,tebak_kata_kunci,teka teki,19.0
+2026-02-09,tebak_kata_kunci,teka teki,14.0
+2026-02-16,tebak_kata_kunci,teka teki,17.0
+2026-02-23,tebak_kata_kunci,teka teki,16.0
+2026-03-02,tebak_kata_kunci,teka teki,16.0
+2026-03-09,tebak_kata_kunci,teka teki,13.0
+2026-03-16,tebak_kata_kunci,teka teki,15.0
+2026-03-23,tebak_kata_kunci,teka teki,13.0
+2026-03-30,tebak_kata_kunci,teka teki,15.0
+2026-04-06,tebak_kata_kunci,teka teki,15.0
+2026-04-13,tebak_kata_kunci,teka teki,15.0
+2026-04-20,tebak_kata_kunci,teka teki,14.0
+2026-04-27,tebak_kata_kunci,teka teki,15.0
+2026-05-04,tebak_kata_kunci,teka teki,15.0
+2026-05-11,tebak_kata_kunci,teka teki,17.0
+2026-05-18,tebak_kata_kunci,teka teki,14.0
+2026-05-25,tebak_kata_kunci,teka teki,14.0
+2026-06-01,tebak_kata_kunci,teka teki,12.0
+2026-06-08,tebak_kata_kunci,teka teki,12.0
+2026-06-15,tebak_kata_kunci,teka teki,12.0
+2026-06-22,tebak_kata_kunci,teka teki,13.0
+2026-06-29,tebak_kata_kunci,teka teki,36.0
+2026-07-06,tebak_kata_kunci,teka teki,100.0
+2026-07-13,tebak_kata_kunci,teka teki,19.0
+2026-07-20,tebak_kata_kunci,teka teki,16.0
+2026-07-27,tebak_kata_kunci,teka teki,17.0
+2026-08-03,tebak_kata_kunci,teka teki,16.0
+2026-08-10,tebak_kata_kunci,teka teki,16.0
+2026-08-17,tebak_kata_kunci,teka teki,18.0
+2026-08-24,tebak_kata_kunci,teka teki,20.0
+2026-08-31,tebak_kata_kunci,teka teki,20.0
+2026-09-07,tebak_kata_kunci,teka teki,19.0
+2026-09-14,tebak_kata_kunci,teka teki,18.0
+2026-09-21,tebak_kata_kunci,teka teki,17.0
+2026-09-28,tebak_kata_kunci,teka teki,17.0
+2026-10-05,tebak_kata_kunci,teka teki,17.0
+2026-10-12,tebak_kata_kunci,teka teki,16.0
+2026-10-19,tebak_kata_kunci,teka teki,19.0
+2026-10-26,tebak_kata_kunci,teka teki,18.0
+2026-11-02,tebak_kata_kunci,teka teki,17.0
+2026-11-09,tebak_kata_kunci,teka teki,17.0
+2026-11-16,tebak_kata_kunci,teka teki,14.0
+2024-11-25,voting_meme,meme,78.0
+2024-12-02,voting_meme,meme,74.0
+2024-12-09,voting_meme,meme,78.0
+2024-12-16,voting_meme,meme,82.0
+2024-12-23,voting_meme,meme,83.0
+2024-12-30,voting_meme,meme,77.0
+2025-01-06,voting_meme,meme,78.0
+2025-01-13,voting_meme,meme,79.0
+2025-01-20,voting_meme,meme,78.0
+2025-01-27,voting_meme,meme,77.0
+2025-02-03,voting_meme,meme,78.0
+2025-02-10,voting_meme,meme,78.0
+2025-02-17,voting_meme,meme,83.0
+2025-02-24,voting_meme,meme,80.0
+2025-03-03,voting_meme,meme,74.0
+2025-03-10,voting_meme,meme,78.0
+2025-03-17,voting_meme,meme,81.0
+2025-03-24,voting_meme,meme,84.0
+2025-03-31,voting_meme,meme,81.0
+2025-04-07,voting_meme,meme,74.0
+2025-04-14,voting_meme,meme,72.0
+2025-04-21,voting_meme,meme,74.0
+2025-04-28,voting_meme,meme,81.0
+2025-05-05,voting_meme,meme,100.0
+2025-05-12,voting_meme,meme,78.0
+2025-05-19,voting_meme,meme,77.0
+2025-05-26,voting_meme,meme,79.0
+2025-06-02,voting_meme,meme,73.0
+2025-06-09,voting_meme,meme,77.0
+2025-06-16,voting_meme,meme,81.0
+2025-06-23,voting_meme,meme,73.0
+2025-06-30,voting_meme,meme,74.0
+2025-07-07,voting_meme,meme,77.0
+2025-07-14,voting_meme,meme,74.0
+2025-07-21,voting_meme,meme,74.0
+2025-07-28,voting_meme,meme,77.0
+2025-08-04,voting_meme,meme,79.0
+2025-08-11,voting_meme,meme,78.0
+2025-08-18,voting_meme,meme,81.0
+2025-08-25,voting_meme,meme,81.0
+2025-09-01,voting_meme,meme,76.0
+2025-09-08,voting_meme,meme,74.0
+2025-09-15,voting_meme,meme,75.0
+2025-09-22,voting_meme,meme,79.0
+2025-09-29,voting_meme,meme,77.0
+2025-10-06,voting_meme,meme,80.0
+2025-10-13,voting_meme,meme,89.0
+2025-10-20,voting_meme,meme,88.0
+2025-10-27,voting_meme,meme,80.0
+2025-11-03,voting_meme,meme,82.0
+2025-11-10,voting_meme,meme,85.0
+2025-11-17,voting_meme,meme,84.0
+2025-11-24,voting_meme,meme,86.0
+2025-12-01,voting_meme,meme,88.0
+2025-12-08,voting_meme,meme,91.0
+2025-12-15,voting_meme,meme,84.0
+2025-12-22,voting_meme,meme,94.0
+2025-12-29,voting_meme,meme,87.0
+2026-01-05,voting_meme,meme,86.0
+2026-01-12,voting_meme,meme,90.0
+2026-01-19,voting_meme,meme,88.0
+2026-01-26,voting_meme,meme,84.0
+2026-02-02,voting_meme,meme,89.0
+2026-02-09,voting_meme,meme,99.0
+2026-02-16,voting_meme,meme,91.0
+2026-02-23,voting_meme,meme,89.0
+2026-03-02,voting_meme,meme,92.0
+2026-03-09,voting_meme,meme,95.0
+2026-03-16,voting_meme,meme,95.0
+2026-03-23,voting_meme,meme,88.0
+2026-03-30,voting_meme,meme,93.0
+2026-04-06,voting_meme,meme,95.0
+2026-04-13,voting_meme,meme,83.0
+2026-04-20,voting_meme,meme,81.0
+2026-04-27,voting_meme,meme,84.0
+2026-05-04,voting_meme,meme,84.0
+2026-05-11,voting_meme,meme,87.0
+2026-05-18,voting_meme,meme,91.0
+2026-05-25,voting_meme,meme,93.0
+2026-06-01,voting_meme,meme,90.0
+2026-06-08,voting_meme,meme,84.0
+2026-06-15,voting_meme,meme,92.0
+2026-06-22,voting_meme,meme,87.0
+2026-06-29,voting_meme,meme,98.0
+2026-07-06,voting_meme,meme,93.0
+2026-07-13,voting_meme,meme,86.0
+2026-07-20,voting_meme,meme,90.0
+2026-07-27,voting_meme,meme,91.0
+2026-08-03,voting_meme,meme,88.0
+2026-08-10,voting_meme,meme,89.0
+2026-08-17,voting_meme,meme,88.0
+2026-08-24,voting_meme,meme,89.0
+2026-08-31,voting_meme,meme,95.0
+2026-09-07,voting_meme,meme,100.0
+2026-09-14,voting_meme,meme,100.0
+2026-09-21,voting_meme,meme,95.0
+2026-09-28,voting_meme,meme,91.0
+2026-10-05,voting_meme,meme,89.0
+2026-10-12,voting_meme,meme,91.0
+2026-10-19,voting_meme,meme,96.0
+2026-10-26,voting_meme,meme,90.0
+2026-11-02,voting_meme,meme,86.0
+2026-11-09,voting_meme,meme,88.0
+2026-11-16,voting_meme,meme,93.0
