@@ -259,7 +259,7 @@ def test_langchain_agent_with_fake_model():
 def test_design_game_offline_passes_rules():
     from core.agent import design_game
     spec, prov = design_game("tebak ayat tentang sabar", use_llm=False)
-    assert validate(spec)[0] and prov == "template offline"
+    assert validate(spec)[0] and prov == "bank ide offline"
 
 
 def test_compare_verdicts():
@@ -382,3 +382,71 @@ def test_confirmation_after_recommendation_creates_room():
                               {"role": "assistant", "content": prev},
                               {"role": "user", "content": "gas"}])
     assert ctx.rooms and "role=host" in answer
+
+
+# ------------------------------------------------- "yang lain" + ide baru + kuota
+def test_offline_yang_lain_gives_different_game():
+    ctx = AgentContext(base_url="https://x.app", use_llm=False)
+    h = [{"role": "user", "content": "arisan keluarga 8 orang 20 menit"}]
+    a1, _, _ = chat(ctx, h)
+    first = ctx.rooms[-1]["game"]
+    seen = {first}
+    h += [{"role": "assistant", "content": a1}]
+    for _ in range(3):
+        h += [{"role": "user", "content": "yang lain dong"}]
+        ctx = AgentContext(base_url="https://x.app", use_llm=False)
+        a, _, _ = chat(ctx, h)
+        g = ctx.rooms[-1]["game"]
+        assert g not in seen, (g, seen)
+        assert ctx.rooms[-1]["host_url"] in a
+        seen.add(g)
+        h += [{"role": "assistant", "content": a}]
+
+
+def test_offline_new_idea_creates_custom_room():
+    ctx = AgentContext(base_url="https://x.app", use_llm=False)
+    a, trace, _ = chat(ctx, [{"role": "user", "content": "kajian 12 orang, kasih ide game baru yang beda"}])
+    tools = [t["tool"] for t in trace]
+    assert "design_custom_game" in tools and "register_custom_game" in tools
+    assert ctx.rooms and "role=host" in a and "Aturan" in a
+    st = library.load_state()
+    assert any(g["name"] == ctx.rooms[-1]["game"] for g in st["custom_games"].values())
+
+
+def test_new_ideas_do_not_repeat():
+    from core.agent import design_game
+    names = set()
+    for _ in range(4):
+        spec, _ = design_game("", use_llm=False)
+        assert validate(spec)[0]
+        library.add_custom_game(validate(spec)[2])
+        names.add(spec["name"])
+    assert len(names) == 4
+
+
+def test_llm_alt_request_excludes_shown(monkeypatch):
+    from langchain_core.messages import AIMessage
+    A = _fake_agent_run(monkeypatch, [
+        AIMessage("", tool_calls=[{"name": "recommend_games", "args": {"players": 8}, "id": "1"}]),
+        AIMessage("Coba yang ini"),
+    ])
+    ctx = A.AgentContext(base_url="https://x.app", use_llm=True)
+    hist = [{"role": "user", "content": "keluarga 8 orang"},
+            {"role": "assistant", "content": "Room siap (Kuis Kilat). Alternatif: Fakta atau Hoaks"},
+            {"role": "user", "content": "yang lain"}]
+    answer, trace, _ = A.chat(ctx, hist)
+    recs = trace[0]["result"]["recommendations"]
+    assert recs and all(r["game_id"] not in ("kuis_kilat", "fakta_hoaks") for r in recs)
+    assert ctx.rooms and ctx.rooms[-1]["game"] not in ("Kuis Kilat", "Fakta atau Hoaks")
+
+
+def test_rate_limit_cooldown_switches_model(monkeypatch):
+    from core import llm
+    monkeypatch.setenv("GEMINI_API_KEY", "x")
+    monkeypatch.setattr(llm, "_COOLDOWN", {})
+    assert [n for _, n in llm.model_names()] == ["gemini-2.5-flash", "gemini-2.5-flash-lite"]
+    llm.mark_rate_limited("Error calling model 'gemini-2.5-flash' (RESOURCE_EXHAUSTED): 429")
+    assert [n for _, n in llm.model_names()] == ["gemini-2.5-flash-lite"]
+    monkeypatch.setenv("OPENAI_API_KEY", "y")
+    llm.mark_rate_limited("429", "gemini-2.5-flash-lite")
+    assert [n for _, n in llm.model_names()] == ["gpt-4o-mini"]

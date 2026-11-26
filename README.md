@@ -66,7 +66,7 @@ dengan `w = n / (n + 50)` (maks 0,7) dan `n` = request in-app 28 hari terakhir. 
 | **Chain Desainer** | ide bebas -> `GameSpec` (Pydantic, structured output) -> validasi aturan kunci |
 | **Chain Konten** | potongan dokumen (retrieval TF-IDF, maks 4) -> `RoundsOut` (Pydantic) -> validasi skema -> cache |
 
-**Pemakaian API key** (hanya di `core/llm.py`): Gemini (gratis) utama, OpenAI cadangan otomatis
+**Pemakaian API key** (hanya di `core/llm.py`): Gemini 2.5 Flash (gratis) utama, Gemini 2.5 Flash-Lite (kuota gratis terpisah) lalu OpenAI sebagai cadangan otomatis; model yang kena 429 diistirahatkan sementara
 (`ModelFallbackMiddleware`). Pengaman: maks 6 panggilan LLM per pesan (`ModelCallLimitMiddleware`), `create_room` dan
 `register_custom_game` maks 1x per pesan, total tool call maks 8 (`ToolCallLimitMiddleware`), output maks 1.500 token,
 temperature rendah, timeout 30 detik, dan semua angka/link wajib dari hasil tool. Model ML, skor, retrieval, validasi,
@@ -106,7 +106,7 @@ dan room **tidak** memakai API. Tanpa key, planner offline memanggil tools yang 
 ```bash
 pip install -r requirements-dev.txt
 streamlit run app.py                     # http://localhost:8501
-pytest -q                                # 49 tes
+pytest -q                                # 54 tes
 python scripts/fetch_real_signals.py     # tarik ulang Wikipedia + Google Trends
 python scripts/train_model.py            # latih model tren
 python scripts/train_appeal_model.py     # latih model daya tarik (BGG)

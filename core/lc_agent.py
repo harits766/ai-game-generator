@@ -12,12 +12,25 @@ import json
 from typing import Callable
 
 from langchain.agents import create_agent
-from langchain.agents.middleware import (ModelCallLimitMiddleware, ModelFallbackMiddleware,
-                                         ToolCallLimitMiddleware)
+from langchain.agents.middleware import (AgentMiddleware, ModelCallLimitMiddleware,
+                                         ModelFallbackMiddleware, ToolCallLimitMiddleware)
 from langchain_core.messages import AIMessage, HumanMessage
 from langchain_core.tools import StructuredTool
 
 from .config import MAX_AGENT_STEPS
+from .llm import _model_id, is_rate_limit, mark_rate_limited
+
+
+class RateLimitMarker(AgentMiddleware):
+    """Catat model yang kena 429 (kuota habis) supaya pesan berikutnya langsung pakai model cadangan."""
+
+    def wrap_model_call(self, request, handler):
+        try:
+            return handler(request)
+        except Exception as e:
+            if is_rate_limit(e):
+                mark_rate_limited(e, _model_id(request.model))
+            raise
 
 
 def to_langchain_tools(spec: dict[str, tuple[str, dict, Callable]], trace: list[dict]) -> list[StructuredTool]:
@@ -45,6 +58,7 @@ def build_agent(models: list, tools: list, system: str):
     ]
     if len(models) > 1:
         middleware.insert(0, ModelFallbackMiddleware(*models[1:]))
+    middleware.append(RateLimitMarker())     # paling dalam: melihat setiap percobaan model
     return create_agent(models[0], tools=tools, system_prompt=system, middleware=middleware,
                         name="game_master")
 

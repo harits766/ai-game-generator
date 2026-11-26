@@ -40,6 +40,8 @@ class AgentContext:
     # diisi chat(): pesan user terakhir + jawaban AI sebelumnya, untuk gerbang create_room
     user_text: str | None = None
     prev_answer: str = ""
+    shown: list[str] = field(default_factory=list)    # game_id yang sudah disarankan di chat ini
+    wants_alt: bool = False                            # user minta "yang lain"
 
 
 # ---------------------------------------------------------------------------
@@ -131,19 +133,86 @@ class GameSpec(BaseModel):
     seconds_per_round: int = Field(description="10-120")
 
 
-def design_game(idea: str, use_llm: bool = True) -> tuple[dict, str]:
-    """Ide bebas -> spesifikasi game. LLM (structured output) atau template offline."""
+# Bank ide offline: dipakai kalau tidak ada API key / kuota habis, supaya "ide baru" tetap beragam.
+IDEA_BANK: list[dict] = [
+    {"name": "Dua Fakta Satu Bohong", "mechanic": "truefalse",
+     "desc": "Host membacakan pernyataan dari materi, peserta menebak mana yang bohong.",
+     "roles": {"host": "Membacakan pernyataan dan membuka jawaban", "peserta": "Menebak benar atau bohong"},
+     "rules": ["Setiap ronde ada satu pernyataan dari materi.", "Peserta memilih Fakta atau Bohong sebelum waktu habis.",
+               "Jawaban benar dapat poin, makin cepat makin besar.", "Host menjelaskan fakta aslinya setelah jawaban dibuka.",
+               "Skor tertinggi di akhir game menang."]},
+    {"name": "Tebak Tahun", "mechanic": "estimate",
+     "desc": "Tebak tahun atau angka penting dari materi, yang paling dekat menang.",
+     "roles": {"host": "Membacakan peristiwa atau fakta angka", "peserta": "Menulis tebakan angka"},
+     "rules": ["Host membacakan satu peristiwa atau fakta angka.", "Peserta menulis tebakan angka di HP.",
+               "Tebakan paling dekat dapat poin terbanyak.", "Selisih terlalu jauh tidak dapat poin.",
+               "Total poin terbanyak menang."]},
+    {"name": "Pitch 60 Detik", "mechanic": "open_vote",
+     "desc": "Peserta menulis solusi singkat untuk masalah dari materi, lalu semua voting yang terbaik.",
+     "roles": {"host": "Membacakan masalah dan memimpin voting", "peserta": "Menulis solusi lalu memilih jawaban terbaik"},
+     "rules": ["Host membacakan satu masalah dari materi.", "Peserta menulis solusi maksimal satu kalimat.",
+               "Semua jawaban ditampilkan tanpa nama.", "Peserta memilih jawaban terbaik selain miliknya.",
+               "Jawaban dengan suara terbanyak dapat poin."]},
+    {"name": "Suara Rakyat", "mechanic": "majority",
+     "desc": "Pilih jawaban yang menurutmu paling banyak dipilih orang lain.",
+     "roles": {"host": "Membacakan pertanyaan pendapat", "peserta": "Menebak pilihan mayoritas"},
+     "rules": ["Host membacakan pertanyaan dengan beberapa pilihan.", "Peserta memilih jawaban yang dikira paling populer.",
+               "Peserta yang sama dengan mayoritas dapat poin.", "Host membahas hasil voting setelah tiap ronde."]},
+    {"name": "Detektif Materi", "mechanic": "quiz",
+     "desc": "Soal pilihan ganda berbentuk petunjuk, tebak istilah dari materi.",
+     "roles": {"host": "Membacakan petunjuk", "peserta": "Menebak istilah yang dimaksud"},
+     "rules": ["Setiap ronde berisi petunjuk tentang satu istilah di materi.", "Peserta memilih satu dari empat jawaban.",
+               "Jawaban benar dan cepat dapat poin lebih besar.", "Host menjelaskan istilah setelah jawaban dibuka.",
+               "Skor tertinggi menang."]},
+    {"name": "Judul Paling Kena", "mechanic": "open_vote",
+     "desc": "Beri judul berita paling kocak tapi benar untuk fakta dari materi.",
+     "roles": {"host": "Menampilkan fakta dan memimpin voting", "peserta": "Membuat judul lalu memilih yang terbaik"},
+     "rules": ["Host menampilkan satu fakta dari materi.", "Peserta membuat judul berita maksimal 10 kata.",
+               "Judul tidak boleh menyinggung orang lain.", "Peserta memilih judul terbaik selain miliknya.",
+               "Suara terbanyak dapat poin."]},
+    {"name": "Hoaks Hunter", "mechanic": "truefalse",
+     "desc": "Berburu hoaks: tentukan apakah klaim viral seputar materi itu benar.",
+     "roles": {"host": "Membacakan klaim viral", "peserta": "Menentukan fakta atau hoaks"},
+     "rules": ["Host membacakan klaim yang mirip pesan berantai.", "Peserta memilih Fakta atau Hoaks.",
+               "Jawaban benar dapat poin plus bonus kecepatan.", "Host menunjukkan sumber yang benar.",
+               "Tiga jawaban benar beruntun dapat bonus."]},
+    {"name": "Kilat Kelompok", "mechanic": "quiz",
+     "desc": "Kuis pilihan ganda cepat di mana tiap jawaban menyumbang poin untuk kelompok.",
+     "roles": {"host": "Membacakan soal dan mengumumkan skor kelompok", "peserta": "Menjawab untuk kelompoknya"},
+     "rules": ["Peserta dibagi dua kelompok secara otomatis.", "Setiap peserta menjawab soal di HP masing-masing.",
+               "Poin anggota dijumlah untuk kelompok.", "Kelompok dengan skor tertinggi menang.",
+               "Host mengumumkan skor kelompok tiap ronde."]},
+]
+
+
+def offline_idea(idea: str = "", avoid: set[str] | None = None) -> dict:
+    """Pilih ide dari bank yang belum dipakai, utamakan mekanik yang cocok dengan kata di ide user."""
+    avoid = {a.lower() for a in (avoid or set())}
+    t = (idea or "").lower()
+    hint = ("estimate" if any(w in t for w in ("angka", "tahun", "tebak", "berapa")) else
+            "open_vote" if any(w in t for w in ("lucu", "receh", "kreatif", "tulis", "judul", "voting")) else
+            "truefalse" if any(w in t for w in ("hoaks", "fakta", "benar salah")) else
+            "majority" if any(w in t for w in ("pendapat", "mayoritas", "survei")) else None)
+    pool = [i for i in IDEA_BANK if i["name"].lower() not in avoid] or IDEA_BANK
+    pool = sorted(pool, key=lambda i: i["mechanic"] != hint)
+    import random
+    head = [i for i in pool if i["mechanic"] == pool[0]["mechanic"]] if hint else pool
+    pick = random.choice(head)
+    return {**TEMPLATE, **pick, "rules": list(pick["rules"]), "roles": dict(pick["roles"])}
+
+
+def design_game(idea: str, use_llm: bool = True, avoid: set[str] | None = None) -> tuple[dict, str]:
+    """Ide bebas -> spesifikasi game. LLM (structured output) atau bank ide offline."""
+    avoid = set(avoid or set()) | {g["name"] for g in library.all_games()}
     if use_llm and library_has_llm():
         spec, prov = structured(
             GameSpec, "Kamu desainer game party edukatif untuk acara kumpul di Indonesia. Patuhi batas angka.",
-            f"Rancang game dari ide berikut: {idea}\nMekanik yang tersedia: "
-            + "; ".join(f"{k} = {v}" for k, v in MECHANICS.items()), temperature=0.7)
+            f"Rancang game BARU dari ide berikut: {idea or 'bebas, yang seru dan beda'}\n"
+            f"Nama dan konsepnya harus beda dari game yang sudah ada: {', '.join(sorted(avoid))[:800]}\n"
+            "Mekanik yang tersedia: " + "; ".join(f"{k} = {v}" for k, v in MECHANICS.items()), temperature=0.9)
         if spec is not None:
             return spec.model_dump(), prov
-    return ({**TEMPLATE, "name": idea[:40].strip().title() or "Game Baru", "desc": idea[:200],
-             "rules": ["Host membacakan soal dari materi.", "Peserta menjawab lewat HP sebelum waktu habis.",
-                       "Jawaban benar dan cepat dapat poin lebih besar.",
-                       "Skor tertinggi di akhir ronde jadi pemenang."]}, "template offline")
+    return offline_idea(idea, avoid), "bank ide offline"
 
 
 # ---------------------------------------------------------------------------
@@ -174,7 +243,16 @@ def build_tools(ctx: AgentContext) -> dict:
     def recommend_games(players: int = 10, duration_min: int = 20, event_type: str = "",
                         mode: str = "offline", location: str = "", topic: str = "") -> dict:
         p = normalize_params(locals())
-        return {"params": p, "recommendations": library.recommend(p, k=3)}
+        recs = library.recommend(p, k=20)
+        if ctx.wants_alt:
+            fresh = [r for r in recs if r["game_id"] not in ctx.shown]
+            if not fresh:
+                return {"params": p, "recommendations": [], "note": "Semua game library sudah disarankan. "
+                        "Panggil design_custom_game untuk membuat ide game baru."}
+            recs = fresh
+        return {"params": p, "recommendations": recs[:3],
+                **({"note": "User minta game lain: game yang sudah disarankan sudah dikeluarkan."}
+                   if ctx.wants_alt else {})}
 
     def read_document(query: str = "") -> dict:
         if ctx.doc is None:
@@ -182,7 +260,7 @@ def build_tools(ctx: AgentContext) -> dict:
         return {"doc": ctx.doc.name, "type": ctx.doc.doc_type, "chars": len(ctx.doc.text),
                 "passages": retrieve(ctx.doc, query or ctx.doc.name, k=3)}
 
-    def design_custom_game(idea: str) -> dict:
+    def design_custom_game(idea: str = "") -> dict:
         spec, prov = design_game(idea, ctx.use_llm)
         ok, errs, clean = validate(spec)
         return {"spec": clean, "valid": ok, "errors": errs, "designer": prov}
@@ -238,8 +316,8 @@ def build_tools(ctx: AgentContext) -> dict:
                           {"type": "object", "properties": {"query": {"type": "string"}}}, read_document),
         "design_custom_game": ("Rancang spesifikasi game baru dari ide bebas user (memanggil chain desainer), "
                                "lalu langsung divalidasi aturan kunci.",
-                               {"type": "object", "properties": {"idea": {"type": "string"}},
-                                "required": ["idea"]}, design_custom_game),
+                               {"type": "object", "properties": {"idea": {"type": "string"}}},
+                               design_custom_game),
         "validate_custom_game": ("Cek apakah spesifikasi game custom lolos aturan kunci (4-7 aturan, "
                                  "peran host & peserta, batas pemain/ronde/durasi).",
                                  {"type": "object", "properties": {"spec": spec_schema},
@@ -267,9 +345,13 @@ Cara kerja:
    di giliran yang sama. JANGAN bertanya "mau langsung main?": user datang untuk dapat link.
    Kalau user menyebut nama game tertentu, langsung create_room dengan game itu.
    game_id adalah field "game_id" dari hasil tool (mis. voting_meme), bukan nama tampilan.
-3. Kalau user ingin bikin game sendiri, panggil design_custom_game (atau susun spec lalu validate_custom_game). Kalau valid dan user
-   setuju/minta, register_custom_game lalu create_room dengan game_id baru. Aturan kunci: 4-7 aturan,
+3. Kalau user ingin bikin game sendiri, panggil design_custom_game (atau susun spec lalu validate_custom_game). Kalau valid,
+   langsung register_custom_game lalu create_room dengan game_id baru. Aturan kunci: 4-7 aturan,
    wajib peran host & peserta, maks 30 pemain, 3-15 ronde, 10-120 detik/ronde, total <= 60 menit.
+3b. Kalau user minta game LAIN ("yang lain", "ganti"), panggil recommend_games lagi (game yang sudah
+   disarankan otomatis dikeluarkan) lalu create_room dengan game baru itu. Kalau user minta IDE BARU /
+   game yang beda / belum pernah ada, panggil design_custom_game -> register_custom_game -> create_room,
+   dan tulis nama, deskripsi, dan aturan game barunya.
 4. Kalau user hanya tanya game apa yang lagi rame, panggil get_trends (tanpa create_room).
 Jawab singkat, bahasa Indonesia santai. Saat room dibuat, WAJIB tampilkan host_url dan player_url apa adanya
 dan jelaskan: host buka link host di laptop/HP host, bagikan link peserta ke teman.
@@ -326,7 +408,7 @@ def extract_params(text: str) -> dict:
     return p
 
 
-def offline_agent(ctx: AgentContext, text: str) -> tuple[str, list[dict]]:
+def offline_agent(ctx: AgentContext, text: str, history: list[dict] | None = None) -> tuple[str, list[dict]]:
     tools = build_tools(ctx)
     trace = []
 
@@ -336,7 +418,8 @@ def offline_agent(ctx: AgentContext, text: str) -> tuple[str, list[dict]]:
         return out
 
     t = text.lower()
-    params = extract_params(text)
+    history = history or [{"role": "user", "content": text}]
+    params = conversation_params(history)
     if ctx.doc and not params.get("topic"):
         params["topic"] = ctx.doc.name.rsplit(".", 1)[0].replace("_", " ")
     wants_trend = any(w in t for w in ["rame", "ramai", "trend", "tren", "populer", "viral", "top"])
@@ -351,6 +434,8 @@ def offline_agent(ctx: AgentContext, text: str) -> tuple[str, list[dict]]:
         return "Ini library game yang lagi rame minggu ini:\n\n" + "\n".join(lines) + note, trace
     if not is_game_request(text, ctx.prev_answer):
         return ASK_DETAILS, trace
+    if wants_design(text) or wants_alt(text):
+        return ensure_room(ctx, history, "", trace), trace
     rec = call("recommend_games", **params)
     if not rec["recommendations"]:
         return "Belum ada game yang cocok dengan parameter itu. Coba ubah jumlah pemain atau mode.", trace
@@ -376,10 +461,14 @@ def chat(ctx: AgentContext, history: list[dict]) -> tuple[str, list[dict], str]:
     text = history[-1]["content"]
     ctx.user_text = text
     ctx.prev_answer = next((m["content"] for m in reversed(history[:-1]) if m["role"] == "assistant"), "")
+    ctx.shown = shown_games(history[:-1])
+    ctx.wants_alt = wants_alt(text) and not wants_design(text)
     if ctx.use_llm:
         doc_note = (f"\n[Konteks: user sudah upload dokumen '{ctx.doc.name}' ({ctx.doc.doc_type}, "
                     f"{len(ctx.doc.text)} karakter). Gunakan read_document bila perlu.]") if ctx.doc else ""
-        hist = history[:-1] + [{"role": "user", "content": text + doc_note}]
+        alt_note = (f"\n[Konteks: user minta game LAIN. Game yang sudah disarankan: "
+                    f"{', '.join(ctx.shown) or '-'}. Jangan sarankan itu lagi.]") if ctx.wants_alt else ""
+        hist = history[:-1] + [{"role": "user", "content": text + doc_note + alt_note}]
         models = chat_models(temperature=0.2)
         if models:
             from .lc_agent import run_agent
@@ -390,17 +479,26 @@ def chat(ctx: AgentContext, history: list[dict]) -> tuple[str, list[dict], str]:
                     return answer, trace, f"LangChain agent · {status_label()}"
                 fallback_reason = "agent tidak memberi jawaban"
             except Exception as e:
-                fallback_reason = f"{type(e).__name__}: {str(e)[:120]}"
+                from .llm import is_rate_limit, mark_rate_limited
+                if is_rate_limit(e):
+                    mark_rate_limited(e)
+                    fallback_reason = "kuota AI gratis habis sementara"
+                else:
+                    fallback_reason = f"{type(e).__name__}: {str(e)[:120]}"
         else:
             fallback_reason = "tanpa API key"
     else:
         fallback_reason = "LLM dimatikan"
-    answer, trace = offline_agent(ctx, text)
+    answer, trace = offline_agent(ctx, text, history)
     return answer, trace, f"offline planner ({fallback_reason})"
 
 
 TREND_WORDS = ("rame", "ramai", "trend", "tren", "populer", "viral")
-DESIGN_WORDS = ("custom", "desain", "rancang", "game sendiri", "game baru", "bikin aturan", "multiverse")
+DESIGN_WORDS = ("custom", "desain", "rancang", "game sendiri", "game baru", "bikin aturan", "multiverse",
+                "ide baru", "ide lain", "ide game", "yang beda", "yg beda", "belum pernah", "bikin sendiri",
+                "kreasi", "game unik", "game kreatif")
+ALT_WORDS = ("yang lain", "yg lain", "lainnya", "game lain", "selain", "opsi lain", "pilihan lain", "ganti",
+             "lagi dong", "yang lainnya", "alternatif", "bosen", "bosan", "udah pernah", "sudah pernah")
 ASK_WORDS = ("game", "games", "gim", "main", "mainan", "permainan", "room", "link", "kuis", "quiz", "acara")
 CONFIRM_WORDS = ("gas", "ayo", "oke", "ok", "okay", "ya", "iya", "yuk", "boleh", "mau", "lanjut", "jadi",
                  "setuju", "sip", "itu", "aja", "buat", "bikin", "buatin", "bikinin", "langsung")
@@ -413,19 +511,44 @@ def _has_word(text: str, words) -> bool:
 def is_game_request(text: str, prev_answer: str = "") -> bool:
     """Apakah pesan user benar-benar minta dibuatkan game/room?
 
-    Ya kalau: ada parameter acara (jumlah orang, durasi, jenis acara, mode, topik...), menyebut nama game,
+    Ya kalau: minta game lain / ide baru, ada parameter acara (jumlah orang, durasi, jenis acara, mode, topik...), menyebut nama game,
     memakai kata seperti "game/main/room/link/kuis", atau mengiyakan ("gas", "oke") game yang
     disebut AI di jawaban sebelumnya. Salam / "tes" / pesan kosong makna -> tidak.
     """
     t = (text or "").lower()
-    if any(w in t for w in DESIGN_WORDS):
-        return False
+    if any(w in t for w in DESIGN_WORDS) or any(w in t for w in ALT_WORDS):
+        return True
     params = extract_params(text or "")
     if any(w in t for w in TREND_WORDS) and not any(k in params for k in ("players", "event_type")):
         return False
     if params or library.game_mentioned(text or "") or _has_word(t, ASK_WORDS):
         return True
     return bool(prev_answer and library.game_mentioned(prev_answer) and _has_word(t, CONFIRM_WORDS))
+
+
+def wants_design(text: str) -> bool:
+    return any(w in (text or "").lower() for w in DESIGN_WORDS)
+
+
+def wants_alt(text: str) -> bool:
+    return any(w in (text or "").lower() for w in ALT_WORDS)
+
+
+def conversation_params(history: list[dict]) -> dict:
+    """Parameter acara dari semua pesan user (yang terbaru menimpa), supaya 'yang lain' tetap ingat acaranya."""
+    p: dict = {}
+    for m in history:
+        if m["role"] == "user":
+            p.update(extract_params(m["content"]))
+    return p
+
+
+def shown_games(history: list[dict]) -> list[str]:
+    ids: list[str] = []
+    for m in history:
+        if m["role"] == "assistant":
+            ids += [g["id"] for g in library.games_mentioned(m["content"]) if g["id"] not in ids]
+    return ids
 
 
 ASK_DETAILS = ("Halo! Mau bikin game buat acara apa? Ceritain singkat aja, misalnya: jumlah orang, durasi, "
@@ -451,19 +574,26 @@ def ensure_room(ctx: AgentContext, history: list[dict], answer: str, trace: list
     if ok_rooms:
         room = ok_rooms[-1]
         return answer if room["host_url"] in answer else (answer + "\n\n" + _room_block(room)).strip()
-    if any(t["tool"] in ("design_custom_game", "register_custom_game", "validate_custom_game") for t in trace):
-        return answer
-    params = extract_params(text)
+    params = conversation_params(history)
     prev = next((m["content"] for m in reversed(history[:-1]) if m["role"] == "assistant"), "")
     if not is_game_request(text, prev):
         # salam / "tes" / pesan samar: jangan bikin room, minta detail acara
         return answer or ASK_DETAILS
+    tools = build_tools(ctx)
+    designed = [t for t in trace if t["tool"] in ("design_custom_game", "register_custom_game")]
+    if designed or wants_design(text):
+        return _ensure_custom_room(ctx, tools, text, answer, trace, params)
     recs = next((t["result"].get("recommendations") for t in reversed(trace)
                  if t["tool"] == "recommend_games" and t["result"].get("recommendations")), None)
-    named = library.game_mentioned(text)
+    named = None if ctx.wants_alt else library.game_mentioned(text)
+    if ctx.wants_alt and recs is None:
+        rec = tools["recommend_games"][2](**_tool_params(params))
+        trace.append({"tool": "recommend_games", "args": _tool_params(params), "result": rec, "auto": True})
+        recs = rec["recommendations"]
+        if not recs:      # semua game library sudah disarankan -> buat ide baru
+            return _ensure_custom_room(ctx, tools, text, answer, trace, params)
     if recs is None and not named and prev:
         named = library.game_mentioned(prev)
-    tools = build_tools(ctx)
     if recs and not named:
         game = recs[0]
         params = next((t["args"] for t in reversed(trace) if t["tool"] == "recommend_games"), params)
@@ -477,20 +607,55 @@ def ensure_room(ctx: AgentContext, history: list[dict], answer: str, trace: list
         game = rec["recommendations"][0]
     if ctx.doc and not params.get("topic"):
         params = {**params, "topic": ctx.doc.name.rsplit(".", 1)[0].replace("_", " ")}
-    args = {k: v for k, v in params.items() if k in ("players", "duration_min", "event_type", "mode",
-                                                       "location", "topic")}
+    args = _tool_params(params)
     room = tools["create_room"][2](game_id=game["game_id"], **args)
     trace.append({"tool": "create_room", "args": {"game_id": game["game_id"], **args}, "result": room,
                   "auto": True})
     if "error" in room:
         return (answer + f"\n\nGagal bikin room: {room['error']}").strip()
-    lead = f"Langsung aku buatin room **{game['name']}** ya."
+    lead = (f"Oke, ganti ke **{game['name']}** ya." if ctx.wants_alt
+            else f"Langsung aku buatin room **{game['name']}** ya.")
     if named and recs is None:
         lead = f"Siap, pakai **{game['name']}**."
     # teks LLM dibuang kalau isinya menolak/membantah game yang barusan dibuat
     keep = answer and not re.search(r"(tidak|belum|gak|nggak) (ada|terdaftar|ditemukan)|maaf", answer.lower())
     body = (answer.split("Mau langsung")[0].strip() + "\n\n") if keep else ""
     return f"{body}{lead}\n\n{_room_block(room)}".strip()
+
+
+def _tool_params(params: dict) -> dict:
+    return {k: v for k, v in params.items() if k in ("players", "duration_min", "event_type", "mode",
+                                                     "location", "topic")}
+
+
+def _ensure_custom_room(ctx, tools, text, answer, trace, params) -> str:
+    """User minta ide game baru: desain (LLM / bank ide) -> validasi aturan kunci -> slot multiverse -> room."""
+    reg = next((t["result"] for t in reversed(trace)
+                if t["tool"] == "register_custom_game" and t["result"].get("valid")), None)
+    if reg is None:
+        spec = next((t["result"]["spec"] for t in reversed(trace)
+                     if t["tool"] == "design_custom_game" and t["result"].get("valid")), None)
+        if spec is None:
+            d = tools["design_custom_game"][2](idea=text)
+            trace.append({"tool": "design_custom_game", "args": {"idea": text}, "result": d, "auto": True})
+            if not d["valid"]:
+                return (answer + "\n\nIde gamenya belum lolos aturan kunci: " + "; ".join(d["errors"])).strip()
+            spec = d["spec"]
+        reg = tools["register_custom_game"][2](spec=spec)
+        trace.append({"tool": "register_custom_game", "args": {"spec": spec}, "result": reg, "auto": True})
+        if not reg.get("valid"):
+            return (answer + "\n\nIde gamenya belum lolos aturan kunci: " + "; ".join(reg["errors"])).strip()
+    game = library.find_game(reg["game_id"])
+    args = _tool_params(params)
+    room = tools["create_room"][2](game_id=reg["game_id"], **args)
+    trace.append({"tool": "create_room", "args": {"game_id": reg["game_id"], **args}, "result": room, "auto": True})
+    if "error" in room:
+        return (answer + f"\n\nGagal bikin room: {room['error']}").strip()
+    rules = "\n".join(f"{i+1}. {r}" for i, r in enumerate(game["rules"]))
+    slot = "slot multiverse" if reg.get("slot_status") == "multiverse" else "antrian multiverse"
+    return (f"Ini ide game baru: **{game['name']}** ({MECHANICS[game['mechanic']].split(';')[0].lower()}).\n\n"
+            f"{game.get('desc', '')}\n\nAturan:\n{rules}\n\n"
+            f"Sudah lolos aturan kunci dan masuk {slot}.\n\n{_room_block(room)}")
 
 
 def sample_doc_for(topic: str) -> Document:

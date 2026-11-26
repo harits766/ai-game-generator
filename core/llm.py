@@ -11,11 +11,16 @@ Pengaman supaya tidak "ngaco" dan hemat kuota:
 - temperature rendah, max output token dibatasi, timeout 30 dtk, retry 1x
 - output konten & desain dipaksa ke skema Pydantic (structured output) lalu divalidasi lagi
 - LLM hanya melihat <= 4 potongan dokumen (bukan seluruh dokumen)
-- urutan: Gemini (gratis) -> OpenAI (cadangan) -> mode offline tanpa API
+- urutan: Gemini 2.5 Flash -> Gemini 2.5 Flash-Lite (kuota gratis terpisah) -> OpenAI (cadangan)
+  -> mode offline tanpa API
+- model yang kena 429 / kuota habis "diistirahatkan" sementara (cooldown), jadi pesan berikutnya
+  langsung ke model cadangan tanpa membuang panggilan
 """
 from __future__ import annotations
 
 import os
+import re
+import time
 from typing import TypeVar
 
 from pydantic import BaseModel
@@ -50,29 +55,75 @@ def providers() -> list[str]:          # kompatibilitas lama
     return provider_names()
 
 
+# ------------------------------------------------------------------ cooldown kuota (429)
+_COOLDOWN: dict[str, float] = {}
+COOLDOWN_MIN_SEC = 60          # limit per menit
+COOLDOWN_DAY_SEC = 30 * 60     # limit harian: coba lagi 30 menit kemudian
+
+
+def is_rate_limit(err: BaseException | str) -> bool:
+    t = str(err)
+    return "429" in t or "RESOURCE_EXHAUSTED" in t or "RateLimit" in type(err).__name__ \
+        or "rate limit" in t.lower() or "quota" in t.lower()
+
+
+def mark_rate_limited(err: BaseException | str, model: str | None = None) -> None:
+    """Catat model yang kena 429 supaya dilewati sementara."""
+    t = str(err)
+    if model is None:
+        m = re.search(r"model '([^']+)'", t)
+        model = m.group(1) if m else None
+    if not model:
+        return
+    _COOLDOWN[model] = time.time() + (COOLDOWN_DAY_SEC if "PerDay" in t or "per day" in t.lower()
+                                      else COOLDOWN_MIN_SEC)
+
+
+def _cooling(model: str) -> bool:
+    return _COOLDOWN.get(model, 0) > time.time()
+
+
+def model_names() -> list[tuple[str, str]]:
+    """(provider, nama_model) sesuai key yang ada, urut prioritas, tanpa yang sedang cooldown."""
+    out = []
+    for p in provider_names():
+        if p == "gemini":
+            names = [_secret("GEMINI_MODEL", "gemini-2.5-flash"),
+                     _secret("GEMINI_FALLBACK_MODEL", "gemini-2.5-flash-lite")]
+        else:
+            names = [_secret("OPENAI_MODEL", "gpt-4o-mini")]
+        for n in dict.fromkeys(x for x in names if x):
+            out.append((p, n))
+    ready = [x for x in out if not _cooling(x[1])]
+    return ready or out[-1:]       # semua cooldown: tetap coba model terakhir
+
+
 def status_label() -> str:
-    p = provider_names()
-    if not p:
+    m = model_names()
+    if not m:
         return "offline (tanpa API key)"
-    names = {"gemini": _secret("GEMINI_MODEL", "gemini-2.5-flash"), "openai": _secret("OPENAI_MODEL", "gpt-4o-mini")}
-    return " -> ".join(f"{x} ({names[x]})" for x in p)
+    return " -> ".join(f"{p} ({n})" for p, n in m)
 
 
 def chat_models(temperature: float = 0.3) -> list:
     """Daftar chat model LangChain sesuai key yang tersedia (urut prioritas)."""
     out = []
-    for p in provider_names():
+    for p, name in model_names():
         if p == "gemini":
             from langchain_google_genai import ChatGoogleGenerativeAI
             out.append(ChatGoogleGenerativeAI(
-                model=_secret("GEMINI_MODEL", "gemini-2.5-flash"), google_api_key=_secret("GEMINI_API_KEY"),
-                temperature=temperature, max_output_tokens=MAX_OUTPUT_TOKENS, timeout=TIMEOUT, max_retries=1))
+                model=name, google_api_key=_secret("GEMINI_API_KEY"), temperature=temperature,
+                max_output_tokens=MAX_OUTPUT_TOKENS, timeout=TIMEOUT, max_retries=0))
         else:
             from langchain_openai import ChatOpenAI
             out.append(ChatOpenAI(
-                model=_secret("OPENAI_MODEL", "gpt-4o-mini"), api_key=_secret("OPENAI_API_KEY"),
-                temperature=temperature, max_tokens=MAX_OUTPUT_TOKENS, timeout=TIMEOUT, max_retries=1))
+                model=name, api_key=_secret("OPENAI_API_KEY"), temperature=temperature,
+                max_tokens=MAX_OUTPUT_TOKENS, timeout=TIMEOUT, max_retries=1))
     return out
+
+
+def _model_id(m) -> str:
+    return str(getattr(m, "model", "") or getattr(m, "model_name", "")).replace("models/", "")
 
 
 def structured(schema: type[T], system: str, prompt: str, temperature: float = 0.6) -> tuple[T | None, str]:
@@ -82,7 +133,9 @@ def structured(schema: type[T], system: str, prompt: str, temperature: float = 0
         try:
             obj = m.with_structured_output(schema).invoke([("system", system), ("human", prompt)])
             if obj is not None:
-                return obj, type(m).__name__
+                return obj, _model_id(m) or type(m).__name__
         except Exception as e:
-            errors.append(f"{type(m).__name__}: {type(e).__name__}: {str(e)[:120]}")
+            if is_rate_limit(e):
+                mark_rate_limited(e, _model_id(m))
+            errors.append(f"{_model_id(m)}: {type(e).__name__}: {str(e)[:120]}")
     return None, "; ".join(errors) or "offline"

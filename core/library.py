@@ -321,6 +321,13 @@ def find_game(game_id: str) -> dict | None:
     return None
 
 
+def games_mentioned(text: str) -> list[dict]:
+    """Semua game yang namanya disebut di teks (urut posisi kemunculan)."""
+    t = _norm(text)
+    hits = [(t.find(_norm(g["name"])), g) for g in all_games() if _norm(g["name"]) and _norm(g["name"]) in t]
+    return [g for _, g in sorted(hits, key=lambda x: x[0])]
+
+
 def game_mentioned(text: str) -> dict | None:
     """Game pertama (posisi paling awal) yang namanya disebut di teks."""
     t = _norm(text)
