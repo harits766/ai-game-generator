@@ -1,0 +1,57 @@
+[
+  {
+    "at": "2026-11-26T08:59:43+00:00",
+    "data_week": "2026-11-23",
+    "top": [
+      "voting_meme",
+      "survival_kuis",
+      "kuis_kilat",
+      "satu_frekuensi",
+      "emoji_tebak",
+      "fakta_hoaks",
+      "adu_receh",
+      "tebak_angka",
+      "siapa_paling",
+      "tebak_kata_kunci"
+    ],
+    "pred": {
+      "voting_meme": 110.66,
+      "survival_kuis": 49.94,
+      "kuis_kilat": 42.64,
+      "satu_frekuensi": 36.18,
+      "emoji_tebak": 26.5,
+      "fakta_hoaks": 26.01,
+      "adu_receh": 22.53,
+      "tebak_angka": 22.07,
+      "siapa_paling": 21.93,
+      "tebak_kata_kunci": 19.66
+    },
+    "multiverse": null,
+    "compare": {
+      "overlap": 0,
+      "kendall_tau": null,
+      "masuk": [
+        "voting_meme",
+        "survival_kuis",
+        "kuis_kilat",
+        "satu_frekuensi",
+        "emoji_tebak",
+        "fakta_hoaks",
+        "adu_receh",
+        "tebak_angka",
+        "siapa_paling",
+        "tebak_kata_kunci"
+      ],
+      "keluar": [],
+      "verdict": "BASELINE"
+    },
+    "backtest": {
+      "week_predicted": "2026-11-23",
+      "precision_at_10": 1.0,
+      "missed": [],
+      "false_in": []
+    },
+    "integrity_ok": true,
+    "model": "Ridge Regression"
+  }
+]
