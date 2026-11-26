@@ -106,7 +106,7 @@ dan room **tidak** memakai API. Tanpa key, planner offline memanggil tools yang 
 ```bash
 pip install -r requirements-dev.txt
 streamlit run app.py                     # http://localhost:8501
-pytest -q                                # 37 tes
+pytest -q                                # 49 tes
 python scripts/fetch_real_signals.py     # tarik ulang Wikipedia + Google Trends
 python scripts/train_model.py            # latih model tren
 python scripts/train_appeal_model.py     # latih model daya tarik (BGG)

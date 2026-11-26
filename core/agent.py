@@ -37,6 +37,9 @@ class AgentContext:
     doc: Document | None = None
     use_llm: bool = True
     rooms: list[dict] = field(default_factory=list)
+    # diisi chat(): pesan user terakhir + jawaban AI sebelumnya, untuk gerbang create_room
+    user_text: str | None = None
+    prev_answer: str = ""
 
 
 # ---------------------------------------------------------------------------
@@ -199,6 +202,9 @@ def build_tools(ctx: AgentContext) -> dict:
                     mode: str = "offline", location: str = "", topic: str = "") -> dict:
         args = dict(locals())
         args.pop("game_id")
+        if ctx.user_text is not None and not is_game_request(ctx.user_text, ctx.prev_answer):
+            return {"error": "Pesan user belum berisi permintaan game. JANGAN buat room; sapa singkat lalu "
+                             "tanyakan jumlah orang, durasi, jenis acara, online/offline, dan topik."}
         return create_room_service(ctx, game_id, args)
 
     params_schema = {
@@ -252,6 +258,8 @@ Masalah yang diselesaikan: acara kumpul sering berakhir semua main HP sendiri-se
 yang ada kaku (itu-itu saja, harus gonta-ganti aplikasi). Kamu membuat game yang pas dengan acara.
 
 Cara kerja:
+0. Kalau pesan user BUKAN permintaan game/acara (mis. salam, "tes", "halo", pesan samar), JANGAN panggil tool
+   apa pun. Sapa singkat lalu minta info: jumlah orang, durasi, jenis acara, online/offline, topik.
 1. Ambil parameter dari pesan user: jumlah pemain, durasi, jenis acara ({', '.join(EVENT_TYPES)}),
    mode (offline/online/hybrid), lokasi, topik. Kalau ada yang kosong, pakai default wajar
    (10 pemain, 20 menit, offline) dan sebutkan asumsinya. Jangan bertanya lebih dari 1 kali.
@@ -341,6 +349,8 @@ def offline_agent(ctx: AgentContext, text: str) -> tuple[str, list[dict]]:
         note = (f"\n\nSkor = tren real (Wikipedia + Google Trends) + daya tarik (BoardGameGeek)"
                 f" + request in-app (bobot sekarang {tr['bobot_request_in_app']:.0%}).")
         return "Ini library game yang lagi rame minggu ini:\n\n" + "\n".join(lines) + note, trace
+    if not is_game_request(text, ctx.prev_answer):
+        return ASK_DETAILS, trace
     rec = call("recommend_games", **params)
     if not rec["recommendations"]:
         return "Belum ada game yang cocok dengan parameter itu. Coba ubah jumlah pemain atau mode.", trace
@@ -364,6 +374,8 @@ def offline_agent(ctx: AgentContext, text: str) -> tuple[str, list[dict]]:
 def chat(ctx: AgentContext, history: list[dict]) -> tuple[str, list[dict], str]:
     """Return (jawaban, trace_tool, mesin_yang_dipakai)."""
     text = history[-1]["content"]
+    ctx.user_text = text
+    ctx.prev_answer = next((m["content"] for m in reversed(history[:-1]) if m["role"] == "assistant"), "")
     if ctx.use_llm:
         doc_note = (f"\n[Konteks: user sudah upload dokumen '{ctx.doc.name}' ({ctx.doc.doc_type}, "
                     f"{len(ctx.doc.text)} karakter). Gunakan read_document bila perlu.]") if ctx.doc else ""
@@ -389,17 +401,36 @@ def chat(ctx: AgentContext, history: list[dict]) -> tuple[str, list[dict], str]:
 
 TREND_WORDS = ("rame", "ramai", "trend", "tren", "populer", "viral")
 DESIGN_WORDS = ("custom", "desain", "rancang", "game sendiri", "game baru", "bikin aturan", "multiverse")
-GO_WORDS = ("game", "main", "room", "link", "buat", "bikin", "gas", "ayo", "oke", "ok", "ya", "iya",
-            "boleh", "mau", "lanjut", "jadi", "setuju", "sip", "yang itu", "itu aja")
+ASK_WORDS = ("game", "games", "gim", "main", "mainan", "permainan", "room", "link", "kuis", "quiz", "acara")
+CONFIRM_WORDS = ("gas", "ayo", "oke", "ok", "okay", "ya", "iya", "yuk", "boleh", "mau", "lanjut", "jadi",
+                 "setuju", "sip", "itu", "aja", "buat", "bikin", "buatin", "bikinin", "langsung")
 
 
-def _wants_room(text: str, params: dict) -> bool:
-    t = text.lower()
+def _has_word(text: str, words) -> bool:
+    return bool(re.search(r"\b(" + "|".join(map(re.escape, words)) + r")\b", text.lower()))
+
+
+def is_game_request(text: str, prev_answer: str = "") -> bool:
+    """Apakah pesan user benar-benar minta dibuatkan game/room?
+
+    Ya kalau: ada parameter acara (jumlah orang, durasi, jenis acara, mode, topik...), menyebut nama game,
+    memakai kata seperti "game/main/room/link/kuis", atau mengiyakan ("gas", "oke") game yang
+    disebut AI di jawaban sebelumnya. Salam / "tes" / pesan kosong makna -> tidak.
+    """
+    t = (text or "").lower()
     if any(w in t for w in DESIGN_WORDS):
         return False
+    params = extract_params(text or "")
     if any(w in t for w in TREND_WORDS) and not any(k in params for k in ("players", "event_type")):
         return False
-    return bool(params) or bool(re.search(r"\b(" + "|".join(GO_WORDS) + r")\b", t))
+    if params or library.game_mentioned(text or "") or _has_word(t, ASK_WORDS):
+        return True
+    return bool(prev_answer and library.game_mentioned(prev_answer) and _has_word(t, CONFIRM_WORDS))
+
+
+ASK_DETAILS = ("Halo! Mau bikin game buat acara apa? Ceritain singkat aja, misalnya: jumlah orang, durasi, "
+               "jenis acara (kajian, kelas, kantor, keluarga...), online/offline, dan topiknya. "
+               "Contoh: *arisan keluarga 12 orang, 20 menit, offline, topik sejarah kemerdekaan*.")
 
 
 def _room_block(room: dict) -> str:
@@ -424,15 +455,14 @@ def ensure_room(ctx: AgentContext, history: list[dict], answer: str, trace: list
         return answer
     params = extract_params(text)
     prev = next((m["content"] for m in reversed(history[:-1]) if m["role"] == "assistant"), "")
+    if not is_game_request(text, prev):
+        # salam / "tes" / pesan samar: jangan bikin room, minta detail acara
+        return answer or ASK_DETAILS
     recs = next((t["result"].get("recommendations") for t in reversed(trace)
                  if t["tool"] == "recommend_games" and t["result"].get("recommendations")), None)
     named = library.game_mentioned(text)
-    if not (named or recs or _wants_room(text, params)):
-        return answer
-    if recs is None and not named:
-        prev_game = library.game_mentioned(prev) if prev else None
-        if prev_game and re.search(r"\b(" + "|".join(GO_WORDS) + r")\b", text.lower()):
-            named = prev_game
+    if recs is None and not named and prev:
+        named = library.game_mentioned(prev)
     tools = build_tools(ctx)
     if recs and not named:
         game = recs[0]

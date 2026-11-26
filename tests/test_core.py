@@ -344,3 +344,41 @@ def test_find_game_by_name():
     assert library.find_game("caption-meme")["id"] == "voting_meme"
     assert library.find_game("voting_meme")["id"] == "voting_meme"
     assert library.find_game("catur") is None
+
+
+def test_tes_does_not_create_room_even_if_llm_tries(monkeypatch):
+    from langchain_core.messages import AIMessage
+    A = _fake_agent_run(monkeypatch, [
+        AIMessage("", tool_calls=[{"name": "recommend_games", "args": {}, "id": "1"}]),
+        AIMessage("", tool_calls=[{"name": "create_room", "args": {"game_id": "voting_meme"}, "id": "2"}]),
+        AIMessage(""),
+    ])
+    ctx = A.AgentContext(base_url="https://x.app", use_llm=True)
+    answer, trace, _ = A.chat(ctx, [{"role": "user", "content": "tes"}])
+    assert not ctx.rooms and "role=host" not in answer
+    assert "jumlah orang" in answer
+
+
+@pytest.mark.parametrize("msg", ["tes", "halo", "p", "assalamualaikum", "test 123"])
+def test_vague_messages_offline_ask_for_details(msg):
+    ctx = AgentContext(base_url="https://x.app", use_llm=False)
+    answer, trace, _ = chat(ctx, [{"role": "user", "content": msg}])
+    assert not ctx.rooms and "jumlah orang" in answer
+
+
+@pytest.mark.parametrize("msg", ["Buat sebuah Game offline utk 10 orang", "kajian 15 orang", "bikinin kuis dong",
+                                 "caption meme", "gathering kantor online"])
+def test_real_requests_pass_gate(msg):
+    from core.agent import is_game_request
+    assert is_game_request(msg)
+
+
+def test_confirmation_after_recommendation_creates_room():
+    from core.agent import is_game_request
+    prev = 'Aku rekomendasikan "Kuis Kilat". Mau langsung main?'
+    assert is_game_request("gas", prev) and not is_game_request("gas", "")
+    ctx = AgentContext(base_url="https://x.app", use_llm=False)
+    answer, _, _ = chat(ctx, [{"role": "user", "content": "kajian 10 orang"},
+                              {"role": "assistant", "content": prev},
+                              {"role": "user", "content": "gas"}])
+    assert ctx.rooms and "role=host" in answer
