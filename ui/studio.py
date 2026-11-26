@@ -25,7 +25,8 @@ PALETTE = ["#6D28D9", "#DB2777", "#2563EB", "#D97706", "#059669", "#0891B2", "#9
 
 def _ctx() -> AgentContext:
     return AgentContext(base_url=base_url(), doc=st.session_state.get("doc"),
-                        use_llm=st.session_state.get("use_llm", True))
+                        use_llm=st.session_state.get("use_llm", True),
+                        ai_log=st.session_state.setdefault("ai_log", []))
 
 
 def hero(title: str, sub: str):

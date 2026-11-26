@@ -18,13 +18,21 @@ from langchain_core.messages import AIMessage, HumanMessage
 from langchain_core.tools import StructuredTool
 
 from .config import MAX_AGENT_STEPS
-from .llm import _model_id, is_rate_limit, mark_rate_limited
+from .llm import (BudgetExceeded, _model_id, is_openai, is_rate_limit, mark_rate_limited,
+                  openai_budget_ok, record_openai_call)
 
 
 class RateLimitMarker(AgentMiddleware):
-    """Catat model yang kena 429 (kuota habis) supaya pesan berikutnya langsung pakai model cadangan."""
+    """Pengaman kuota & biaya di setiap percobaan model:
+    - model yang kena 429 dicatat supaya pesan berikutnya langsung pakai cadangan
+    - panggilan OpenAI (berbayar) dihitung dan ditolak kalau batas harian tercapai
+    """
 
     def wrap_model_call(self, request, handler):
+        if is_openai(request.model):
+            if not openai_budget_ok():
+                raise BudgetExceeded("batas harian OpenAI tercapai")
+            record_openai_call()
         try:
             return handler(request)
         except Exception as e:

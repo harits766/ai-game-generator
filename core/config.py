@@ -12,6 +12,9 @@ DATA_DIR = ROOT / "data"
 RAW_DIR = DATA_DIR / "raw"
 PROCESSED_DIR = DATA_DIR / "processed"
 RUNTIME_DIR = DATA_DIR / "runtime"
+
+# Rate limit pemakaian AI per sesi browser (di atasnya: planner offline, tetap jalan tanpa API)
+AI_MSGS_PER_HOUR = 20
 MODELS_DIR = ROOT / "models"
 DOCS_DIR = ROOT / "docs"
 

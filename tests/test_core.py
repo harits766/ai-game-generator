@@ -450,3 +450,28 @@ def test_rate_limit_cooldown_switches_model(monkeypatch):
     monkeypatch.setenv("OPENAI_API_KEY", "y")
     llm.mark_rate_limited("429", "gemini-2.5-flash-lite")
     assert [n for _, n in llm.model_names()] == ["gpt-4o-mini"]
+
+
+def test_session_rate_limit_falls_back_offline(monkeypatch):
+    import core.agent as A
+    monkeypatch.setattr("core.config.AI_MSGS_PER_HOUR", 2)
+    monkeypatch.setattr(A, "chat_models", lambda temperature=0.2: [])
+    log: list[float] = []
+    for i in range(3):
+        ctx = A.AgentContext(base_url="https://x.app", use_llm=True, ai_log=log)
+        answer, _, eng = A.chat(ctx, [{"role": "user", "content": "kajian 10 orang"}])
+    assert "batas 2 pesan AI per jam" in eng and "Mode hemat" in answer and "role=host" in answer
+    assert len(log) == 2
+
+
+def test_openai_daily_budget(monkeypatch, tmp_path):
+    from core import llm
+    monkeypatch.setattr(llm, "_budget_file", lambda: tmp_path / "u.json")
+    monkeypatch.setattr(llm, "_COOLDOWN", {})
+    monkeypatch.setenv("GEMINI_API_KEY", "")
+    monkeypatch.setenv("OPENAI_API_KEY", "y")
+    monkeypatch.setenv("OPENAI_DAILY_CALLS", "3")
+    assert [n for _, n in llm.model_names()] == ["gpt-4o-mini"]
+    for _ in range(3):
+        llm.record_openai_call()
+    assert not llm.openai_budget_ok() and llm.model_names() == []

@@ -40,6 +40,7 @@ class AgentContext:
     # diisi chat(): pesan user terakhir + jawaban AI sebelumnya, untuk gerbang create_room
     user_text: str | None = None
     prev_answer: str = ""
+    ai_log: list[float] | None = None       # timestamp pesan yang memakai AI (per sesi browser)
     shown: list[str] = field(default_factory=list)    # game_id yang sudah disarankan di chat ini
     wants_alt: bool = False                            # user minta "yang lain"
 
@@ -456,6 +457,20 @@ def offline_agent(ctx: AgentContext, text: str, history: list[dict] | None = Non
     return msg, trace
 
 
+def _session_limited(ctx: AgentContext) -> str:
+    """Rate limit per sesi: maks AI_MSGS_PER_HOUR pesan yang memakai AI per jam. '' = boleh."""
+    if ctx.ai_log is None or not ctx.use_llm:
+        return ""
+    from .config import AI_MSGS_PER_HOUR
+    import time as _t
+    now = _t.time()
+    ctx.ai_log[:] = [x for x in ctx.ai_log if now - x < 3600]
+    if len(ctx.ai_log) >= AI_MSGS_PER_HOUR:
+        return f"batas {AI_MSGS_PER_HOUR} pesan AI per jam tercapai"
+    ctx.ai_log.append(now)
+    return ""
+
+
 def chat(ctx: AgentContext, history: list[dict]) -> tuple[str, list[dict], str]:
     """Return (jawaban, trace_tool, mesin_yang_dipakai)."""
     text = history[-1]["content"]
@@ -463,7 +478,11 @@ def chat(ctx: AgentContext, history: list[dict]) -> tuple[str, list[dict], str]:
     ctx.prev_answer = next((m["content"] for m in reversed(history[:-1]) if m["role"] == "assistant"), "")
     ctx.shown = shown_games(history[:-1])
     ctx.wants_alt = wants_alt(text) and not wants_design(text)
-    if ctx.use_llm:
+    limited = _session_limited(ctx)
+    if ctx.use_llm and limited:
+        fallback_reason = limited
+        ctx.use_llm = False            # soal juga dibuat tanpa AI supaya kuota/kredit aman
+    elif ctx.use_llm:
         doc_note = (f"\n[Konteks: user sudah upload dokumen '{ctx.doc.name}' ({ctx.doc.doc_type}, "
                     f"{len(ctx.doc.text)} karakter). Gunakan read_document bila perlu.]") if ctx.doc else ""
         alt_note = (f"\n[Konteks: user minta game LAIN. Game yang sudah disarankan: "
@@ -483,6 +502,8 @@ def chat(ctx: AgentContext, history: list[dict]) -> tuple[str, list[dict], str]:
                 if is_rate_limit(e):
                     mark_rate_limited(e)
                     fallback_reason = "kuota AI gratis habis sementara"
+                elif "batas harian OpenAI" in str(e):
+                    fallback_reason = "batas harian AI cadangan tercapai"
                 else:
                     fallback_reason = f"{type(e).__name__}: {str(e)[:120]}"
         else:
@@ -490,6 +511,9 @@ def chat(ctx: AgentContext, history: list[dict]) -> tuple[str, list[dict], str]:
     else:
         fallback_reason = "LLM dimatikan"
     answer, trace = offline_agent(ctx, text, history)
+    if limited or "batas harian" in fallback_reason or "kuota" in fallback_reason:
+        answer = (f"_(Mode hemat: {fallback_reason}. Sementara aku jalan tanpa AI, game tetap bisa dimainkan.)_"
+                  f"\n\n{answer}")
     return answer, trace, f"offline planner ({fallback_reason})"
 
 
