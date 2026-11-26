@@ -38,7 +38,11 @@ def fetch_wiki(project: str, article: str, end: date) -> pd.Series:
     url = ("https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/"
            f"{project}/all-access/user/{quote(article, safe='')}/daily/"
            f"{START:%Y%m%d}00/{end:%Y%m%d}00")
-    r = requests.get(url, headers={"User-Agent": UA}, timeout=30)
+    for attempt in range(5):
+        r = requests.get(url, headers={"User-Agent": UA}, timeout=30)
+        if r.status_code != 429:
+            break
+        time.sleep(5 * (attempt + 1))       # rate limit Wikimedia -> tunggu lalu ulangi
     r.raise_for_status()
     items = r.json()["items"]
     s = pd.Series({pd.Timestamp(i["timestamp"][:8]): i["views"] for i in items})
@@ -64,7 +68,7 @@ def main() -> None:
                 log["wiki"][ref] = f"ok ({int(s.sum()):,} views)"
             except Exception as e:
                 log["wiki"][ref] = f"gagal: {type(e).__name__} {str(e)[:80]}"
-            time.sleep(0.2)
+            time.sleep(1.5)
         if total is None:
             continue
         df = total.rename("views").to_frame()
