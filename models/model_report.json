@@ -8,85 +8,85 @@
   ],
   "test_from": "2026-06-29",
   "n_series": 21,
-  "n_train": 1583,
-  "n_test": 411,
-  "google_trends_coverage": 0.702,
+  "n_train": 1659,
+  "n_test": 420,
+  "google_trends_coverage": 0.667,
   "results": [
     {
       "model": "Baseline (naive: = minggu ini)",
-      "MAE_log": 0.113,
-      "MAPE_views": 0.1239,
-      "R2_log": 0.9919,
-      "Akurasi_arah": 0.0024,
-      "Precision@10_momentum": 0.85
-    },
-    {
-      "model": "Baseline (rata-rata 4 minggu)",
-      "MAE_log": 0.1262,
-      "MAPE_views": 0.1348,
-      "R2_log": 0.9918,
-      "Akurasi_arah": 0.5693,
-      "Precision@10_momentum": 0.82
-    },
-    {
-      "model": "Ridge Regression",
-      "MAE_log": 0.115,
-      "MAPE_views": 0.1253,
-      "R2_log": 0.9923,
-      "Akurasi_arah": 0.5207,
-      "Precision@10_momentum": 0.835
-    },
-    {
-      "model": "Huber Regression (robust)",
-      "MAE_log": 0.1105,
-      "MAPE_views": 0.119,
-      "R2_log": 0.9925,
-      "Akurasi_arah": 0.5766,
-      "Precision@10_momentum": 0.845
-    },
-    {
-      "model": "Random Forest",
-      "MAE_log": 0.1104,
-      "MAPE_views": 0.1193,
-      "R2_log": 0.9931,
-      "Akurasi_arah": 0.5401,
+      "MAE_log": 0.1044,
+      "MAPE_views": 0.1044,
+      "R2_log": 0.9908,
+      "Akurasi_arah": 0.0,
       "Precision@10_momentum": 0.84
     },
     {
-      "model": "Gradient Boosting (HistGB)",
-      "MAE_log": 0.1075,
-      "MAPE_views": 0.1159,
-      "R2_log": 0.9927,
-      "Akurasi_arah": 0.5547,
+      "model": "Baseline (rata-rata 4 minggu)",
+      "MAE_log": 0.1211,
+      "MAPE_views": 0.1219,
+      "R2_log": 0.9889,
+      "Akurasi_arah": 0.5667,
+      "Precision@10_momentum": 0.795
+    },
+    {
+      "model": "Ridge Regression",
+      "MAE_log": 0.1052,
+      "MAPE_views": 0.1062,
+      "R2_log": 0.9912,
+      "Akurasi_arah": 0.5286,
       "Precision@10_momentum": 0.845
     },
     {
+      "model": "Huber Regression (robust)",
+      "MAE_log": 0.1014,
+      "MAPE_views": 0.1008,
+      "R2_log": 0.9915,
+      "Akurasi_arah": 0.5571,
+      "Precision@10_momentum": 0.855
+    },
+    {
+      "model": "Random Forest",
+      "MAE_log": 0.1024,
+      "MAPE_views": 0.103,
+      "R2_log": 0.9915,
+      "Akurasi_arah": 0.5262,
+      "Precision@10_momentum": 0.845
+    },
+    {
+      "model": "Gradient Boosting (HistGB)",
+      "MAE_log": 0.1,
+      "MAPE_views": 0.099,
+      "R2_log": 0.9916,
+      "Akurasi_arah": 0.5619,
+      "Precision@10_momentum": 0.85
+    },
+    {
       "model": "MLP (Neural Net)",
-      "MAE_log": 0.1254,
-      "MAPE_views": 0.1335,
-      "R2_log": 0.9912,
-      "Akurasi_arah": 0.4915,
-      "Precision@10_momentum": 0.825
+      "MAE_log": 0.1114,
+      "MAPE_views": 0.1133,
+      "R2_log": 0.9903,
+      "Akurasi_arah": 0.5262,
+      "Precision@10_momentum": 0.84
     }
   ],
   "feature_importance": {
-    "mom12": 0.13534312149995403,
-    "mom4": 0.024728449035377742,
-    "woy_sin": 0.012953461543109234,
-    "lv_lag3": 0.010005498766020549,
-    "lv_t": 0.009869411734359512,
-    "lv_lag2": 0.003815065272453877,
-    "woy_cos": 0.0024017308058106534,
-    "lv_lag1": 0.0020394957113956556,
-    "roll4": 0.0017063206067863934,
-    "roll12": 0.0015474877150026378,
+    "mom12": 0.130847936167457,
+    "woy_sin": 0.029953858196828453,
+    "mom4": 0.017209653651708658,
+    "woy_cos": 0.00558134599197393,
+    "gt_t": 0.0036826164463393597,
+    "lv_t": 0.003457037092749982,
+    "lv_lag3": 0.0019781264321828917,
+    "lv_lag1": 0.0011559265917392646,
+    "lv_lag2": 0.0007835652368548107,
+    "roll4": 0.0003393076358675806,
     "has_gt": 0.0,
     "next_ramadan": 0.0,
     "next_august": 0.0,
     "next_yearend": 0.0,
-    "gt_t": -0.00015333441787255265,
-    "next_school_holiday": -0.0010964678247388226,
-    "gt_delta": -0.010742174906276492,
-    "vol4": -0.010986177268280928
+    "roll12": -0.0005850858740420462,
+    "vol4": -0.0009697668392542269,
+    "gt_delta": -0.0011515431718163605,
+    "next_school_holiday": -0.001916105029839832
   }
 }

@@ -58,5 +58,54 @@
     },
     "integrity_ok": true,
     "model": "Gradient Boosting (HistGB)"
+  },
+  {
+    "at": "2026-11-26T12:32:48+00:00",
+    "data_week": "2026-11-16",
+    "top": [
+      "survival_kuis",
+      "voting_meme",
+      "harga_pas",
+      "cerita_berantai",
+      "tebak_kata_kunci",
+      "adu_receh",
+      "fakta_hoaks",
+      "tebak_angka",
+      "emoji_tebak",
+      "debat_kilat"
+    ],
+    "pred": {
+      "survival_kuis": 74.0,
+      "voting_meme": 73.9,
+      "harga_pas": 70.0,
+      "cerita_berantai": 67.6,
+      "tebak_kata_kunci": 58.6,
+      "adu_receh": 57.0,
+      "fakta_hoaks": 55.4,
+      "tebak_angka": 54.6,
+      "emoji_tebak": 50.2,
+      "debat_kilat": 45.9
+    },
+    "multiverse": null,
+    "compare": {
+      "overlap": 10,
+      "kendall_tau": 0.467,
+      "masuk": [],
+      "keluar": [],
+      "verdict": "STABIL"
+    },
+    "backtest": {
+      "week_predicted": "2026-11-16",
+      "precision_at_10": 0.9,
+      "direction_acc": 0.667,
+      "missed": [
+        "voting_meme"
+      ],
+      "false_in": [
+        "siapa_paling"
+      ]
+    },
+    "integrity_ok": true,
+    "model": "Gradient Boosting (HistGB)"
   }
 ]

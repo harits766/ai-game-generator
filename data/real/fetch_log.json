@@ -1,11 +1,12 @@
 {
-  "run_at": "2026-11-26T12:14:23+00:00",
+  "run_at": "2026-11-26T12:28:46+00:00",
   "wiki": {
     "en:Kahoot!": "ok (646,093 views)",
     "en:Fact-checking": "ok (122,477 views)",
     "id:Hoaks": "ok (272 views)",
     "en:Family_Feud": "ok (896,423 views)",
     "en:Wits_&_Wagers": "ok (239 views)",
+    "en:Fermi_problem": "ok (159,674 views)",
     "en:Cards_Against_Humanity": "ok (305,911 views)",
     "en:Debate": "ok (160,383 views)",
     "id:Debat": "ok (7,420 views)",
@@ -41,7 +42,7 @@
     "cerita berantai": "ok",
     "mitos atau fakta": "ok",
     "tebak harga": "ok",
-    "teka teki": "ok",
+    "teka teki": "gagal: TooManyRequestsError",
     "meme": "ok"
   }
 }

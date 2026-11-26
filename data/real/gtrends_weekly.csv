@@ -8,7 +8,7 @@ week,game_id,keyword,google_trends
 2025-01-06,kuis_kilat,kahoot,61.0
 2025-01-13,kuis_kilat,kahoot,60.0
 2025-01-20,kuis_kilat,kahoot,27.0
-2025-01-27,kuis_kilat,kahoot,67.0
+2025-01-27,kuis_kilat,kahoot,66.0
 2025-02-03,kuis_kilat,kahoot,69.0
 2025-02-10,kuis_kilat,kahoot,70.0
 2025-02-17,kuis_kilat,kahoot,47.0
@@ -21,10 +21,10 @@ week,game_id,keyword,google_trends
 2025-04-07,kuis_kilat,kahoot,37.0
 2025-04-14,kuis_kilat,kahoot,46.0
 2025-04-21,kuis_kilat,kahoot,44.0
-2025-04-28,kuis_kilat,kahoot,51.0
+2025-04-28,kuis_kilat,kahoot,50.0
 2025-05-05,kuis_kilat,kahoot,39.0
 2025-05-12,kuis_kilat,kahoot,57.0
-2025-05-19,kuis_kilat,kahoot,37.0
+2025-05-19,kuis_kilat,kahoot,36.0
 2025-05-26,kuis_kilat,kahoot,24.0
 2025-06-02,kuis_kilat,kahoot,24.0
 2025-06-09,kuis_kilat,kahoot,24.0
@@ -42,7 +42,7 @@ week,game_id,keyword,google_trends
 2025-09-01,kuis_kilat,kahoot,86.0
 2025-09-08,kuis_kilat,kahoot,94.0
 2025-09-15,kuis_kilat,kahoot,83.0
-2025-09-22,kuis_kilat,kahoot,90.0
+2025-09-22,kuis_kilat,kahoot,91.0
 2025-09-29,kuis_kilat,kahoot,89.0
 2025-10-06,kuis_kilat,kahoot,85.0
 2025-10-13,kuis_kilat,kahoot,89.0
@@ -120,16 +120,16 @@ week,game_id,keyword,google_trends
 2025-03-03,fakta_hoaks,hoaks,62.0
 2025-03-10,fakta_hoaks,hoaks,34.0
 2025-03-17,fakta_hoaks,hoaks,15.0
-2025-03-24,fakta_hoaks,hoaks,8.0
+2025-03-24,fakta_hoaks,hoaks,9.0
 2025-03-31,fakta_hoaks,hoaks,26.0
 2025-04-07,fakta_hoaks,hoaks,44.0
 2025-04-14,fakta_hoaks,hoaks,39.0
-2025-04-21,fakta_hoaks,hoaks,41.0
+2025-04-21,fakta_hoaks,hoaks,40.0
 2025-04-28,fakta_hoaks,hoaks,42.0
 2025-05-05,fakta_hoaks,hoaks,33.0
 2025-05-12,fakta_hoaks,hoaks,46.0
-2025-05-19,fakta_hoaks,hoaks,57.0
-2025-05-26,fakta_hoaks,hoaks,60.0
+2025-05-19,fakta_hoaks,hoaks,56.0
+2025-05-26,fakta_hoaks,hoaks,59.0
 2025-06-02,fakta_hoaks,hoaks,55.0
 2025-06-09,fakta_hoaks,hoaks,32.0
 2025-06-16,fakta_hoaks,hoaks,19.0
@@ -147,7 +147,7 @@ week,game_id,keyword,google_trends
 2025-09-08,fakta_hoaks,hoaks,47.0
 2025-09-15,fakta_hoaks,hoaks,49.0
 2025-09-22,fakta_hoaks,hoaks,49.0
-2025-09-29,fakta_hoaks,hoaks,54.0
+2025-09-29,fakta_hoaks,hoaks,53.0
 2025-10-06,fakta_hoaks,hoaks,50.0
 2025-10-13,fakta_hoaks,hoaks,50.0
 2025-10-20,fakta_hoaks,hoaks,50.0
@@ -212,11 +212,11 @@ week,game_id,keyword,google_trends
 2024-12-09,satu_frekuensi,family 100,55.0
 2024-12-16,satu_frekuensi,family 100,71.0
 2024-12-23,satu_frekuensi,family 100,100.0
-2024-12-30,satu_frekuensi,family 100,78.0
+2024-12-30,satu_frekuensi,family 100,79.0
 2025-01-06,satu_frekuensi,family 100,71.0
 2025-01-13,satu_frekuensi,family 100,64.0
 2025-01-20,satu_frekuensi,family 100,64.0
-2025-01-27,satu_frekuensi,family 100,60.0
+2025-01-27,satu_frekuensi,family 100,59.0
 2025-02-03,satu_frekuensi,family 100,54.0
 2025-02-10,satu_frekuensi,family 100,62.0
 2025-02-17,satu_frekuensi,family 100,51.0
@@ -225,24 +225,24 @@ week,game_id,keyword,google_trends
 2025-03-10,satu_frekuensi,family 100,45.0
 2025-03-17,satu_frekuensi,family 100,43.0
 2025-03-24,satu_frekuensi,family 100,47.0
-2025-03-31,satu_frekuensi,family 100,39.0
+2025-03-31,satu_frekuensi,family 100,40.0
 2025-04-07,satu_frekuensi,family 100,40.0
-2025-04-14,satu_frekuensi,family 100,42.0
-2025-04-21,satu_frekuensi,family 100,50.0
+2025-04-14,satu_frekuensi,family 100,43.0
+2025-04-21,satu_frekuensi,family 100,49.0
 2025-04-28,satu_frekuensi,family 100,45.0
 2025-05-05,satu_frekuensi,family 100,53.0
 2025-05-12,satu_frekuensi,family 100,49.0
-2025-05-19,satu_frekuensi,family 100,41.0
+2025-05-19,satu_frekuensi,family 100,40.0
 2025-05-26,satu_frekuensi,family 100,34.0
 2025-06-02,satu_frekuensi,family 100,43.0
 2025-06-09,satu_frekuensi,family 100,35.0
 2025-06-16,satu_frekuensi,family 100,36.0
 2025-06-23,satu_frekuensi,family 100,40.0
-2025-06-30,satu_frekuensi,family 100,32.0
+2025-06-30,satu_frekuensi,family 100,33.0
 2025-07-07,satu_frekuensi,family 100,37.0
 2025-07-14,satu_frekuensi,family 100,25.0
 2025-07-21,satu_frekuensi,family 100,34.0
-2025-07-28,satu_frekuensi,family 100,37.0
+2025-07-28,satu_frekuensi,family 100,38.0
 2025-08-04,satu_frekuensi,family 100,33.0
 2025-08-11,satu_frekuensi,family 100,24.0
 2025-08-18,satu_frekuensi,family 100,24.0
@@ -257,7 +257,7 @@ week,game_id,keyword,google_trends
 2025-10-20,satu_frekuensi,family 100,33.0
 2025-10-27,satu_frekuensi,family 100,34.0
 2025-11-03,satu_frekuensi,family 100,38.0
-2025-11-10,satu_frekuensi,family 100,43.0
+2025-11-10,satu_frekuensi,family 100,44.0
 2025-11-17,satu_frekuensi,family 100,48.0
 2025-11-24,satu_frekuensi,family 100,42.0
 2025-12-01,satu_frekuensi,family 100,47.0
@@ -268,16 +268,16 @@ week,game_id,keyword,google_trends
 2026-01-05,satu_frekuensi,family 100,30.0
 2026-01-12,satu_frekuensi,family 100,35.0
 2026-01-19,satu_frekuensi,family 100,44.0
-2026-01-26,satu_frekuensi,family 100,46.0
+2026-01-26,satu_frekuensi,family 100,47.0
 2026-02-02,satu_frekuensi,family 100,58.0
 2026-02-09,satu_frekuensi,family 100,57.0
 2026-02-16,satu_frekuensi,family 100,55.0
 2026-02-23,satu_frekuensi,family 100,46.0
 2026-03-02,satu_frekuensi,family 100,41.0
-2026-03-09,satu_frekuensi,family 100,41.0
+2026-03-09,satu_frekuensi,family 100,42.0
 2026-03-16,satu_frekuensi,family 100,51.0
 2026-03-23,satu_frekuensi,family 100,53.0
-2026-03-30,satu_frekuensi,family 100,52.0
+2026-03-30,satu_frekuensi,family 100,53.0
 2026-04-06,satu_frekuensi,family 100,52.0
 2026-04-13,satu_frekuensi,family 100,47.0
 2026-04-20,satu_frekuensi,family 100,51.0
@@ -285,28 +285,28 @@ week,game_id,keyword,google_trends
 2026-05-04,satu_frekuensi,family 100,53.0
 2026-05-11,satu_frekuensi,family 100,47.0
 2026-05-18,satu_frekuensi,family 100,50.0
-2026-05-25,satu_frekuensi,family 100,52.0
+2026-05-25,satu_frekuensi,family 100,53.0
 2026-06-01,satu_frekuensi,family 100,47.0
 2026-06-08,satu_frekuensi,family 100,53.0
 2026-06-15,satu_frekuensi,family 100,52.0
 2026-06-22,satu_frekuensi,family 100,50.0
-2026-06-29,satu_frekuensi,family 100,51.0
+2026-06-29,satu_frekuensi,family 100,52.0
 2026-07-06,satu_frekuensi,family 100,42.0
 2026-07-13,satu_frekuensi,family 100,33.0
 2026-07-20,satu_frekuensi,family 100,43.0
-2026-07-27,satu_frekuensi,family 100,27.0
+2026-07-27,satu_frekuensi,family 100,28.0
 2026-08-03,satu_frekuensi,family 100,40.0
 2026-08-10,satu_frekuensi,family 100,36.0
 2026-08-17,satu_frekuensi,family 100,29.0
 2026-08-24,satu_frekuensi,family 100,59.0
-2026-08-31,satu_frekuensi,family 100,63.0
+2026-08-31,satu_frekuensi,family 100,64.0
 2026-09-07,satu_frekuensi,family 100,87.0
 2026-09-14,satu_frekuensi,family 100,39.0
-2026-09-21,satu_frekuensi,family 100,35.0
+2026-09-21,satu_frekuensi,family 100,36.0
 2026-09-28,satu_frekuensi,family 100,39.0
 2026-10-05,satu_frekuensi,family 100,39.0
 2026-10-12,satu_frekuensi,family 100,34.0
-2026-10-19,satu_frekuensi,family 100,35.0
+2026-10-19,satu_frekuensi,family 100,36.0
 2026-10-26,satu_frekuensi,family 100,39.0
 2026-11-02,satu_frekuensi,family 100,42.0
 2026-11-09,satu_frekuensi,family 100,35.0
@@ -319,43 +319,43 @@ week,game_id,keyword,google_trends
 2024-12-30,tebak_angka,tebak angka,59.0
 2025-01-06,tebak_angka,tebak angka,43.0
 2025-01-13,tebak_angka,tebak angka,59.0
-2025-01-20,tebak_angka,tebak angka,50.0
+2025-01-20,tebak_angka,tebak angka,51.0
 2025-01-27,tebak_angka,tebak angka,42.0
-2025-02-03,tebak_angka,tebak angka,66.0
+2025-02-03,tebak_angka,tebak angka,67.0
 2025-02-10,tebak_angka,tebak angka,66.0
-2025-02-17,tebak_angka,tebak angka,64.0
+2025-02-17,tebak_angka,tebak angka,65.0
 2025-02-24,tebak_angka,tebak angka,67.0
 2025-03-03,tebak_angka,tebak angka,58.0
-2025-03-10,tebak_angka,tebak angka,51.0
+2025-03-10,tebak_angka,tebak angka,52.0
 2025-03-17,tebak_angka,tebak angka,54.0
-2025-03-24,tebak_angka,tebak angka,52.0
+2025-03-24,tebak_angka,tebak angka,53.0
 2025-03-31,tebak_angka,tebak angka,46.0
 2025-04-07,tebak_angka,tebak angka,49.0
 2025-04-14,tebak_angka,tebak angka,53.0
-2025-04-21,tebak_angka,tebak angka,63.0
+2025-04-21,tebak_angka,tebak angka,62.0
 2025-04-28,tebak_angka,tebak angka,69.0
-2025-05-05,tebak_angka,tebak angka,53.0
+2025-05-05,tebak_angka,tebak angka,54.0
 2025-05-12,tebak_angka,tebak angka,61.0
 2025-05-19,tebak_angka,tebak angka,59.0
-2025-05-26,tebak_angka,tebak angka,69.0
+2025-05-26,tebak_angka,tebak angka,68.0
 2025-06-02,tebak_angka,tebak angka,53.0
 2025-06-09,tebak_angka,tebak angka,50.0
-2025-06-16,tebak_angka,tebak angka,27.0
+2025-06-16,tebak_angka,tebak angka,28.0
 2025-06-23,tebak_angka,tebak angka,48.0
 2025-06-30,tebak_angka,tebak angka,39.0
 2025-07-07,tebak_angka,tebak angka,77.0
-2025-07-14,tebak_angka,tebak angka,73.0
+2025-07-14,tebak_angka,tebak angka,74.0
 2025-07-21,tebak_angka,tebak angka,67.0
-2025-07-28,tebak_angka,tebak angka,49.0
+2025-07-28,tebak_angka,tebak angka,50.0
 2025-08-04,tebak_angka,tebak angka,41.0
-2025-08-11,tebak_angka,tebak angka,56.0
-2025-08-18,tebak_angka,tebak angka,68.0
+2025-08-11,tebak_angka,tebak angka,55.0
+2025-08-18,tebak_angka,tebak angka,69.0
 2025-08-25,tebak_angka,tebak angka,62.0
-2025-09-01,tebak_angka,tebak angka,77.0
+2025-09-01,tebak_angka,tebak angka,78.0
 2025-09-08,tebak_angka,tebak angka,45.0
 2025-09-15,tebak_angka,tebak angka,57.0
 2025-09-22,tebak_angka,tebak angka,46.0
-2025-09-29,tebak_angka,tebak angka,83.0
+2025-09-29,tebak_angka,tebak angka,82.0
 2025-10-06,tebak_angka,tebak angka,78.0
 2025-10-13,tebak_angka,tebak angka,59.0
 2025-10-20,tebak_angka,tebak angka,33.0
@@ -363,13 +363,13 @@ week,game_id,keyword,google_trends
 2025-11-03,tebak_angka,tebak angka,42.0
 2025-11-10,tebak_angka,tebak angka,45.0
 2025-11-17,tebak_angka,tebak angka,55.0
-2025-11-24,tebak_angka,tebak angka,56.0
+2025-11-24,tebak_angka,tebak angka,57.0
 2025-12-01,tebak_angka,tebak angka,53.0
 2025-12-08,tebak_angka,tebak angka,38.0
 2025-12-15,tebak_angka,tebak angka,41.0
 2025-12-22,tebak_angka,tebak angka,44.0
 2025-12-29,tebak_angka,tebak angka,61.0
-2026-01-05,tebak_angka,tebak angka,57.0
+2026-01-05,tebak_angka,tebak angka,58.0
 2026-01-12,tebak_angka,tebak angka,61.0
 2026-01-19,tebak_angka,tebak angka,36.0
 2026-01-26,tebak_angka,tebak angka,50.0
@@ -381,7 +381,7 @@ week,game_id,keyword,google_trends
 2026-03-09,tebak_angka,tebak angka,52.0
 2026-03-16,tebak_angka,tebak angka,50.0
 2026-03-23,tebak_angka,tebak angka,38.0
-2026-03-30,tebak_angka,tebak angka,52.0
+2026-03-30,tebak_angka,tebak angka,53.0
 2026-04-06,tebak_angka,tebak angka,50.0
 2026-04-13,tebak_angka,tebak angka,54.0
 2026-04-20,tebak_angka,tebak angka,52.0
@@ -395,16 +395,16 @@ week,game_id,keyword,google_trends
 2026-06-15,tebak_angka,tebak angka,0.0
 2026-06-22,tebak_angka,tebak angka,56.0
 2026-06-29,tebak_angka,tebak angka,25.0
-2026-07-06,tebak_angka,tebak angka,54.0
+2026-07-06,tebak_angka,tebak angka,55.0
 2026-07-13,tebak_angka,tebak angka,0.0
 2026-07-20,tebak_angka,tebak angka,38.0
 2026-07-27,tebak_angka,tebak angka,50.0
 2026-08-03,tebak_angka,tebak angka,40.0
 2026-08-10,tebak_angka,tebak angka,52.0
 2026-08-17,tebak_angka,tebak angka,53.0
-2026-08-24,tebak_angka,tebak angka,52.0
+2026-08-24,tebak_angka,tebak angka,53.0
 2026-08-31,tebak_angka,tebak angka,40.0
-2026-09-07,tebak_angka,tebak angka,48.0
+2026-09-07,tebak_angka,tebak angka,49.0
 2026-09-14,tebak_angka,tebak angka,57.0
 2026-09-21,tebak_angka,tebak angka,39.0
 2026-09-28,tebak_angka,tebak angka,47.0
@@ -414,11 +414,11 @@ week,game_id,keyword,google_trends
 2026-10-26,tebak_angka,tebak angka,42.0
 2026-11-02,tebak_angka,tebak angka,18.0
 2026-11-09,tebak_angka,tebak angka,48.0
-2026-11-16,tebak_angka,tebak angka,40.0
+2026-11-16,tebak_angka,tebak angka,41.0
 2024-11-25,adu_receh,jokes bapak bapak,47.0
 2024-12-02,adu_receh,jokes bapak bapak,46.0
 2024-12-09,adu_receh,jokes bapak bapak,48.0
-2024-12-16,adu_receh,jokes bapak bapak,47.0
+2024-12-16,adu_receh,jokes bapak bapak,46.0
 2024-12-23,adu_receh,jokes bapak bapak,56.0
 2024-12-30,adu_receh,jokes bapak bapak,100.0
 2025-01-06,adu_receh,jokes bapak bapak,79.0
@@ -432,16 +432,16 @@ week,game_id,keyword,google_trends
 2025-03-03,adu_receh,jokes bapak bapak,54.0
 2025-03-10,adu_receh,jokes bapak bapak,64.0
 2025-03-17,adu_receh,jokes bapak bapak,37.0
-2025-03-24,adu_receh,jokes bapak bapak,50.0
+2025-03-24,adu_receh,jokes bapak bapak,51.0
 2025-03-31,adu_receh,jokes bapak bapak,45.0
 2025-04-07,adu_receh,jokes bapak bapak,36.0
 2025-04-14,adu_receh,jokes bapak bapak,32.0
-2025-04-21,adu_receh,jokes bapak bapak,45.0
-2025-04-28,adu_receh,jokes bapak bapak,45.0
+2025-04-21,adu_receh,jokes bapak bapak,44.0
+2025-04-28,adu_receh,jokes bapak bapak,44.0
 2025-05-05,adu_receh,jokes bapak bapak,48.0
 2025-05-12,adu_receh,jokes bapak bapak,42.0
 2025-05-19,adu_receh,jokes bapak bapak,46.0
-2025-05-26,adu_receh,jokes bapak bapak,45.0
+2025-05-26,adu_receh,jokes bapak bapak,44.0
 2025-06-02,adu_receh,jokes bapak bapak,46.0
 2025-06-09,adu_receh,jokes bapak bapak,54.0
 2025-06-16,adu_receh,jokes bapak bapak,54.0
@@ -455,10 +455,10 @@ week,game_id,keyword,google_trends
 2025-08-11,adu_receh,jokes bapak bapak,61.0
 2025-08-18,adu_receh,jokes bapak bapak,50.0
 2025-08-25,adu_receh,jokes bapak bapak,54.0
-2025-09-01,adu_receh,jokes bapak bapak,52.0
+2025-09-01,adu_receh,jokes bapak bapak,53.0
 2025-09-08,adu_receh,jokes bapak bapak,50.0
 2025-09-15,adu_receh,jokes bapak bapak,59.0
-2025-09-22,adu_receh,jokes bapak bapak,56.0
+2025-09-22,adu_receh,jokes bapak bapak,57.0
 2025-09-29,adu_receh,jokes bapak bapak,46.0
 2025-10-06,adu_receh,jokes bapak bapak,65.0
 2025-10-13,adu_receh,jokes bapak bapak,61.0
@@ -519,7 +519,7 @@ week,game_id,keyword,google_trends
 2026-11-02,adu_receh,jokes bapak bapak,50.0
 2026-11-09,adu_receh,jokes bapak bapak,35.0
 2026-11-16,adu_receh,jokes bapak bapak,31.0
-2024-11-25,debat_kilat,debat,96.0
+2024-11-25,debat_kilat,debat,97.0
 2024-12-02,debat_kilat,debat,79.0
 2024-12-09,debat_kilat,debat,72.0
 2024-12-16,debat_kilat,debat,61.0
@@ -528,7 +528,7 @@ week,game_id,keyword,google_trends
 2025-01-06,debat_kilat,debat,81.0
 2025-01-13,debat_kilat,debat,82.0
 2025-01-20,debat_kilat,debat,64.0
-2025-01-27,debat_kilat,debat,93.0
+2025-01-27,debat_kilat,debat,92.0
 2025-02-03,debat_kilat,debat,98.0
 2025-02-10,debat_kilat,debat,100.0
 2025-02-17,debat_kilat,debat,74.0
@@ -540,11 +540,11 @@ week,game_id,keyword,google_trends
 2025-03-31,debat_kilat,debat,61.0
 2025-04-07,debat_kilat,debat,76.0
 2025-04-14,debat_kilat,debat,70.0
-2025-04-21,debat_kilat,debat,76.0
-2025-04-28,debat_kilat,debat,73.0
+2025-04-21,debat_kilat,debat,75.0
+2025-04-28,debat_kilat,debat,72.0
 2025-05-05,debat_kilat,debat,63.0
 2025-05-12,debat_kilat,debat,73.0
-2025-05-19,debat_kilat,debat,70.0
+2025-05-19,debat_kilat,debat,69.0
 2025-05-26,debat_kilat,debat,73.0
 2025-06-02,debat_kilat,debat,64.0
 2025-06-09,debat_kilat,debat,57.0
@@ -553,33 +553,33 @@ week,game_id,keyword,google_trends
 2025-06-30,debat_kilat,debat,43.0
 2025-07-07,debat_kilat,debat,44.0
 2025-07-14,debat_kilat,debat,51.0
-2025-07-21,debat_kilat,debat,58.0
+2025-07-21,debat_kilat,debat,57.0
 2025-07-28,debat_kilat,debat,60.0
 2025-08-04,debat_kilat,debat,55.0
 2025-08-11,debat_kilat,debat,55.0
 2025-08-18,debat_kilat,debat,80.0
 2025-08-25,debat_kilat,debat,68.0
-2025-09-01,debat_kilat,debat,65.0
+2025-09-01,debat_kilat,debat,66.0
 2025-09-08,debat_kilat,debat,66.0
-2025-09-15,debat_kilat,debat,66.0
-2025-09-22,debat_kilat,debat,68.0
-2025-09-29,debat_kilat,debat,69.0
+2025-09-15,debat_kilat,debat,67.0
+2025-09-22,debat_kilat,debat,69.0
+2025-09-29,debat_kilat,debat,68.0
 2025-10-06,debat_kilat,debat,67.0
-2025-10-13,debat_kilat,debat,75.0
+2025-10-13,debat_kilat,debat,74.0
 2025-10-20,debat_kilat,debat,70.0
 2025-10-27,debat_kilat,debat,66.0
-2025-11-03,debat_kilat,debat,71.0
+2025-11-03,debat_kilat,debat,70.0
 2025-11-10,debat_kilat,debat,66.0
 2025-11-17,debat_kilat,debat,58.0
 2025-11-24,debat_kilat,debat,60.0
 2025-12-01,debat_kilat,debat,57.0
-2025-12-08,debat_kilat,debat,51.0
+2025-12-08,debat_kilat,debat,50.0
 2025-12-15,debat_kilat,debat,43.0
 2025-12-22,debat_kilat,debat,41.0
 2025-12-29,debat_kilat,debat,47.0
 2026-01-05,debat_kilat,debat,55.0
 2026-01-12,debat_kilat,debat,64.0
-2026-01-19,debat_kilat,debat,65.0
+2026-01-19,debat_kilat,debat,64.0
 2026-01-26,debat_kilat,debat,67.0
 2026-02-02,debat_kilat,debat,66.0
 2026-02-09,debat_kilat,debat,40.0
@@ -604,7 +604,7 @@ week,game_id,keyword,google_trends
 2026-06-22,debat_kilat,debat,39.0
 2026-06-29,debat_kilat,debat,39.0
 2026-07-06,debat_kilat,debat,44.0
-2026-07-13,debat_kilat,debat,55.0
+2026-07-13,debat_kilat,debat,54.0
 2026-07-20,debat_kilat,debat,47.0
 2026-07-27,debat_kilat,debat,50.0
 2026-08-03,debat_kilat,debat,49.0
@@ -619,14 +619,14 @@ week,game_id,keyword,google_trends
 2026-10-05,debat_kilat,debat,65.0
 2026-10-12,debat_kilat,debat,78.0
 2026-10-19,debat_kilat,debat,69.0
-2026-10-26,debat_kilat,debat,72.0
+2026-10-26,debat_kilat,debat,71.0
 2026-11-02,debat_kilat,debat,77.0
 2026-11-09,debat_kilat,debat,68.0
 2026-11-16,debat_kilat,debat,59.0
 2024-11-25,survival_kuis,squid game,1.0
 2024-12-02,survival_kuis,squid game,2.0
 2024-12-09,survival_kuis,squid game,3.0
-2024-12-16,survival_kuis,squid game,66.0
+2024-12-16,survival_kuis,squid game,65.0
 2024-12-23,survival_kuis,squid game,100.0
 2024-12-30,survival_kuis,squid game,55.0
 2025-01-06,survival_kuis,squid game,30.0
@@ -652,7 +652,7 @@ week,game_id,keyword,google_trends
 2025-05-26,survival_kuis,squid game,3.0
 2025-06-02,survival_kuis,squid game,2.0
 2025-06-09,survival_kuis,squid game,3.0
-2025-06-16,survival_kuis,squid game,32.0
+2025-06-16,survival_kuis,squid game,33.0
 2025-06-23,survival_kuis,squid game,37.0
 2025-06-30,survival_kuis,squid game,15.0
 2025-07-07,survival_kuis,squid game,7.0
@@ -748,7 +748,7 @@ week,game_id,keyword,google_trends
 2025-03-31,tim_vs_tim,cerdas cermat,6.0
 2025-04-07,tim_vs_tim,cerdas cermat,11.0
 2025-04-14,tim_vs_tim,cerdas cermat,12.0
-2025-04-21,tim_vs_tim,cerdas cermat,14.0
+2025-04-21,tim_vs_tim,cerdas cermat,13.0
 2025-04-28,tim_vs_tim,cerdas cermat,7.0
 2025-05-05,tim_vs_tim,cerdas cermat,6.0
 2025-05-12,tim_vs_tim,cerdas cermat,7.0
@@ -764,13 +764,13 @@ week,game_id,keyword,google_trends
 2025-07-21,tim_vs_tim,cerdas cermat,12.0
 2025-07-28,tim_vs_tim,cerdas cermat,16.0
 2025-08-04,tim_vs_tim,cerdas cermat,30.0
-2025-08-11,tim_vs_tim,cerdas cermat,18.0
+2025-08-11,tim_vs_tim,cerdas cermat,17.0
 2025-08-18,tim_vs_tim,cerdas cermat,12.0
 2025-08-25,tim_vs_tim,cerdas cermat,12.0
 2025-09-01,tim_vs_tim,cerdas cermat,12.0
 2025-09-08,tim_vs_tim,cerdas cermat,12.0
 2025-09-15,tim_vs_tim,cerdas cermat,11.0
-2025-09-22,tim_vs_tim,cerdas cermat,9.0
+2025-09-22,tim_vs_tim,cerdas cermat,10.0
 2025-09-29,tim_vs_tim,cerdas cermat,11.0
 2025-10-06,tim_vs_tim,cerdas cermat,12.0
 2025-10-13,tim_vs_tim,cerdas cermat,15.0
@@ -935,24 +935,24 @@ week,game_id,keyword,google_trends
 2026-11-02,emoji_tebak,tebak emoji,12.0
 2026-11-09,emoji_tebak,tebak emoji,22.0
 2026-11-16,emoji_tebak,tebak emoji,26.0
-2024-11-25,siapa_paling,never have i ever,59.0
+2024-11-25,siapa_paling,never have i ever,60.0
 2024-12-02,siapa_paling,never have i ever,51.0
 2024-12-09,siapa_paling,never have i ever,51.0
-2024-12-16,siapa_paling,never have i ever,46.0
+2024-12-16,siapa_paling,never have i ever,45.0
 2024-12-23,siapa_paling,never have i ever,63.0
 2024-12-30,siapa_paling,never have i ever,33.0
 2025-01-06,siapa_paling,never have i ever,43.0
 2025-01-13,siapa_paling,never have i ever,50.0
 2025-01-20,siapa_paling,never have i ever,18.0
-2025-01-27,siapa_paling,never have i ever,36.0
+2025-01-27,siapa_paling,never have i ever,35.0
 2025-02-03,siapa_paling,never have i ever,46.0
 2025-02-10,siapa_paling,never have i ever,36.0
 2025-02-17,siapa_paling,never have i ever,43.0
 2025-02-24,siapa_paling,never have i ever,49.0
 2025-03-03,siapa_paling,never have i ever,47.0
 2025-03-10,siapa_paling,never have i ever,39.0
-2025-03-17,siapa_paling,never have i ever,54.0
-2025-03-24,siapa_paling,never have i ever,51.0
+2025-03-17,siapa_paling,never have i ever,55.0
+2025-03-24,siapa_paling,never have i ever,52.0
 2025-03-31,siapa_paling,never have i ever,27.0
 2025-04-07,siapa_paling,never have i ever,47.0
 2025-04-14,siapa_paling,never have i ever,36.0
@@ -960,7 +960,7 @@ week,game_id,keyword,google_trends
 2025-04-28,siapa_paling,never have i ever,35.0
 2025-05-05,siapa_paling,never have i ever,43.0
 2025-05-12,siapa_paling,never have i ever,45.0
-2025-05-19,siapa_paling,never have i ever,58.0
+2025-05-19,siapa_paling,never have i ever,57.0
 2025-05-26,siapa_paling,never have i ever,42.0
 2025-06-02,siapa_paling,never have i ever,26.0
 2025-06-09,siapa_paling,never have i ever,52.0
@@ -972,13 +972,13 @@ week,game_id,keyword,google_trends
 2025-07-21,siapa_paling,never have i ever,38.0
 2025-07-28,siapa_paling,never have i ever,43.0
 2025-08-04,siapa_paling,never have i ever,48.0
-2025-08-11,siapa_paling,never have i ever,46.0
+2025-08-11,siapa_paling,never have i ever,45.0
 2025-08-18,siapa_paling,never have i ever,40.0
 2025-08-25,siapa_paling,never have i ever,31.0
 2025-09-01,siapa_paling,never have i ever,48.0
 2025-09-08,siapa_paling,never have i ever,56.0
 2025-09-15,siapa_paling,never have i ever,63.0
-2025-09-22,siapa_paling,never have i ever,30.0
+2025-09-22,siapa_paling,never have i ever,31.0
 2025-09-29,siapa_paling,never have i ever,53.0
 2025-10-06,siapa_paling,never have i ever,42.0
 2025-10-13,siapa_paling,never have i ever,49.0
@@ -1168,7 +1168,7 @@ week,game_id,keyword,google_trends
 2025-04-28,mitos_sains,mitos atau fakta,47.0
 2025-05-05,mitos_sains,mitos atau fakta,43.0
 2025-05-12,mitos_sains,mitos atau fakta,35.0
-2025-05-19,mitos_sains,mitos atau fakta,44.0
+2025-05-19,mitos_sains,mitos atau fakta,43.0
 2025-05-26,mitos_sains,mitos atau fakta,42.0
 2025-06-02,mitos_sains,mitos atau fakta,42.0
 2025-06-09,mitos_sains,mitos atau fakta,39.0
@@ -1180,13 +1180,13 @@ week,game_id,keyword,google_trends
 2025-07-21,mitos_sains,mitos atau fakta,44.0
 2025-07-28,mitos_sains,mitos atau fakta,42.0
 2025-08-04,mitos_sains,mitos atau fakta,35.0
-2025-08-11,mitos_sains,mitos atau fakta,49.0
+2025-08-11,mitos_sains,mitos atau fakta,48.0
 2025-08-18,mitos_sains,mitos atau fakta,45.0
 2025-08-25,mitos_sains,mitos atau fakta,40.0
 2025-09-01,mitos_sains,mitos atau fakta,57.0
 2025-09-08,mitos_sains,mitos atau fakta,45.0
 2025-09-15,mitos_sains,mitos atau fakta,54.0
-2025-09-22,mitos_sains,mitos atau fakta,51.0
+2025-09-22,mitos_sains,mitos atau fakta,52.0
 2025-09-29,mitos_sains,mitos atau fakta,44.0
 2025-10-06,mitos_sains,mitos atau fakta,51.0
 2025-10-13,mitos_sains,mitos atau fakta,54.0
@@ -1277,7 +1277,7 @@ week,game_id,keyword,google_trends
 2025-06-02,harga_pas,tebak harga,0.0
 2025-06-09,harga_pas,tebak harga,84.0
 2025-06-16,harga_pas,tebak harga,0.0
-2025-06-23,harga_pas,tebak harga,70.0
+2025-06-23,harga_pas,tebak harga,69.0
 2025-06-30,harga_pas,tebak harga,0.0
 2025-07-07,harga_pas,tebak harga,0.0
 2025-07-14,harga_pas,tebak harga,0.0
@@ -1350,111 +1350,7 @@ week,game_id,keyword,google_trends
 2026-10-26,harga_pas,tebak harga,0.0
 2026-11-02,harga_pas,tebak harga,17.0
 2026-11-09,harga_pas,tebak harga,49.0
-2026-11-16,harga_pas,tebak harga,40.0
-2024-11-25,tebak_kata_kunci,teka teki,17.0
-2024-12-02,tebak_kata_kunci,teka teki,19.0
-2024-12-09,tebak_kata_kunci,teka teki,19.0
-2024-12-16,tebak_kata_kunci,teka teki,18.0
-2024-12-23,tebak_kata_kunci,teka teki,20.0
-2024-12-30,tebak_kata_kunci,teka teki,23.0
-2025-01-06,tebak_kata_kunci,teka teki,24.0
-2025-01-13,tebak_kata_kunci,teka teki,23.0
-2025-01-20,tebak_kata_kunci,teka teki,20.0
-2025-01-27,tebak_kata_kunci,teka teki,24.0
-2025-02-03,tebak_kata_kunci,teka teki,24.0
-2025-02-10,tebak_kata_kunci,teka teki,23.0
-2025-02-17,tebak_kata_kunci,teka teki,19.0
-2025-02-24,tebak_kata_kunci,teka teki,18.0
-2025-03-03,tebak_kata_kunci,teka teki,20.0
-2025-03-10,tebak_kata_kunci,teka teki,17.0
-2025-03-17,tebak_kata_kunci,teka teki,15.0
-2025-03-24,tebak_kata_kunci,teka teki,15.0
-2025-03-31,tebak_kata_kunci,teka teki,15.0
-2025-04-07,tebak_kata_kunci,teka teki,16.0
-2025-04-14,tebak_kata_kunci,teka teki,17.0
-2025-04-21,tebak_kata_kunci,teka teki,17.0
-2025-04-28,tebak_kata_kunci,teka teki,17.0
-2025-05-05,tebak_kata_kunci,teka teki,17.0
-2025-05-12,tebak_kata_kunci,teka teki,18.0
-2025-05-19,tebak_kata_kunci,teka teki,15.0
-2025-05-26,tebak_kata_kunci,teka teki,13.0
-2025-06-02,tebak_kata_kunci,teka teki,16.0
-2025-06-09,tebak_kata_kunci,teka teki,15.0
-2025-06-16,tebak_kata_kunci,teka teki,16.0
-2025-06-23,tebak_kata_kunci,teka teki,17.0
-2025-06-30,tebak_kata_kunci,teka teki,47.0
-2025-07-07,tebak_kata_kunci,teka teki,99.0
-2025-07-14,tebak_kata_kunci,teka teki,23.0
-2025-07-21,tebak_kata_kunci,teka teki,20.0
-2025-07-28,tebak_kata_kunci,teka teki,22.0
-2025-08-04,tebak_kata_kunci,teka teki,21.0
-2025-08-11,tebak_kata_kunci,teka teki,23.0
-2025-08-18,tebak_kata_kunci,teka teki,24.0
-2025-08-25,tebak_kata_kunci,teka teki,23.0
-2025-09-01,tebak_kata_kunci,teka teki,24.0
-2025-09-08,tebak_kata_kunci,teka teki,22.0
-2025-09-15,tebak_kata_kunci,teka teki,21.0
-2025-09-22,tebak_kata_kunci,teka teki,21.0
-2025-09-29,tebak_kata_kunci,teka teki,21.0
-2025-10-06,tebak_kata_kunci,teka teki,22.0
-2025-10-13,tebak_kata_kunci,teka teki,21.0
-2025-10-20,tebak_kata_kunci,teka teki,19.0
-2025-10-27,tebak_kata_kunci,teka teki,21.0
-2025-11-03,tebak_kata_kunci,teka teki,21.0
-2025-11-10,tebak_kata_kunci,teka teki,21.0
-2025-11-17,tebak_kata_kunci,teka teki,17.0
-2025-11-24,tebak_kata_kunci,teka teki,15.0
-2025-12-01,tebak_kata_kunci,teka teki,16.0
-2025-12-08,tebak_kata_kunci,teka teki,17.0
-2025-12-15,tebak_kata_kunci,teka teki,16.0
-2025-12-22,tebak_kata_kunci,teka teki,15.0
-2025-12-29,tebak_kata_kunci,teka teki,16.0
-2026-01-05,tebak_kata_kunci,teka teki,17.0
-2026-01-12,tebak_kata_kunci,teka teki,18.0
-2026-01-19,tebak_kata_kunci,teka teki,18.0
-2026-01-26,tebak_kata_kunci,teka teki,19.0
-2026-02-02,tebak_kata_kunci,teka teki,19.0
-2026-02-09,tebak_kata_kunci,teka teki,14.0
-2026-02-16,tebak_kata_kunci,teka teki,17.0
-2026-02-23,tebak_kata_kunci,teka teki,16.0
-2026-03-02,tebak_kata_kunci,teka teki,16.0
-2026-03-09,tebak_kata_kunci,teka teki,13.0
-2026-03-16,tebak_kata_kunci,teka teki,15.0
-2026-03-23,tebak_kata_kunci,teka teki,13.0
-2026-03-30,tebak_kata_kunci,teka teki,16.0
-2026-04-06,tebak_kata_kunci,teka teki,15.0
-2026-04-13,tebak_kata_kunci,teka teki,16.0
-2026-04-20,tebak_kata_kunci,teka teki,14.0
-2026-04-27,tebak_kata_kunci,teka teki,15.0
-2026-05-04,tebak_kata_kunci,teka teki,15.0
-2026-05-11,tebak_kata_kunci,teka teki,17.0
-2026-05-18,tebak_kata_kunci,teka teki,14.0
-2026-05-25,tebak_kata_kunci,teka teki,14.0
-2026-06-01,tebak_kata_kunci,teka teki,12.0
-2026-06-08,tebak_kata_kunci,teka teki,12.0
-2026-06-15,tebak_kata_kunci,teka teki,12.0
-2026-06-22,tebak_kata_kunci,teka teki,14.0
-2026-06-29,tebak_kata_kunci,teka teki,38.0
-2026-07-06,tebak_kata_kunci,teka teki,100.0
-2026-07-13,tebak_kata_kunci,teka teki,20.0
-2026-07-20,tebak_kata_kunci,teka teki,17.0
-2026-07-27,tebak_kata_kunci,teka teki,17.0
-2026-08-03,tebak_kata_kunci,teka teki,16.0
-2026-08-10,tebak_kata_kunci,teka teki,16.0
-2026-08-17,tebak_kata_kunci,teka teki,18.0
-2026-08-24,tebak_kata_kunci,teka teki,21.0
-2026-08-31,tebak_kata_kunci,teka teki,20.0
-2026-09-07,tebak_kata_kunci,teka teki,19.0
-2026-09-14,tebak_kata_kunci,teka teki,18.0
-2026-09-21,tebak_kata_kunci,teka teki,16.0
-2026-09-28,tebak_kata_kunci,teka teki,17.0
-2026-10-05,tebak_kata_kunci,teka teki,17.0
-2026-10-12,tebak_kata_kunci,teka teki,16.0
-2026-10-19,tebak_kata_kunci,teka teki,19.0
-2026-10-26,tebak_kata_kunci,teka teki,18.0
-2026-11-02,tebak_kata_kunci,teka teki,17.0
-2026-11-09,tebak_kata_kunci,teka teki,16.0
-2026-11-16,tebak_kata_kunci,teka teki,14.0
+2026-11-16,harga_pas,tebak harga,42.0
 2024-11-25,voting_meme,meme,77.0
 2024-12-02,voting_meme,meme,74.0
 2024-12-09,voting_meme,meme,77.0
@@ -1465,7 +1361,7 @@ week,game_id,keyword,google_trends
 2025-01-13,voting_meme,meme,79.0
 2025-01-20,voting_meme,meme,78.0
 2025-01-27,voting_meme,meme,72.0
-2025-02-03,voting_meme,meme,74.0
+2025-02-03,voting_meme,meme,75.0
 2025-02-10,voting_meme,meme,76.0
 2025-02-17,voting_meme,meme,79.0
 2025-02-24,voting_meme,meme,76.0
@@ -1476,12 +1372,12 @@ week,game_id,keyword,google_trends
 2025-03-31,voting_meme,meme,80.0
 2025-04-07,voting_meme,meme,70.0
 2025-04-14,voting_meme,meme,71.0
-2025-04-21,voting_meme,meme,74.0
+2025-04-21,voting_meme,meme,73.0
 2025-04-28,voting_meme,meme,81.0
 2025-05-05,voting_meme,meme,97.0
 2025-05-12,voting_meme,meme,76.0
-2025-05-19,voting_meme,meme,76.0
-2025-05-26,voting_meme,meme,80.0
+2025-05-19,voting_meme,meme,75.0
+2025-05-26,voting_meme,meme,79.0
 2025-06-02,voting_meme,meme,71.0
 2025-06-09,voting_meme,meme,75.0
 2025-06-16,voting_meme,meme,73.0
@@ -1489,17 +1385,17 @@ week,game_id,keyword,google_trends
 2025-06-30,voting_meme,meme,74.0
 2025-07-07,voting_meme,meme,72.0
 2025-07-14,voting_meme,meme,69.0
-2025-07-21,voting_meme,meme,73.0
+2025-07-21,voting_meme,meme,72.0
 2025-07-28,voting_meme,meme,72.0
 2025-08-04,voting_meme,meme,84.0
 2025-08-11,voting_meme,meme,78.0
 2025-08-18,voting_meme,meme,81.0
 2025-08-25,voting_meme,meme,77.0
-2025-09-01,voting_meme,meme,72.0
+2025-09-01,voting_meme,meme,73.0
 2025-09-08,voting_meme,meme,72.0
-2025-09-15,voting_meme,meme,72.0
+2025-09-15,voting_meme,meme,73.0
 2025-09-22,voting_meme,meme,77.0
-2025-09-29,voting_meme,meme,78.0
+2025-09-29,voting_meme,meme,77.0
 2025-10-06,voting_meme,meme,81.0
 2025-10-13,voting_meme,meme,86.0
 2025-10-20,voting_meme,meme,87.0
@@ -1558,4 +1454,4 @@ week,game_id,keyword,google_trends
 2026-10-26,voting_meme,meme,95.0
 2026-11-02,voting_meme,meme,88.0
 2026-11-09,voting_meme,meme,84.0
-2026-11-16,voting_meme,meme,89.0
+2026-11-16,voting_meme,meme,88.0
