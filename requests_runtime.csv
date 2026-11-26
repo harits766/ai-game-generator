@@ -1,0 +1,9 @@
+request_id,timestamp,game_id,players,duration_min,event_type,mode,location,topic,doc_type,rating
+U4f3c9ce06c,2026-11-26T11:30:16,satu_frekuensi,5,10,keluarga,offline,,prabowo,md,
+U19c2e403c6,2026-11-26T11:46:17,tebak_angka,25,20,kantor,online,,,md,
+U52fa5973d3,2026-11-26T11:46:33,tebak_angka,25,20,kantor,online,,,md,
+U017ab19708,2026-11-26T11:47:22,voting_meme,10,20,komunitas,offline,,,md,
+Uc34ebf4975,2026-11-26T11:53:24,tebak_angka,25,20,kantor,online,,,topic,
+U8ce61c9a18,2026-11-26T12:01:16,voting_meme,10,20,komunitas,offline,,,topic,
+Ub5184d195d,2026-11-26T12:07:23,voting_meme,10,20,komunitas,offline,,,topic,
+U9f8a704ba2,2026-11-26T13:36:27,voting_meme,10,20,komunitas,offline,,,topic,
