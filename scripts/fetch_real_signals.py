@@ -80,11 +80,15 @@ def main() -> None:
     rows = []
     try:
         from pytrends.request import TrendReq
-        py = TrendReq(hl="id-ID", tz=420, timeout=(10, 30), retries=2, backoff_factor=1.5)
+        py = TrendReq(hl="id-ID", tz=420, timeout=(10, 30))
+        fails = 0
         for gid, src in GAME_SOURCES.items():
             kw = src["gtrends"]
             ok = False
-            for attempt in range(3):
+            if fails >= 3:      # Google memblokir IP ini -> berhenti, jangan buang waktu
+                log["gtrends"][kw] = "dilewati (diblokir Google)"
+                continue
+            for attempt in range(2):
                 try:
                     py.build_payload([kw], timeframe=f"{START} {end}", geo="ID")
                     df = py.interest_over_time()
@@ -100,8 +104,9 @@ def main() -> None:
                     break
                 except Exception as e:
                     log["gtrends"][kw] = f"gagal: {type(e).__name__}"
-                    time.sleep(20 * (attempt + 1))
-            time.sleep(8 if ok else 2)
+                    time.sleep(15)
+            fails = 0 if ok else fails + 1
+            time.sleep(6 if ok else 1)
     except ImportError:
         log["gtrends"]["_"] = "pytrends tidak terpasang"
     if rows:

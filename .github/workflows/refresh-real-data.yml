@@ -30,8 +30,10 @@ jobs:
           git show data:requests_runtime.csv > data/runtime/requests_runtime.csv 2>/dev/null || true
           wc -l data/runtime/requests_runtime.csv 2>/dev/null || echo "belum ada log in-app"
       - name: Tarik Wikipedia pageviews + Google Trends
+        timeout-minutes: 15
         run: python scripts/fetch_real_signals.py
       - name: Latih ulang model + update ground truth
+        if: ${{ hashFiles('core/trend_model.py') != '' }}
         run: |
           python scripts/train_model.py
           python scripts/update_ground_truth.py
