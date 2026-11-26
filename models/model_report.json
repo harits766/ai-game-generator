@@ -1,78 +1,92 @@
 {
-  "best_model": "Ridge Regression",
-  "selection_metric": "MAE (test, 26 minggu terakhir)",
-  "train_weeks": [
-    "2024-12-02",
-    "2026-05-25"
+  "task": "Prediksi perubahan log(1+Wikipedia views) minggu depan per jenis game (data real)",
+  "best_model": "Gradient Boosting (HistGB)",
+  "selection_metric": "MAE_log (test 20 minggu terakhir)",
+  "data_weeks": [
+    "2024-12-23",
+    "2026-11-09"
   ],
-  "n_train": 1020,
-  "n_test": 390,
+  "test_from": "2026-06-29",
+  "n_series": 21,
+  "n_train": 1583,
+  "n_test": 411,
+  "google_trends_coverage": 0.702,
   "results": [
     {
       "model": "Baseline (naive: = minggu ini)",
-      "MAE": 6.913,
-      "RMSE": 9.242,
-      "R2": 0.8264,
-      "Precision@10": 0.8615
+      "MAE_log": 0.113,
+      "MAPE_views": 0.1239,
+      "R2_log": 0.9919,
+      "Akurasi_arah": 0.0024,
+      "Precision@10_momentum": 0.85
+    },
+    {
+      "model": "Baseline (rata-rata 4 minggu)",
+      "MAE_log": 0.1262,
+      "MAPE_views": 0.1348,
+      "R2_log": 0.9918,
+      "Akurasi_arah": 0.5693,
+      "Precision@10_momentum": 0.82
     },
     {
       "model": "Ridge Regression",
-      "MAE": 6.105,
-      "RMSE": 8.074,
-      "R2": 0.8675,
-      "Precision@10": 0.8962
+      "MAE_log": 0.115,
+      "MAPE_views": 0.1253,
+      "R2_log": 0.9923,
+      "Akurasi_arah": 0.5207,
+      "Precision@10_momentum": 0.835
     },
     {
-      "model": "Poisson GLM",
-      "MAE": 11.275,
-      "RMSE": 30.592,
-      "R2": -0.9019,
-      "Precision@10": 0.8846
+      "model": "Huber Regression (robust)",
+      "MAE_log": 0.1105,
+      "MAPE_views": 0.119,
+      "R2_log": 0.9925,
+      "Akurasi_arah": 0.5766,
+      "Precision@10_momentum": 0.845
     },
     {
       "model": "Random Forest",
-      "MAE": 6.406,
-      "RMSE": 9.074,
-      "R2": 0.8327,
-      "Precision@10": 0.9038
+      "MAE_log": 0.1104,
+      "MAPE_views": 0.1193,
+      "R2_log": 0.9931,
+      "Akurasi_arah": 0.5401,
+      "Precision@10_momentum": 0.84
     },
     {
       "model": "Gradient Boosting (HistGB)",
-      "MAE": 6.334,
-      "RMSE": 8.735,
-      "R2": 0.845,
-      "Precision@10": 0.8846
+      "MAE_log": 0.1075,
+      "MAPE_views": 0.1159,
+      "R2_log": 0.9927,
+      "Akurasi_arah": 0.5547,
+      "Precision@10_momentum": 0.845
     },
     {
       "model": "MLP (Neural Net)",
-      "MAE": 6.833,
-      "RMSE": 9.272,
-      "R2": 0.8253,
-      "Precision@10": 0.8769
+      "MAE_log": 0.1254,
+      "MAPE_views": 0.1335,
+      "R2_log": 0.9912,
+      "Akurasi_arah": 0.4915,
+      "Precision@10_momentum": 0.825
     }
   ],
   "feature_importance": {
-    "roll4_mean": 0.26723485153266535,
-    "req_t": 0.23665683497540985,
-    "tiktok_t": 0.17867830329687961,
-    "gtrend_t": 0.03364914527963225,
-    "req_lag1": 0.024287842728129228,
-    "next_august": 0.01787542650713254,
-    "x_t": 0.012677861709662697,
-    "req_lag3": 0.008012264342900855,
-    "req_lag2": 0.0040302789633466,
-    "next_school_holiday": 0.003767557219019113,
-    "weeks_since_launch": 0.0030513805962722796,
-    "roll4_std": 0.002085260665233779,
-    "gtrend_delta": 0.0019062747798425984,
-    "growth": 0.0011829822264600054,
-    "mech_quiz": 0.0003827792932166174,
-    "mech_estimate": 0.000172673669455925,
-    "mech_majority": 0.00016995441998959304,
+    "mom12": 0.13534312149995403,
+    "mom4": 0.024728449035377742,
+    "woy_sin": 0.012953461543109234,
+    "lv_lag3": 0.010005498766020549,
+    "lv_t": 0.009869411734359512,
+    "lv_lag2": 0.003815065272453877,
+    "woy_cos": 0.0024017308058106534,
+    "lv_lag1": 0.0020394957113956556,
+    "roll4": 0.0017063206067863934,
+    "roll12": 0.0015474877150026378,
+    "has_gt": 0.0,
     "next_ramadan": 0.0,
+    "next_august": 0.0,
     "next_yearend": 0.0,
-    "mech_truefalse": -8.543876251914107e-05,
-    "mech_open_vote": -0.00013518300739254752,
-    "tiktok_delta": -0.00023325039406150161
+    "gt_t": -0.00015333441787255265,
+    "next_school_holiday": -0.0010964678247388226,
+    "gt_delta": -0.010742174906276492,
+    "vol4": -0.010986177268280928
   }
 }

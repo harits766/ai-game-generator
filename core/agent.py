@@ -5,13 +5,18 @@ hasil tool dikembalikan ke LLM, sampai LLM memberi jawaban akhir (maks
 MAX_AGENT_STEPS langkah). Tanpa API key, planner rule-based memanggil tools yang
 sama secara berurutan, jadi aplikasi tetap jalan saat demo.
 
-Tools (6):
-  get_trends, recommend_games, read_document, validate_custom_game,
-  register_custom_game, create_room
+Komponen GenAI (semuanya LangChain):
+  1. Agent "game_master" (langchain create_agent, ReAct di atas LangGraph) dengan 7 tools:
+     get_trends, recommend_games, read_document, design_custom_game,
+     validate_custom_game, register_custom_game, create_room
+  2. Chain "desainer" (design_custom_game): LLM -> GameSpec (Pydantic) -> validasi aturan kunci
+  3. Chain "konten" (core/generator.py): potongan dokumen -> soal terstruktur
 """
 from __future__ import annotations
 
 import re
+
+import pandas as pd
 from dataclasses import dataclass, field
 from urllib.parse import urlencode
 
@@ -21,8 +26,9 @@ from .config import EVENT_TYPES, LOCATIONS, MAX_AGENT_STEPS, MODES
 from .documents import Document, from_text, retrieve
 from .engine import STORE
 from .generator import generate_rounds
-from .llm import run_tools
+from .llm import chat_models, status_label, structured
 from .rules import TEMPLATE, validate
+from pydantic import BaseModel, Field
 
 
 @dataclass
@@ -98,8 +104,42 @@ def create_room_service(ctx: AgentContext, game_id: str, params: dict) -> dict:
 
 
 def library_has_llm() -> bool:
-    from .llm import providers
-    return bool(providers())
+    from .llm import provider_names
+    return bool(provider_names())
+
+
+# ---------------------------------------------------------------------------
+# chain desainer game custom
+# ---------------------------------------------------------------------------
+class Roles(BaseModel):
+    host: str = Field(description="apa yang dilakukan host")
+    peserta: str = Field(description="apa yang dilakukan peserta")
+
+
+class GameSpec(BaseModel):
+    name: str = Field(description="nama game, maks 40 karakter")
+    desc: str = Field(description="deskripsi 1 kalimat")
+    mechanic: str = Field(description=f"salah satu: {', '.join(MECHANICS)}")
+    roles: Roles
+    rules: list[str] = Field(description="4-7 aturan main, kalimat pendek")
+    max_players: int = Field(description="2-30")
+    rounds: int = Field(description="3-15")
+    seconds_per_round: int = Field(description="10-120")
+
+
+def design_game(idea: str, use_llm: bool = True) -> tuple[dict, str]:
+    """Ide bebas -> spesifikasi game. LLM (structured output) atau template offline."""
+    if use_llm and library_has_llm():
+        spec, prov = structured(
+            GameSpec, "Kamu desainer game party edukatif untuk acara kumpul di Indonesia. Patuhi batas angka.",
+            f"Rancang game dari ide berikut: {idea}\nMekanik yang tersedia: "
+            + "; ".join(f"{k} = {v}" for k, v in MECHANICS.items()), temperature=0.7)
+        if spec is not None:
+            return spec.model_dump(), prov
+    return ({**TEMPLATE, "name": idea[:40].strip().title() or "Game Baru", "desc": idea[:200],
+             "rules": ["Host membacakan soal dari materi.", "Peserta menjawab lewat HP sebelum waktu habis.",
+                       "Jawaban benar dan cepat dapat poin lebih besar.",
+                       "Skor tertinggi di akhir ronde jadi pemenang."]}, "template offline")
 
 
 # ---------------------------------------------------------------------------
@@ -110,16 +150,21 @@ def build_tools(ctx: AgentContext) -> dict:
         state = library.load_state()
         if not state.get("top"):
             state = library.refresh_library()
-        pred = library.predict_demand().set_index("game_id")
+        sc = library.compute_scores().set_index("game_id")
+
+        def num(r, c, nd=1):
+            v = r.get(c) if r is not None else None
+            return None if v is None or pd.isna(v) else round(float(v), nd)
         rows = []
         for g in library.active_games(state)[: int(top_k) + 1]:
-            r = pred.loc[g["id"]] if g["id"] in pred.index else None
+            r = sc.loc[g["id"]] if g["id"] in sc.index else None
             rows.append({"game_id": g["id"], "name": g["name"], "mechanic": g["mechanic"],
-                         "pred_requests_next_week": round(float(r["pred"]), 1) if r is not None else 0,
-                         "google_trends": float(r["gtrend_t"]) if r is not None else 0,
-                         "tiktok_mentions": int(r["tiktok_t"]) if r is not None else 0,
+                         "skor": num(r, "pred"), "wikipedia_views_minggu_ini": num(r, "views_t", 0),
+                         "momentum": num(r, "momentum", 3), "google_trends_id": num(r, "google_trends", 0),
+                         "daya_tarik_bgg": num(r, "appeal", 3), "request_in_app_28h": num(r, "req_28d", 0),
                          "multiverse": bool(g.get("custom"))})
-        return {"library": rows, "multiverse": state.get("multiverse"),
+        w = float(sc["w_req"].iloc[0]) if len(sc) else 0
+        return {"library": rows, "multiverse": state.get("multiverse"), "bobot_request_in_app": w,
                 "updated_at": state.get("updated_at")}
 
     def recommend_games(players: int = 10, duration_min: int = 20, event_type: str = "",
@@ -132,6 +177,11 @@ def build_tools(ctx: AgentContext) -> dict:
             return {"error": "User belum upload dokumen. Pakai topik dari chat saja."}
         return {"doc": ctx.doc.name, "type": ctx.doc.doc_type, "chars": len(ctx.doc.text),
                 "passages": retrieve(ctx.doc, query or ctx.doc.name, k=3)}
+
+    def design_custom_game(idea: str) -> dict:
+        spec, prov = design_game(idea, ctx.use_llm)
+        ok, errs, clean = validate(spec)
+        return {"spec": clean, "valid": ok, "errors": errs, "designer": prov}
 
     def validate_custom_game(spec: dict) -> dict:
         ok, errs, clean = validate(spec)
@@ -172,13 +222,17 @@ def build_tools(ctx: AgentContext) -> dict:
         "required": ["name", "mechanic", "roles", "rules", "max_players", "rounds", "seconds_per_round"],
     }
     return {
-        "get_trends": ("Lihat library game Top-10 + slot multiverse beserta prediksi permintaan dan "
-                       "sinyal tren (Google Trends, TikTok, X).",
+        "get_trends": ("Lihat library game Top-10 + slot multiverse beserta skor ranking dan "
+                       "sinyal tren real (Wikipedia pageviews, Google Trends) serta request in-app.",
                        {"type": "object", "properties": {"top_k": {"type": "integer"}}}, get_trends),
         "recommend_games": ("Rekomendasikan 3 game terbaik untuk parameter acara user.",
                             {"type": "object", "properties": params_schema}, recommend_games),
         "read_document": ("Ambil potongan dokumen yang diupload user yang relevan dengan query.",
                           {"type": "object", "properties": {"query": {"type": "string"}}}, read_document),
+        "design_custom_game": ("Rancang spesifikasi game baru dari ide bebas user (memanggil chain desainer), "
+                               "lalu langsung divalidasi aturan kunci.",
+                               {"type": "object", "properties": {"idea": {"type": "string"}},
+                                "required": ["idea"]}, design_custom_game),
         "validate_custom_game": ("Cek apakah spesifikasi game custom lolos aturan kunci (4-7 aturan, "
                                  "peran host & peserta, batas pemain/ronde/durasi).",
                                  {"type": "object", "properties": {"spec": spec_schema},
@@ -202,13 +256,15 @@ Cara kerja:
    (10 pemain, 20 menit, offline) dan sebutkan asumsinya. Jangan bertanya lebih dari 1 kali.
 2. Panggil recommend_games, pilih game teratas (boleh sebut 2 alternatif singkat).
 3. Kalau user ingin langsung main / minta room / link, panggil create_room.
-4. Kalau user ingin bikin game sendiri, susun spec lalu validate_custom_game. Kalau valid dan user
+4. Kalau user ingin bikin game sendiri, panggil design_custom_game (atau susun spec lalu validate_custom_game). Kalau valid dan user
    setuju/minta, register_custom_game lalu create_room dengan game_id baru. Aturan kunci: 4-7 aturan,
    wajib peran host & peserta, maks 30 pemain, 3-15 ronde, 10-120 detik/ronde, total <= 60 menit.
 5. Kalau user tanya game apa yang lagi rame, panggil get_trends.
 Jawab singkat, bahasa Indonesia santai. Saat room dibuat, WAJIB tampilkan host_url dan player_url apa adanya
 dan jelaskan: host buka link host di laptop/HP host, bagikan link peserta ke teman.
-Maksimal {MAX_AGENT_STEPS} langkah tool."""
+Jangan mengarang link, skor, atau data: semua angka & link harus berasal dari hasil tool.
+Tolak permintaan di luar urusan membuat/merekomendasikan game acara.
+Maksimal {MAX_AGENT_STEPS} langkah."""
 
 
 # ---------------------------------------------------------------------------
@@ -275,9 +331,13 @@ def offline_agent(ctx: AgentContext, text: str) -> tuple[str, list[dict]]:
     wants_trend = any(w in t for w in ["rame", "ramai", "trend", "tren", "populer", "viral", "top"])
     if wants_trend and not any(k in params for k in ("players", "event_type")):
         tr = call("get_trends", top_k=10)
-        lines = [f"{i+1}. **{g['name']}** ({g['mechanic']}) - prediksi {g['pred_requests_next_week']} request"
+        def arrow(m):
+            return "naik" if (m or 0) > 0.05 else ("turun" if (m or 0) < -0.05 else "stabil")
+        lines = [f"{i+1}. **{g['name']}** ({g['mechanic']}) · skor {g['skor']} · tren {arrow(g['momentum'])}"
                  for i, g in enumerate(tr["library"])]
-        return "Ini library game yang lagi rame minggu ini:\n\n" + "\n".join(lines), trace
+        note = (f"\n\nSkor = tren real (Wikipedia + Google Trends) + daya tarik (BoardGameGeek)"
+                f" + request in-app (bobot sekarang {tr['bobot_request_in_app']:.0%}).")
+        return "Ini library game yang lagi rame minggu ini:\n\n" + "\n".join(lines) + note, trace
     rec = call("recommend_games", **params)
     if not rec["recommendations"]:
         return "Belum ada game yang cocok dengan parameter itu. Coba ubah jumlah pemain atau mode.", trace
@@ -305,10 +365,18 @@ def chat(ctx: AgentContext, history: list[dict]) -> tuple[str, list[dict], str]:
         doc_note = (f"\n[Konteks: user sudah upload dokumen '{ctx.doc.name}' ({ctx.doc.doc_type}, "
                     f"{len(ctx.doc.text)} karakter). Gunakan read_document bila perlu.]") if ctx.doc else ""
         hist = history[:-1] + [{"role": "user", "content": text + doc_note}]
-        answer, trace, engine = run_tools(SYSTEM, hist[-10:], build_tools(ctx), MAX_AGENT_STEPS)
-        if answer is not None:
-            return answer, trace, engine
-        fallback_reason = engine
+        models = chat_models(temperature=0.2)
+        if models:
+            from .lc_agent import run_agent
+            try:
+                answer, trace = run_agent(models, build_tools(ctx), SYSTEM, hist[-10:])
+                if answer:
+                    return answer, trace, f"LangChain agent · {status_label()}"
+                fallback_reason = "agent tidak memberi jawaban"
+            except Exception as e:
+                fallback_reason = f"{type(e).__name__}: {str(e)[:120]}"
+        else:
+            fallback_reason = "tanpa API key"
     else:
         fallback_reason = "LLM dimatikan"
     answer, trace = offline_agent(ctx, text)

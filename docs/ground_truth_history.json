@@ -1,57 +1,62 @@
 [
   {
-    "at": "2026-11-26T08:59:43+00:00",
-    "data_week": "2026-11-23",
+    "at": "2026-11-26T12:20:58+00:00",
+    "data_week": "2026-11-16",
     "top": [
+      "tebak_angka",
       "voting_meme",
       "survival_kuis",
-      "kuis_kilat",
-      "satu_frekuensi",
-      "emoji_tebak",
-      "fakta_hoaks",
+      "harga_pas",
+      "cerita_berantai",
       "adu_receh",
-      "tebak_angka",
-      "siapa_paling",
+      "fakta_hoaks",
+      "emoji_tebak",
+      "debat_kilat",
       "tebak_kata_kunci"
     ],
     "pred": {
-      "voting_meme": 110.66,
-      "survival_kuis": 49.94,
-      "kuis_kilat": 42.64,
-      "satu_frekuensi": 36.18,
-      "emoji_tebak": 26.5,
-      "fakta_hoaks": 26.01,
-      "adu_receh": 22.53,
-      "tebak_angka": 22.07,
-      "siapa_paling": 21.93,
-      "tebak_kata_kunci": 19.66
+      "tebak_angka": 78.6,
+      "voting_meme": 74.8,
+      "survival_kuis": 70.7,
+      "harga_pas": 67.1,
+      "cerita_berantai": 67.0,
+      "adu_receh": 57.9,
+      "fakta_hoaks": 53.2,
+      "emoji_tebak": 53.1,
+      "debat_kilat": 43.3,
+      "tebak_kata_kunci": 45.9
     },
     "multiverse": null,
     "compare": {
       "overlap": 0,
       "kendall_tau": null,
       "masuk": [
+        "tebak_angka",
         "voting_meme",
         "survival_kuis",
-        "kuis_kilat",
-        "satu_frekuensi",
-        "emoji_tebak",
-        "fakta_hoaks",
+        "harga_pas",
+        "cerita_berantai",
         "adu_receh",
-        "tebak_angka",
-        "siapa_paling",
+        "fakta_hoaks",
+        "emoji_tebak",
+        "debat_kilat",
         "tebak_kata_kunci"
       ],
       "keluar": [],
       "verdict": "BASELINE"
     },
     "backtest": {
-      "week_predicted": "2026-11-23",
-      "precision_at_10": 1.0,
-      "missed": [],
-      "false_in": []
+      "week_predicted": "2026-11-16",
+      "precision_at_10": 0.9,
+      "direction_acc": 0.857,
+      "missed": [
+        "voting_meme"
+      ],
+      "false_in": [
+        "siapa_paling"
+      ]
     },
     "integrity_ok": true,
-    "model": "Ridge Regression"
+    "model": "Gradient Boosting (HistGB)"
   }
 ]

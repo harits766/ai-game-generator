@@ -19,7 +19,30 @@ from cachetools import TTLCache
 
 from .config import CACHE_MAXSIZE, CACHE_TTL_SEC, MAX_LLM_CALLS_PER_ROOM
 from .documents import Document, keywords, retrieve, split_sentences
-from .llm import generate_json
+from pydantic import BaseModel, Field
+
+from .llm import structured
+
+
+class RoundOut(BaseModel):
+    """Satu ronde game. Isi field yang relevan dengan mekanik saja."""
+    q: str = Field(description="pertanyaan/pernyataan/instruksi untuk peserta")
+    options: list[str] = Field(default_factory=list, description="opsi jawaban (quiz: tepat 4; majority: 3-4)")
+    answer_index: int | None = Field(None, description="quiz: indeks opsi benar 0-3")
+    answer_bool: bool | None = Field(None, description="truefalse: true jika pernyataan benar/fakta")
+    answer_number: float | None = Field(None, description="estimate: angka jawaban")
+    unit: str = Field("", description="estimate: satuan angka")
+    explain: str = Field("", description="penjelasan singkat 1 kalimat")
+
+
+class RoundsOut(BaseModel):
+    rounds: list[RoundOut]
+
+
+def _to_item(r: RoundOut) -> dict:
+    return {"q": r.q, "options": r.options, "answer": next(
+        (v for v in (r.answer_index, r.answer_bool, r.answer_number) if v is not None), None),
+        "unit": r.unit, "explain": r.explain}
 
 _cache: TTLCache = TTLCache(maxsize=CACHE_MAXSIZE, ttl=CACHE_TTL_SEC)
 _cache_lock = threading.Lock()
@@ -76,13 +99,13 @@ def generate_rounds(doc: Document, game: dict, n: int, topic: str = "",
             need = n - len(rounds)
             if need <= 0:
                 break
-            data, prov = generate_json(_prompt(game, need, topic, context), SYSTEM)
+            data, prov = structured(RoundsOut, SYSTEM, _prompt(game, need, topic, context))
             meta["llm_calls"] += 1
             if data is None:
                 meta["errors"].append(prov)
                 break
             meta["provider"] = prov
-            items = data.get("rounds", data if isinstance(data, list) else [])
+            items = [_to_item(r) for r in data.rounds]
             rounds += [r for r in (_clean_item(game["mechanic"], it) for it in items) if r]
     if len(rounds) < n:
         rounds += offline_rounds(doc, game, n - len(rounds), seed=key)
@@ -97,16 +120,17 @@ def generate_rounds(doc: Document, game: dict, n: int, topic: str = "",
 
 
 SYSTEM = ("Kamu perancang game edukasi untuk acara kumpul warga Indonesia. Buat konten yang "
-          "akurat berdasarkan MATERI, sopan, bahasa Indonesia santai. Jawab hanya JSON.")
+          "akurat HANYA berdasarkan MATERI yang diberikan (jangan mengarang fakta di luar materi), sopan, "
+          "tidak menyinggung SARA, bahasa Indonesia santai.")
 
 
 def _prompt(game: dict, n: int, topic: str, context: str) -> str:
     schema = {
-        "quiz": '{"q": "...", "options": ["A","B","C","D"], "answer": 0}',
-        "truefalse": '{"q": "pernyataan", "answer": true, "explain": "1 kalimat"}',
-        "majority": '{"q": "...", "options": ["...","...","...","..."]}',
-        "estimate": '{"q": "...?", "answer": 1945, "unit": "tahun"}',
-        "open_vote": '{"q": "instruksi/prompt untuk peserta"}',
+        "quiz": "isi q, options (tepat 4), answer_index (0-3, acak posisinya)",
+        "truefalse": "isi q (pernyataan), answer_bool, explain",
+        "majority": "isi q dan options (3-4 opsi opini, tidak ada yang benar/salah)",
+        "estimate": "isi q (pertanyaan angka), answer_number, unit",
+        "open_vote": "isi q saja (instruksi kreatif untuk peserta)",
     }[game["mechanic"]]
     style = game.get("style") or STYLE.get(game["id"], game.get("desc", ""))
     rules = "\n".join(f"- {r}" for r in game.get("rules", []))
@@ -114,8 +138,7 @@ def _prompt(game: dict, n: int, topic: str, context: str) -> str:
     return (f"GAME: {game['name']} (mekanik: {game['mechanic']})\nGAYA: {style}\n"
             f"{rules_block}"
             f"TOPIK: {topic or '-'}\nMATERI:\n{context}\n\n"
-            f"Buat tepat {n} ronde. Format: {{\"rounds\": [{schema}, ...]}}. "
-            "Untuk quiz, 'answer' adalah indeks opsi benar (0-3) dan acak posisinya.")
+            f"Buat tepat {n} ronde. Untuk tiap ronde: {schema}.")
 
 
 def _clean_item(mech: str, it: dict) -> dict | None:

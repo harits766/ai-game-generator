@@ -27,8 +27,9 @@ def isolated_runtime(tmp_path, monkeypatch):
     monkeypatch.setattr(library, "RUNTIME_DIR", tmp_path)
     monkeypatch.setattr(library, "LIBRARY_STATE", tmp_path / "state.json")
     monkeypatch.setattr(library, "RUNTIME_REQUESTS", tmp_path / "req.csv")
-    import core.features as F
-    monkeypatch.setattr(F, "RUNTIME_REQUESTS", tmp_path / "req.csv")
+    import core.storage as S
+    monkeypatch.setattr(S, "RUNTIME_REQUESTS", tmp_path / "req.csv")
+    monkeypatch.setenv("GITHUB_TOKEN", "")
     library._pred_cache.clear()
     monkeypatch.setenv("GEMINI_API_KEY", "")
     monkeypatch.setenv("OPENAI_API_KEY", "")
@@ -182,10 +183,35 @@ def test_multiverse_promote_and_evict():
     assert st["custom_games"][gid]["status"] == "evicted"
     assert st["multiverse"]["id"] == gid2
     # banyak request -> dipromosikan ke Top-10
-    for _ in range(60):
+    for _ in range(120):
         library.log_request(gid2, {"players": 10})
     st = library.refresh_library()
     assert gid2 in st["top"] and len(st["top"]) == 10 and st["multiverse"] is None
+
+
+def test_cold_start_weight_grows_with_requests():
+    s0 = library.compute_scores()
+    assert s0["w_req"].iloc[0] == 0                          # log in-app mulai dari nol
+    for _ in range(50):
+        library.log_request("siapa_paling", {"players": 8})
+    s1 = library.compute_scores()
+    assert 0.45 < s1["w_req"].iloc[0] <= 0.7
+    rank0 = s0.index[s0["game_id"] == "siapa_paling"][0]
+    rank1 = s1.index[s1["game_id"] == "siapa_paling"][0]
+    assert rank1 < rank0                                     # request nyata menaikkan ranking
+
+
+def test_appeal_model_scores_profiles():
+    from core.appeal import appeal_score
+    s = appeal_score(GAME_BY_ID["kuis_kilat"])
+    assert 0 <= s <= 1
+
+
+def test_storage_merge_dedupes():
+    from core.storage import _merge
+    remote = "request_id,game_id\nA,x\nB,y\n"
+    local = "request_id,game_id\nB,y\nC,z\n"
+    assert _merge(remote, local) == "request_id,game_id\nA,x\nB,y\nC,z\n"
 
 
 # ------------------------------------------------------------------- agent
@@ -205,6 +231,37 @@ def test_offline_agent_creates_room():
 
 
 # ------------------------------------------------------------ ground truth
+def test_langchain_agent_with_fake_model():
+    from langchain_core.language_models.fake_chat_models import GenericFakeChatModel
+    from langchain_core.messages import AIMessage
+
+    from core.agent import SYSTEM, build_tools
+    from core.lc_agent import run_agent
+
+    class Fake(GenericFakeChatModel):
+        def bind_tools(self, tools, **kw):
+            return self
+
+    msgs = iter([
+        AIMessage("", tool_calls=[{"name": "recommend_games", "args": {"players": 12}, "id": "1"}]),
+        AIMessage("", tool_calls=[{"name": "create_room", "args": {"game_id": "kuis_kilat"}, "id": "2"},
+                                  {"name": "create_room", "args": {"game_id": "kuis_kilat"}, "id": "3"}]),
+        AIMessage("Room siap"),
+    ])
+    ctx = AgentContext(base_url="https://x.app", doc=SAMPLE, use_llm=False)
+    answer, trace = run_agent([Fake(messages=msgs)], build_tools(ctx), SYSTEM,
+                              [{"role": "user", "content": "kajian 12 orang"}])
+    assert answer == "Room siap"
+    assert [t["tool"] for t in trace] == ["recommend_games", "create_room"]   # create_room dibatasi 1x
+    assert len(ctx.rooms) == 1
+
+
+def test_design_game_offline_passes_rules():
+    from core.agent import design_game
+    spec, prov = design_game("tebak ayat tentang sabar", use_llm=False)
+    assert validate(spec)[0] and prov == "template offline"
+
+
 def test_compare_verdicts():
     a = [f"g{i}" for i in range(10)]
     assert compare([], a)["verdict"] == "BASELINE"

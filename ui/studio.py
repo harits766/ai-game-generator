@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 
+import numpy as np
 import pandas as pd
 import plotly.express as px
 import streamlit as st
@@ -14,7 +15,7 @@ from core.catalog import GAMES, MECHANICS
 from core.config import (DURATIONS, EVENT_TYPES, GROUND_TRUTH_MD, KEY_RULES, LOCATIONS, MODEL_REPORT,
                          MODES, TOP_N)
 from core.ground_truth import load_history, update_ground_truth
-from core.llm import generate_json
+from core.agent import design_game
 from core.rules import TEMPLATE, validate
 
 from .common import base_url, qr_png
@@ -125,7 +126,7 @@ def page_manual():
     for r in recs:
         st.markdown(f'<div class="card"><h4>{r["name"]} <span class="pill">{r["mechanic"]}</span>'
                     f'<span class="pill">skor {r["score"]:.2f}</span></h4>'
-                    f'<span class="muted">Prediksi {r["pred_requests"]} request minggu depan · '
+                    f'<span class="muted">Skor tren {r["trend_score"]} · '
                     f'{"; ".join(r["reasons"])}</span></div>', unsafe_allow_html=True)
     choice = st.radio("Pilih game", [r["game_id"] for r in recs],
                       format_func=lambda g: next(r["name"] for r in recs if r["game_id"] == g), horizontal=True)
@@ -155,23 +156,10 @@ def page_custom():
     idea = st.text_input("Ide game (opsional, biar AI bikinin draft)",
                          placeholder="mis. tebak-tebakan ayat/hadis tentang sabar, versi cepat")
     if st.button("✨ Draft pakai AI") and idea:
-        prompt = (f"Buat spesifikasi game party dari ide: {idea}. Format JSON persis seperti contoh: "
-                  f"{json.dumps(TEMPLATE, ensure_ascii=False)}. mechanic salah satu {list(MECHANICS)}. "
-                  f"rules {KEY_RULES['min_rules']}-{KEY_RULES['max_rules']} kalimat pendek. "
-                  f"roles wajib punya host dan peserta.")
-        data, prov = generate_json(prompt, "Kamu desainer game party. Jawab JSON saja.") \
-            if st.session_state.get("use_llm", True) else (None, "offline")
-        if data:
-            st.session_state["draft"] = data
-            st.toast(f"Draft dari {prov}")
-        else:
-            st.session_state["draft"] = {**TEMPLATE, "name": idea[:40].title(),
-                                         "desc": idea[:200],
-                                         "rules": ["Host membacakan soal dari materi.",
-                                                   "Peserta menjawab lewat HP sebelum waktu habis.",
-                                                   "Jawaban benar dan cepat dapat poin lebih besar.",
-                                                   "Skor tertinggi di akhir ronde jadi pemenang."]}
-            st.toast("LLM tidak tersedia, pakai template.")
+        with st.spinner("Chain desainer bekerja..."):
+            spec, prov = design_game(idea, st.session_state.get("use_llm", True))
+        st.session_state["draft"] = spec
+        st.toast(f"Draft dari {prov}")
     d = {**TEMPLATE, **st.session_state.get("draft", {})}
     with st.form("custom"):
         c1, c2 = st.columns([2, 1])
@@ -214,35 +202,47 @@ def page_custom():
 
 # ---------------------------------------------------------------------------
 def page_trends():
-    hero("📈 Tren & Library", f"Top-{TOP_N} game aktif dipilih oleh model prediksi dari sinyal Google Trends, "
-                              "TikTok, X, dan request di aplikasi.")
+    hero("📈 Tren & Library", f"Top-{TOP_N} game aktif. Skor = tren real (Wikipedia + Google Trends Indonesia, "
+                              "diprediksi model) + daya tarik (model BoardGameGeek) + request in-app.")
     state = library.load_state()
     if not state.get("top"):
         state = library.refresh_library()
     if st.button("🔄 Refresh library sekarang"):
         state = library.refresh_library()
         st.toast("Library diperbarui")
-    pred = library.predict_demand()
+    sc = library.compute_scores()
     report = json.loads(MODEL_REPORT.read_text()) if MODEL_REPORT.exists() else {}
+    w = float(sc["w_req"].iloc[0]) if len(sc) else 0.0
     c = st.columns(4)
     c[0].metric("Game aktif", f"{len(state['top'])} + {1 if state.get('multiverse') else 0}")
-    c[1].metric("Model", report.get("best_model", "-"))
-    c[2].metric("Minggu data", str(pred["week"].max().date()))
-    c[3].metric("Request in-app", sum(library.runtime_counts().values()))
+    c[1].metric("Minggu data tren", str(pd.to_datetime(sc["week"]).max().date()))
+    c[2].metric("Request in-app (28 hari)", int(sc["req_28d"].sum()))
+    c[3].metric("Bobot request in-app", f"{w:.0%}")
+    st.caption(f"Model tren: {report.get('best_model', '-')}. Bobot request in-app mulai dari 0% dan naik "
+               "otomatis seiring data pemakaian nyata bertambah (maks 70%).")
 
     names = {g["id"]: g["name"] for g in GAMES} | {k: v["name"] for k, v in state["custom_games"].items()}
-    top = pred[pred["game_id"].isin(state["top"])].assign(name=lambda d: d["game_id"].map(names))
-    fig = px.bar(top.sort_values("pred"), x="pred", y="name", orientation="h",
-                 labels={"pred": "Prediksi request minggu depan", "name": ""},
-                 color_discrete_sequence=["#6D28D9"], height=360)
-    fig.update_layout(margin=dict(l=0, r=10, t=10, b=0), plot_bgcolor="rgba(0,0,0,0)")
+    top = sc[sc["game_id"].isin(state["top"])].copy()
+    top["name"] = top["game_id"].map(names)
+    top["Tren real"] = (1 - w) * 0.65 * top["trend_part"].fillna(0) * 100
+    top["Daya tarik BGG"] = (1 - w) * np.where(top["custom"], 1.0, 0.35) * top["appeal_part"] * 100
+    top["Request in-app"] = w * top["req_part"] * 100
+    long = top.melt(id_vars="name", value_vars=["Tren real", "Daya tarik BGG", "Request in-app"],
+                    var_name="komponen", value_name="poin")
+    order = top.sort_values("score")["name"].tolist()
+    fig = px.bar(long, x="poin", y="name", color="komponen", orientation="h", height=380,
+                 category_orders={"name": order[::-1]},
+                 color_discrete_sequence=["#6D28D9", "#DB2777", "#059669"],
+                 labels={"poin": "Skor (0-100)", "name": ""})
+    fig.update_layout(margin=dict(l=0, r=10, t=10, b=0), plot_bgcolor="rgba(0,0,0,0)", legend_title=None,
+                      legend=dict(orientation="h", y=-0.15))
     st.plotly_chart(fig, use_container_width=True)
 
     mv = state.get("multiverse")
     st.markdown("#### 🌌 Slot multiverse")
     if mv:
         st.markdown(f'<div class="card"><h4>{mv["name"]}</h4><span class="muted">{mv.get("requests", 0)} request · '
-                    f'prediksi {mv.get("pred", 0)} · umur {mv.get("age_days", 0)} hari</span></div>',
+                    f'skor {mv.get("pred", 0)} · umur {mv.get("age_days", 0)} hari</span></div>',
                     unsafe_allow_html=True)
     else:
         st.caption("Kosong. Bikin game di halaman Game Custom.")
@@ -251,15 +251,21 @@ def page_trends():
             for e in state["events"][::-1][:20]:
                 st.markdown(f"- `{e['at']}` {e['msg']}")
 
-    st.markdown("#### Sinyal tren per game")
-    from core.features import load_raw
-    _, sig = load_raw()
+    st.markdown("#### Sinyal tren real per game")
+    from core.trend_model import load_signals
+    sig = load_signals()
+    sig = sig[sig["game_id"].isin(names)]
     pick = st.multiselect("Game", list(names), default=state["top"][:3], format_func=lambda g: names.get(g, g))
-    metric = st.radio("Sinyal", ["google_trends", "tiktok_mentions", "x_mentions"], horizontal=True)
+    metric = st.radio("Sinyal", ["wiki_views", "google_trends"], horizontal=True,
+                      format_func={"wiki_views": "Wikipedia views/minggu",
+                                   "google_trends": "Google Trends Indonesia (0-100)"}.get)
     s = sig[sig["game_id"].isin(pick)].assign(game=lambda d: d["game_id"].map(names))
-    fig2 = px.line(s, x="week", y=metric, color="game", color_discrete_sequence=PALETTE, height=320)
+    fig2 = px.line(s, x="week", y=metric, color="game", color_discrete_sequence=PALETTE, height=320,
+                   log_y=metric == "wiki_views")
     fig2.update_layout(margin=dict(l=0, r=10, t=10, b=0), legend_title=None, plot_bgcolor="rgba(0,0,0,0)")
     st.plotly_chart(fig2, use_container_width=True)
+    st.caption("Sumber: Wikimedia Pageviews API, Google Trends (pytrends), diperbarui otomatis tiap Senin "
+               "oleh GitHub Actions.")
 
 
 # ---------------------------------------------------------------------------
@@ -288,38 +294,57 @@ def page_ground_truth():
 
 # ---------------------------------------------------------------------------
 def page_model():
-    hero("🧠 Data & Model", "Ringkasan data, eksperimen model, dan cara kerja sistem.")
-    report = json.loads(MODEL_REPORT.read_text()) if MODEL_REPORT.exists() else {}
-    if report:
-        st.markdown(f"**Model terpilih:** {report['best_model']} (metrik seleksi: {report['selection_metric']})")
-        res = pd.DataFrame(report["results"])
-        st.dataframe(res, hide_index=True, use_container_width=True)
-        fi = pd.Series(report["feature_importance"]).head(10).sort_values()
-        fig = px.bar(fi, orientation="h", labels={"value": "importance", "index": ""},
-                     color_discrete_sequence=["#DB2777"], height=320)
-        fig.update_layout(showlegend=False, margin=dict(l=0, r=10, t=10, b=0), plot_bgcolor="rgba(0,0,0,0)")
-        st.plotly_chart(fig, use_container_width=True)
-    from core.features import clean_requests, load_raw
-    reqs, _ = load_raw()
-    df = clean_requests(reqs)
-    st.markdown(f"**Dataset request:** {len(reqs):,} baris mentah -> {len(df):,} setelah cleaning · "
-                f"{df['game_id'].nunique()} game · {df['week'].nunique()} minggu")
-    c1, c2 = st.columns(2)
-    for col, box in [("event_type", c1), ("doc_type", c2)]:
-        vc = df[col].value_counts().reset_index()
-        f = px.bar(vc, x="count", y=col, orientation="h", color_discrete_sequence=["#6D28D9"], height=260)
-        f.update_layout(margin=dict(l=0, r=10, t=10, b=0), plot_bgcolor="rgba(0,0,0,0)", yaxis_title=None)
-        box.plotly_chart(f, use_container_width=True)
-    wk = df.groupby("week").size().reset_index(name="request")
-    f = px.area(wk, x="week", y="request", color_discrete_sequence=["#6D28D9"], height=240)
-    f.update_layout(margin=dict(l=0, r=10, t=10, b=0), plot_bgcolor="rgba(0,0,0,0)")
-    st.plotly_chart(f, use_container_width=True)
-    st.markdown("""
+    hero("🧠 Data & Model", "Dua model ML dari data real + komponen GenAI.")
+    from core.config import MODELS_DIR
+    rep = json.loads(MODEL_REPORT.read_text()) if MODEL_REPORT.exists() else {}
+    ap_path = MODELS_DIR / "appeal_report.json"
+    ap = json.loads(ap_path.read_text()) if ap_path.exists() else {}
+    t1, t2, t3 = st.tabs(["📈 Model tren", "🎲 Model daya tarik (BGG)", "🔌 Sumber data & alur"])
+    with t1:
+        if rep:
+            st.markdown(f"**Tugas:** {rep['task']}  \n**Model terpilih:** {rep['best_model']} "
+                        f"({rep['selection_metric']}) · {rep['n_series']} seri · data {rep['data_weeks'][0]} s/d "
+                        f"{rep['data_weeks'][1]} · cakupan Google Trends {rep['google_trends_coverage']:.0%}")
+            st.dataframe(pd.DataFrame(rep["results"]), hide_index=True, use_container_width=True)
+            st.caption("Data web mingguan mirip random walk, jadi baseline naive sudah kuat. Model dipilih kalau "
+                       "mengalahkan baseline pada MAE dan menebak arah naik/turun lebih baik dari 50%.")
+            _importance(rep["feature_importance"])
+    with t2:
+        if ap:
+            st.markdown(f"**Tugas:** klasifikasi game party populer (25% teratas jumlah rating) dari profilnya. "
+                        f"Data real: {ap['n_games']:,} game BoardGameGeek (2000-2021). **Model terpilih:** "
+                        f"{ap['best_model']} ({ap['selection_metric']}).")
+            st.dataframe(pd.DataFrame(ap["results"]), hide_index=True, use_container_width=True)
+            st.caption("Dipakai untuk cold start: game baru/custom yang belum punya riwayat dapat skor awal dari sini.")
+            _importance(ap["feature_importance"])
+    with t3:
+        st.markdown("""
+| Sumber | Jenis | Dipakai untuk |
+|---|---|---|
+| Wikipedia Pageviews API | real, mingguan, gratis | minat publik per jenis game (fitur + target model tren) |
+| Google Trends Indonesia (pytrends) | real, mingguan | momentum minat di Indonesia |
+| BoardGameGeek (TidyTuesday 2022) | real, 4.911 game party | model daya tarik (cold start game baru) |
+| Log request in-app | real, mulai dari 0 | bobot ranking naik seiring data bertambah, afinitas acara |
+| TikTok / X | tidak dipakai | tidak ada API gratis yang stabil |
+
 **Alur sistem**
 1. Input: dokumen (PDF/DOCX/TXT/MD) atau topik + parameter acara.
-2. Model prediksi (ML) memberi skor permintaan tiap game dari sinyal tren -> Top-10 + slot multiverse.
-3. Agent GenAI memilih game lewat tools, lalu generator membuat konten dari potongan dokumen (retrieval TF-IDF).
-4. Konten di-cache (TTL 30 menit) per dokumen+game+parameter; room idle > 2 jam dihapus.
-5. Room dibuat: link HOST + link PESERTA. Setiap room tercatat sebagai request baru -> data untuk prediksi berikutnya.
-6. Ground truth di-regenerate dan memvalidasi apakah Top-10 masih sama.
+2. Model tren + model daya tarik + request in-app -> skor -> Top-10 + 1 slot multiverse.
+3. Agent LangChain (Gemini -> OpenAI -> offline) memilih game lewat 7 tools; chain konten membuat soal dari
+   potongan dokumen (retrieval TF-IDF), output dipaksa ke skema Pydantic.
+4. Konten di-cache (TTL 30 menit); room idle > 2 jam dihapus.
+5. Room dibuat: link HOST + link PESERTA. Tiap room = 1 request in-app, disimpan permanen di branch `data` GitHub.
+6. GitHub Actions tiap Senin: tarik data tren, latih ulang, regenerate ground truth (cek Top-10 masih sama).
 """)
+        from core.storage import status as storage_status
+        stt = storage_status()
+        st.caption(f"Penyimpanan log: {stt['backend']} · sinkron terakhir: {stt['last_sync'] or '-'}"
+                   + (f" · error: {stt['last_error']}" if stt.get("last_error") else ""))
+
+
+def _importance(fi: dict):
+    s = pd.Series(fi).head(10).sort_values()
+    fig = px.bar(s, orientation="h", labels={"value": "importance", "index": ""},
+                 color_discrete_sequence=["#DB2777"], height=320)
+    fig.update_layout(showlegend=False, margin=dict(l=0, r=10, t=10, b=0), plot_bgcolor="rgba(0,0,0,0)")
+    st.plotly_chart(fig, use_container_width=True)

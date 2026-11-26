@@ -3,38 +3,40 @@
 > Dokumen ini di-generate otomatis oleh `core/ground_truth.py`. Jangan edit manual;
 > jalankan `python scripts/update_ground_truth.py` atau tombol **Update Ground Truth** di app.
 
-- Diperbarui: **2026-11-26T08:59:43+00:00**
-- Minggu data terakhir: **2026-11-23**
-- Model prediksi: **Ridge Regression**
+- Diperbarui: **2026-11-26T12:20:58+00:00**
+- Minggu data terakhir: **2026-11-16**
+- Model prediksi: **Gradient Boosting (HistGB)**
 - Status Top-10: **BASELINE** (overlap 0/10 dengan versi sebelumnya, Kendall tau = None)
 - Integritas: **LULUS**
 
 ## 1. Library aktif (Top-10)
 
-| # | Game | Mekanik | Prediksi request minggu depan | Request minggu ini | Google Trends | TikTok |
-|---|---|---|---|---|---|---|
-| 1 | Caption Meme (`voting_meme`) | open_vote | 110.7 | 114 | 100 | 717 |
-| 2 | Survival Kuis (`survival_kuis`) | quiz | 49.9 | 57 | 100 | 377 |
-| 3 | Kuis Kilat (`kuis_kilat`) | quiz | 42.6 | 50 | 35 | 90 |
-| 4 | Satu Frekuensi (`satu_frekuensi`) | majority | 36.2 | 41 | 49 | 165 |
-| 5 | Tebak Emoji (`emoji_tebak`) | quiz | 26.5 | 32 | 90 | 255 |
-| 6 | Fakta atau Hoaks (`fakta_hoaks`) | truefalse | 26.0 | 30 | 37 | 99 |
-| 7 | Adu Receh (`adu_receh`) | open_vote | 22.5 | 23 | 48 | 151 |
-| 8 | Tebak Angka (`tebak_angka`) | estimate | 22.1 | 26 | 60 | 226 |
-| 9 | Siapa Paling (`siapa_paling`) | majority | 21.9 | 24 | 60 | 185 |
-| 10 | Tebak Kata Kunci (`tebak_kata_kunci`) | quiz | 19.7 | 21 | 44 | 78 |
+Skor = (1 - w) x [0,65 x tren real + 0,35 x daya tarik BGG] + w x request in-app, w = 0.00 (naik otomatis seiring data request in-app bertambah).
+
+| # | Game | Mekanik | Skor | Wikipedia views/minggu | Momentum | Google Trends ID | Daya tarik BGG | Request in-app 28 hari |
+|---|---|---|---|---|---|---|---|---|
+| 1 | Tebak Angka (`tebak_angka`) | estimate | 78.6 | 3 | +0.002 | 48 | 0.43 | 0 |
+| 2 | Caption Meme (`voting_meme`) | open_vote | 74.8 | 12,484 | -0.052 | 89 | 0.42 | 0 |
+| 3 | Survival Kuis (`survival_kuis`) | quiz | 70.7 | 14,998 | -0.029 | 1 | 0.33 | 0 |
+| 4 | Harga Pas (`harga_pas`) | estimate | 67.1 | 5,414 | -0.199 | 40 | 0.43 | 0 |
+| 5 | Cerita Berantai (`cerita_berantai`) | open_vote | 67.0 | 1,618 | -0.131 | 34 | 0.42 | 0 |
+| 6 | Adu Receh (`adu_receh`) | open_vote | 57.9 | 1,596 | -0.075 | 31 | 0.42 | 0 |
+| 7 | Fakta atau Hoaks (`fakta_hoaks`) | truefalse | 53.2 | 617 | -0.094 | 68 | 0.37 | 0 |
+| 8 | Tebak Emoji (`emoji_tebak`) | quiz | 53.1 | 7,585 | -0.112 | 26 | 0.32 | 0 |
+| 9 | Debat Kilat (`debat_kilat`) | open_vote | 43.3 | 921 | -0.146 | 59 | 0.42 | 0 |
+| 10 | Tebak Kata Kunci (`tebak_kata_kunci`) | quiz | 45.9 | 91,291 | -0.047 | 14 | 0.32 | 0 |
 
 ## 2. Slot multiverse (eksperimen)
 
-Aturan: game baru masuk slot ini. Dipromosikan ke Top-10 jika prediksinya >= game peringkat 10 dan sudah >= 5 request; dihapus jika setelah 7 hari request < 5.
+Aturan: game baru masuk slot ini (skor awal dari model daya tarik BGG). Dipromosikan ke Top-10 jika skornya >= game peringkat 10 dan sudah >= 5 request; dihapus jika setelah 7 hari request < 5.
 
 - (kosong)
 
 ## 3. Validasi
 
-**a. Perubahan vs snapshot sebelumnya:** masuk = ['voting_meme', 'survival_kuis', 'kuis_kilat', 'satu_frekuensi', 'emoji_tebak', 'fakta_hoaks', 'adu_receh', 'tebak_angka', 'siapa_paling', 'tebak_kata_kunci'], keluar = -.
+**a. Perubahan vs snapshot sebelumnya:** masuk = ['tebak_angka', 'voting_meme', 'survival_kuis', 'harga_pas', 'cerita_berantai', 'adu_receh', 'fakta_hoaks', 'emoji_tebak', 'debat_kilat', 'tebak_kata_kunci'], keluar = -.
 
-**b. Backtest model:** Top-10 prediksi untuk minggu 2026-11-23 cocok 100% dengan Top-10 aktual (terlewat: -; salah masuk: -).
+**b. Backtest model:** Top-10 momentum prediksi untuk minggu 2026-11-16 cocok 90% dengan aktual, arah naik/turun benar 86% (terlewat: ['voting_meme']; salah masuk: ['siapa_paling']).
 
 **c. Cek integritas:**
 
@@ -53,19 +55,28 @@ Aturan: game baru masuk slot ini. Dipromosikan ke Top-10 jika prediksinya >= gam
 - Total sesi maks 60 menit
 - Mekanik harus salah satu: quiz, truefalse, majority, estimate, open_vote
 
-## 5. Performa model (test 26 minggu terakhir)
+## 5. Performa model tren (MAE_log (test 20 minggu terakhir))
 
-| Model | MAE | RMSE | R2 | Precision@10 |
+| Model | MAE log | MAPE views | Akurasi arah | Precision@10 momentum |
 |---|---|---|---|---|
-| Baseline (naive: = minggu ini) | 6.913 | 9.242 | 0.8264 | 0.8615 |
-| Ridge Regression | 6.105 | 8.074 | 0.8675 | 0.8962 |
-| Poisson GLM | 11.275 | 30.592 | -0.9019 | 0.8846 |
-| Random Forest | 6.406 | 9.074 | 0.8327 | 0.9038 |
-| Gradient Boosting (HistGB) | 6.334 | 8.735 | 0.845 | 0.8846 |
-| MLP (Neural Net) | 6.833 | 9.272 | 0.8253 | 0.8769 |
+| Baseline (naive: = minggu ini) | 0.113 | 0.1239 | 0.0024 | 0.85 |
+| Baseline (rata-rata 4 minggu) | 0.1262 | 0.1348 | 0.5693 | 0.82 |
+| Ridge Regression | 0.115 | 0.1253 | 0.5207 | 0.835 |
+| Huber Regression (robust) | 0.1105 | 0.119 | 0.5766 | 0.845 |
+| Random Forest | 0.1104 | 0.1193 | 0.5401 | 0.84 |
+| Gradient Boosting (HistGB) | 0.1075 | 0.1159 | 0.5547 | 0.845 |
+| MLP (Neural Net) | 0.1254 | 0.1335 | 0.4915 | 0.825 |
+
+## Sumber data
+
+- Wikipedia Pageviews API (Wikimedia), artikel per jenis game: `core/real_sources.py`
+- Google Trends Indonesia (pytrends), 1 keyword per game
+- BoardGameGeek via TidyTuesday 2022-01-25 (4.911 game party) untuk model daya tarik
+- Log request in-app (mulai dari nol, disimpan di branch `data`)
+- TikTok/X tidak dipakai: tidak ada API gratis yang stabil
 
 ## 6. Riwayat update
 
 | Waktu | Verdict | Overlap | Backtest P@10 | Multiverse |
 |---|---|---|---|---|
-| 2026-11-26T08:59:43+00:00 | BASELINE | 0 | 1.0 | - |
+| 2026-11-26T12:20:58+00:00 | BASELINE | 0 | 0.9 | - |

@@ -1,0 +1,71 @@
+{
+  "best_model": "Random Forest",
+  "selection_metric": "ROC-AUC (5-fold CV)",
+  "n_games": 4043,
+  "positive_rate": 0.251,
+  "threshold_users_rated": 354.0,
+  "results": [
+    {
+      "model": "Baseline (selalu 'tidak populer')",
+      "CV_ROC_AUC": 0.5,
+      "CV_F1": 0.0,
+      "Test_ROC_AUC": 0.5,
+      "Test_F1": 0.0
+    },
+    {
+      "model": "Logistic Regression",
+      "CV_ROC_AUC": 0.6731,
+      "CV_F1": 0.4546,
+      "Test_ROC_AUC": 0.6888,
+      "Test_F1": 0.4911
+    },
+    {
+      "model": "Random Forest",
+      "CV_ROC_AUC": 0.6986,
+      "CV_F1": 0.4741,
+      "Test_ROC_AUC": 0.7202,
+      "Test_F1": 0.4917
+    },
+    {
+      "model": "Gradient Boosting (HistGB)",
+      "CV_ROC_AUC": 0.6785,
+      "CV_F1": 0.4365,
+      "Test_ROC_AUC": 0.6911,
+      "Test_F1": 0.4286
+    },
+    {
+      "model": "MLP (Neural Net)",
+      "CV_ROC_AUC": 0.663,
+      "CV_F1": 0.1801,
+      "Test_ROC_AUC": 0.6809,
+      "Test_F1": 0.1459
+    }
+  ],
+  "feature_importance": {
+    "n_mechanics": 0.14242964351959428,
+    "playingtime": 0.11465666320906003,
+    "minage": 0.09287147724589503,
+    "n_categories": 0.07893180679600857,
+    "maxplayers": 0.0724542728695183,
+    "cat_Deduction": 0.03981962402695658,
+    "minplayers": 0.03443500785882896,
+    "mech_Hand Management": 0.025077144483392308,
+    "mech_Variable Player Powers": 0.024216363995885063,
+    "cat_Party Game": 0.021645963272058262,
+    "cat_Bluffing": 0.021312892432765105,
+    "cat_Card Game": 0.02080802441938535,
+    "cat_Humor": 0.01693402485815828,
+    "cat_Fantasy": 0.014400247641543332,
+    "mech_Simultaneous Action Selection": 0.01339004950137871,
+    "mech_Cooperative Game": 0.012846137169682015,
+    "cat_Trivia": 0.012698214895009219,
+    "mech_Team-Based Game": 0.012552347494565937,
+    "cat_Educational": 0.011577241317930151,
+    "cat_Animals": 0.011512467965944531,
+    "mech_Dice Rolling": 0.010960521084229992,
+    "mech_Take That": 0.010014030177551527,
+    "mech_Roll / Spin and Move": 0.00999385823013216,
+    "mech_Set Collection": 0.009603620564298648,
+    "mech_Memory": 0.00905883607615311
+  }
+}

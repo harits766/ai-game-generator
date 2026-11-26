@@ -1,9 +1,9 @@
 """Satu dokumen GROUND TRUTH: sumber kebenaran isi library game.
 
 Setiap update:
-1. refresh library (prediksi model terbaru + request in-app)
+1. refresh library (skor = tren real + daya tarik BGG + request in-app)
 2. bandingkan Top-10 baru dengan snapshot sebelumnya -> overlap, korelasi ranking, masuk/keluar
-3. backtest: Top-10 prediksi model vs Top-10 aktual minggu terakhir yang sudah lengkap
+3. backtest: Top-10 momentum prediksi model vs aktual pada minggu terakhir yang sudah lengkap
 4. cek integritas (jumlah game, slot multiverse, aturan kunci)
 5. tulis ulang docs/GROUND_TRUTH.md + tambah riwayat di docs/ground_truth_history.json
 """
@@ -21,7 +21,7 @@ from .catalog import get_game
 from .config import (GROUND_TRUTH_HISTORY, GROUND_TRUTH_MD, KEY_RULES, MODEL_REPORT,
                      MULTIVERSE_GRACE_DAYS, MULTIVERSE_MIN_REQUESTS, MULTIVERSE_SLOTS, TOP_N,
                      TOP10_STABLE_OVERLAP)
-from .features import FEATURES, TARGET, build_panel
+from .trend_model import FEATURES, TARGET, build_panel
 
 
 def load_history() -> list[dict]:
@@ -34,18 +34,21 @@ def load_history() -> list[dict]:
 
 
 def backtest_last_week() -> dict:
-    """Top-10 prediksi untuk minggu terakhir yang sudah punya data aktual."""
-    reqs, sig = library._raw()
-    panel = build_panel(reqs, sig)
-    data = panel[panel["active"] & panel[TARGET].notna()]
+    """Prediksi momentum minggu terakhir yang sudah ada datanya, dibanding aktual (game katalog)."""
+    from .catalog import GAME_BY_ID
+    panel = build_panel()
+    data = panel[panel[TARGET].notna() & panel["game_id"].isin(GAME_BY_ID)]
     wk = data["week"].max()
     cur = data[data["week"] == wk].copy()
-    bundle = library._model()
-    cur["pred"] = bundle["model"].predict(cur[FEATURES])
-    pred_top = set(cur.nlargest(TOP_N, "pred")["game_id"])
-    act_top = set(cur.nlargest(TOP_N, TARGET)["game_id"])
+    b = library._model()
+    d = b["model"].predict(cur[FEATURES])
+    cur["pred"] = cur["lv_t"] + d if b.get("target") == "delta" else d
+    k = min(TOP_N, len(cur) - 1)
+    pred_top = set(cur.assign(m=cur["pred"] - cur["roll12"]).nlargest(k, "m")["game_id"])
+    act_top = set(cur.assign(m=cur[TARGET] - cur["roll12"]).nlargest(k, "m")["game_id"])
+    arah = float(np.mean(np.sign(cur["pred"] - cur["lv_t"]) == np.sign(cur[TARGET] - cur["lv_t"])))
     return {"week_predicted": str((wk + pd.Timedelta(weeks=1)).date()),
-            "precision_at_10": len(pred_top & act_top) / TOP_N,
+            "precision_at_10": len(pred_top & act_top) / k, "direction_acc": round(arah, 3),
             "missed": sorted(act_top - pred_top), "false_in": sorted(pred_top - act_top)}
 
 
@@ -86,14 +89,14 @@ def update_ground_truth() -> dict:
     hist = load_history()
     prev = hist[-1]["top"] if hist else []
     state = library.refresh_library()
-    pred = library.predict_demand().set_index("game_id")
+    pred = library.compute_scores().set_index("game_id")
     cmp = compare(prev, state["top"])
     bt = backtest_last_week()
     checks = integrity(state)
     report = json.loads(MODEL_REPORT.read_text()) if MODEL_REPORT.exists() else {}
     snap = {
         "at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
-        "data_week": str(pred["week"].max().date()) if len(pred) else None,
+        "data_week": str(pd.to_datetime(pred["week"]).max().date()) if len(pred) else None,
         "top": state["top"],
         "pred": {g: round(float(pred.loc[g, "pred"]), 2) for g in state["top"] if g in pred.index},
         "multiverse": state.get("multiverse"),
@@ -121,22 +124,27 @@ def render_md(state, pred, snap, checks, report, hist) -> str:
          f"Kendall tau = {snap['compare']['kendall_tau']})",
          f"- Integritas: **{'LULUS' if snap['integrity_ok'] else 'GAGAL'}**", "",
          f"## 1. Library aktif (Top-{TOP_N})", "",
-         "| # | Game | Mekanik | Prediksi request minggu depan | Request minggu ini | Google Trends | TikTok |",
-         "|---|---|---|---|---|---|---|"]
+         f"Skor = (1 - w) x [0,65 x tren real + 0,35 x daya tarik BGG] + w x request in-app, "
+         f"w = {float(pred['w_req'].iloc[0]):.2f} (naik otomatis seiring data request in-app bertambah).", "",
+         "| # | Game | Mekanik | Skor | Wikipedia views/minggu | Momentum | Google Trends ID | Daya tarik BGG | Request in-app 28 hari |",
+         "|---|---|---|---|---|---|---|---|---|"]
     for i, gid in enumerate(state["top"], 1):
         g = get_game(gid, cg) or {"name": gid, "mechanic": "?"}
         r = pred.loc[gid] if gid in pred.index else None
-        L.append(f"| {i} | {g['name']} (`{gid}`) | {g['mechanic']} | "
-                 f"{r['pred']:.1f} | {int(r['req_t'])} | {r['gtrend_t']:.0f} | {int(r['tiktok_t'])} |"
-                 if r is not None else f"| {i} | {g['name']} | {g['mechanic']} | - | - | - | - |")
+        def f(v, fmt):
+            return "-" if v is None or pd.isna(v) else format(v, fmt)
+        L.append(f"| {i} | {g['name']} (`{gid}`) | {g['mechanic']} | {f(r['pred'], '.1f')} | "
+                 f"{f(r['views_t'], ',.0f')} | {f(r['momentum'], '+.3f')} | {f(r['google_trends'], '.0f')} | "
+                 f"{f(r['appeal'], '.2f')} | {int(r['req_28d'])} |"
+                 if r is not None else f"| {i} | {g['name']} | {g['mechanic']} | - | - | - | - | - | - |")
     mv = state.get("multiverse")
     L += ["", "## 2. Slot multiverse (eksperimen)", "",
-          f"Aturan: game baru masuk slot ini. Dipromosikan ke Top-{TOP_N} jika prediksinya >= game "
+          f"Aturan: game baru masuk slot ini (skor awal dari model daya tarik BGG). Dipromosikan ke Top-{TOP_N} jika skornya >= game "
           f"peringkat {TOP_N} dan sudah >= {MULTIVERSE_MIN_REQUESTS} request; dihapus jika setelah "
           f"{MULTIVERSE_GRACE_DAYS} hari request < {MULTIVERSE_MIN_REQUESTS}.", ""]
     if mv:
         L.append(f"- **{mv['name']}** (`{mv['id']}`): {mv.get('requests', 0)} request, "
-                 f"prediksi {mv.get('pred', 0)}, umur {mv.get('age_days', 0)} hari")
+                 f"skor {mv.get('pred', 0)}, umur {mv.get('age_days', 0)} hari")
     else:
         L.append("- (kosong)")
     if state.get("queue"):
@@ -144,8 +152,9 @@ def render_md(state, pred, snap, checks, report, hist) -> str:
     L += ["", "## 3. Validasi", "",
           f"**a. Perubahan vs snapshot sebelumnya:** masuk = {snap['compare']['masuk'] or '-'}, "
           f"keluar = {snap['compare']['keluar'] or '-'}.", "",
-          f"**b. Backtest model:** Top-{TOP_N} prediksi untuk minggu {snap['backtest']['week_predicted']} "
-          f"cocok {snap['backtest']['precision_at_10']*100:.0f}% dengan Top-{TOP_N} aktual "
+          f"**b. Backtest model:** Top-{TOP_N} momentum prediksi untuk minggu {snap['backtest']['week_predicted']} "
+          f"cocok {snap['backtest']['precision_at_10']*100:.0f}% dengan aktual, arah naik/turun benar "
+          f"{snap['backtest'].get('direction_acc', 0)*100:.0f}% "
           f"(terlewat: {snap['backtest']['missed'] or '-'}; salah masuk: {snap['backtest']['false_in'] or '-'}).", "",
           "**c. Cek integritas:**", ""]
     L += [f"- [{'x' if c['ok'] else ' '}] {c['cek']}" for c in checks]
@@ -158,10 +167,17 @@ def render_md(state, pred, snap, checks, report, hist) -> str:
           f"- Total sesi maks {KEY_RULES['max_session_minutes']} menit",
           "- Mekanik harus salah satu: quiz, truefalse, majority, estimate, open_vote"]
     if report.get("results"):
-        L += ["", "## 5. Performa model (test 26 minggu terakhir)", "",
-              "| Model | MAE | RMSE | R2 | Precision@10 |", "|---|---|---|---|---|"]
+        L += ["", f"## 5. Performa model tren ({report.get('selection_metric', '')})", "",
+              "| Model | MAE log | MAPE views | Akurasi arah | Precision@10 momentum |", "|---|---|---|---|---|"]
         for r in report["results"]:
-            L.append(f"| {r['model']} | {r['MAE']} | {r['RMSE']} | {r['R2']} | {r['Precision@10']} |")
+            L.append(f"| {r['model']} | {r['MAE_log']} | {r['MAPE_views']} | {r['Akurasi_arah']} | "
+                     f"{r['Precision@10_momentum']} |")
+    L += ["", "## Sumber data", "",
+          "- Wikipedia Pageviews API (Wikimedia), artikel per jenis game: `core/real_sources.py`",
+          "- Google Trends Indonesia (pytrends), 1 keyword per game",
+          "- BoardGameGeek via TidyTuesday 2022-01-25 (4.911 game party) untuk model daya tarik",
+          "- Log request in-app (mulai dari nol, disimpan di branch `data`)",
+          "- TikTok/X tidak dipakai: tidak ada API gratis yang stabil"]
     L += ["", "## 6. Riwayat update", "", "| Waktu | Verdict | Overlap | Backtest P@10 | Multiverse |",
           "|---|---|---|---|---|"]
     for h in hist[-10:][::-1]:

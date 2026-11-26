@@ -1,7 +1,7 @@
 """Library game: Top-N berdasarkan prediksi model + 1 slot "multiverse" untuk game baru.
 
 Alur:
-1. predict_demand()   -> prediksi request minggu depan untuk semua game (pool + custom)
+1. compute_scores()   -> skor tiap game = tren real (model) + daya tarik (BGG) + request in-app
 2. refresh_library()  -> ambil Top-10, nilai game multiverse (promosi / hapus), simpan state
 3. recommend()        -> ranking game untuk parameter acara user (demand x kecocokan)
 """
@@ -22,7 +22,6 @@ from cachetools import TTLCache, cached
 from .catalog import GAMES, get_game
 from .config import (LIBRARY_STATE, MODEL_PATH, MULTIVERSE_GRACE_DAYS, MULTIVERSE_MIN_REQUESTS,
                      RUNTIME_DIR, RUNTIME_REQUESTS, TOP_N)
-from .features import build_panel, clean_requests, load_raw, load_runtime_requests
 
 _lock = threading.RLock()
 _pred_cache: TTLCache = TTLCache(maxsize=4, ttl=300)
@@ -89,16 +88,38 @@ def log_request(game_id: str, params: dict) -> None:
                 "rating": "",
             })
         _pred_cache.clear()
+    from .storage import schedule_sync
+    schedule_sync()
 
 
-def runtime_counts() -> dict:
+def load_runtime_requests() -> pd.DataFrame:
+    from .storage import pull_once
+    pull_once()
+    if RUNTIME_REQUESTS.exists():
+        try:
+            return pd.read_csv(RUNTIME_REQUESTS)
+        except Exception:
+            pass
+    return pd.DataFrame(columns=["request_id", "timestamp", "game_id"])
+
+
+def runtime_counts(days: int | None = None) -> dict:
     rt = load_runtime_requests()
-    return rt["game_id"].value_counts().to_dict() if len(rt) else {}
+    if not len(rt):
+        return {}
+    if days:
+        ts = pd.to_datetime(rt["timestamp"], errors="coerce")
+        rt = rt[ts >= pd.Timestamp.now() - pd.Timedelta(days=days)]
+    return rt["game_id"].value_counts().to_dict()
 
 
 # ---------------------------------------------------------------------------
-# prediksi
+# skor ranking: tren real + daya tarik (BGG) + request in-app
 # ---------------------------------------------------------------------------
+REQ_HALF_WEIGHT = 50     # saat ada 50 request in-app (28 hari), bobotnya 50% dari maks
+REQ_MAX_WEIGHT = 0.7     # request in-app maksimal menentukan 70% skor
+
+
 @cached(TTLCache(maxsize=1, ttl=3600))
 def _model():
     try:
@@ -111,38 +132,64 @@ def _model():
 
 
 @cached(TTLCache(maxsize=1, ttl=3600))
-def _raw():
-    reqs, sig = load_raw()
-    return clean_requests(reqs), sig
+def _trend_now() -> pd.DataFrame:
+    """Prediksi minat minggu depan untuk setiap jenis game di katalog (data real)."""
+    from .trend_model import FEATURES as TF
+    from .trend_model import build_panel as trend_panel
+    panel = trend_panel()
+    last = panel.groupby("game_id")["week"].transform("max")
+    cur = panel[panel["week"] == last].copy()
+    b = _model()
+    delta = b["model"].predict(cur[TF]) if b.get("target") == "delta" else b["model"].predict(cur[TF]) - cur["lv_t"]
+    cur["pred_lv"] = cur["lv_t"] + delta
+    cur["views_t"] = np.expm1(cur["lv_t"]).round()
+    cur["pred_views"] = np.expm1(cur["pred_lv"]).round()
+    cur["momentum"] = cur["pred_lv"] - cur["roll12"]          # >0 = lagi naik dibanding 3 bulan terakhir
+    # artikel dengan view sangat sedikit -> momentum berisik; disusutkan ke 0 (shrinkage)
+    cur["momentum"] = cur["momentum"] * cur["views_t"] / (cur["views_t"] + 200)
+    return cur[["game_id", "week", "views_t", "pred_views", "momentum", "google_trends", "gt_mom"]]
 
 
-def predict_demand() -> pd.DataFrame:
-    """Prediksi request minggu depan untuk setiap game (pool + custom)."""
+def _pct(s: pd.Series) -> pd.Series:
+    return s.rank(pct=True) if len(s) > 1 else pd.Series(1.0, index=s.index)
+
+
+def compute_scores() -> pd.DataFrame:
+    """Skor 0-1 tiap game (katalog + custom). Kolom 'pred' = skor x 100 (untuk tampilan)."""
     key = (RUNTIME_REQUESTS.stat().st_mtime if RUNTIME_REQUESTS.exists() else 0,
            LIBRARY_STATE.stat().st_mtime if LIBRARY_STATE.exists() else 0)
     if key in _pred_cache:
         return _pred_cache[key]
-    reqs, sig = _raw()
-    rt = load_runtime_requests()
-    if len(rt):
-        rt = clean_requests(rt.assign(players=pd.to_numeric(rt["players"], errors="coerce").fillna(10)))
-        # Data historis berhenti di minggu terakhir dataset. Request in-app dihitung
-        # sebagai bagian "minggu berjalan" itu, supaya panel tidak bolong saat app dipakai
-        # setelah tanggal dataset (jam simulasi).
-        rt["week"] = reqs["week"].max()
-        reqs = pd.concat([reqs, rt[reqs.columns.intersection(rt.columns)]], ignore_index=True)
-    customs = list(load_state()["custom_games"].values())
-    panel = build_panel(reqs, sig, extra_games=customs)
-    last_week = panel["week"].max()
-    cur = panel[panel["week"] == last_week].copy()
-    bundle = _model()
-    cur["pred"] = np.clip(bundle["model"].predict(cur[bundle["features"]]), 0, None)
-    # game yang belum launch (belum ada request sama sekali) tidak masuk ranking
-    cur.loc[cur["weeks_since_launch"] < 0, "pred"] = 0.0
-    out = cur[["game_id", "week", "req_t", "roll4_mean", "gtrend_t", "tiktok_t", "x_t", "pred"]]
-    out = out.sort_values("pred", ascending=False).reset_index(drop=True)
-    _pred_cache[key] = out
-    return out
+    from .appeal import appeal_score
+    state = load_state()
+    games = list(GAMES) + [g for g in state["custom_games"].values() if g.get("status") != "evicted"]
+    df = pd.DataFrame({"game_id": [g["id"] for g in games], "name": [g["name"] for g in games],
+                       "custom": [bool(g.get("custom")) for g in games]})
+    df["appeal"] = [appeal_score(g) for g in games]
+    tr = _trend_now()
+    df = df.merge(tr, on="game_id", how="left")
+    cat = ~df["custom"]
+    df["trend_part"] = 0.0
+    gt = df.loc[cat, "gt_mom"].fillna(1.0)
+    df.loc[cat, "trend_part"] = (0.40 * _pct(df.loc[cat, "momentum"]) + 0.35 * _pct(gt)
+                                 + 0.25 * _pct(df.loc[cat, "views_t"]))
+    df["appeal_part"] = _pct(df["appeal"])
+    df["base"] = np.where(df["custom"], df["appeal_part"], 0.65 * df["trend_part"] + 0.35 * df["appeal_part"])
+
+    counts = runtime_counts(days=28)
+    n = sum(counts.values())
+    w_req = min(REQ_MAX_WEIGHT, n / (n + REQ_HALF_WEIGHT)) if n else 0.0
+    df["req_28d"] = df["game_id"].map(counts).fillna(0).astype(int)
+    df["req_part"] = df["req_28d"] / max(df["req_28d"].max(), 1)
+    df["w_req"] = round(w_req, 3)
+    df["score"] = (1 - w_req) * df["base"] + w_req * df["req_part"]
+    df["pred"] = (100 * df["score"]).round(1)
+    df = df.sort_values("score", ascending=False).reset_index(drop=True)
+    _pred_cache[key] = df
+    return df
+
+
+predict_demand = compute_scores   # nama lama, tetap didukung
 
 
 # ---------------------------------------------------------------------------
@@ -151,7 +198,7 @@ def predict_demand() -> pd.DataFrame:
 def refresh_library() -> dict:
     with _lock:
         state = load_state()
-        pred = predict_demand().set_index("game_id")["pred"]
+        pred = compute_scores().set_index("game_id")["score"]
         counts = runtime_counts()
         pool_ids = [g["id"] for g in GAMES]
         promoted = [gid for gid in state["custom_games"]
@@ -167,7 +214,7 @@ def refresh_library() -> dict:
             n_req = int(counts.get(gid, 0))
             p = float(pred.get(gid, 0))
             cutoff = float(pred.get(top[-1], 0)) if top else 0
-            mv.update({"requests": n_req, "pred": round(p, 2), "age_days": round(age_days, 2)})
+            mv.update({"requests": n_req, "pred": round(p, 3), "age_days": round(age_days, 2)})
             if p >= cutoff and n_req >= MULTIVERSE_MIN_REQUESTS:
                 state["custom_games"][gid]["status"] = "promoted"
                 dropped = top[-1]
@@ -251,24 +298,41 @@ def find_game(game_id: str) -> dict | None:
 # ---------------------------------------------------------------------------
 # rekomendasi berdasarkan parameter acara
 # ---------------------------------------------------------------------------
-@cached(TTLCache(maxsize=1, ttl=3600))
-def _affinity() -> dict:
-    """Lift P(nilai | game) / P(nilai) untuk event_type, mode, location, topic dari data log."""
-    reqs, _ = _raw()
-    out = {}
-    for col in ["event_type", "mode", "location", "topic"]:
-        base = reqs[col].value_counts(normalize=True)
-        cond = reqs.groupby("game_id")[col].value_counts(normalize=True)
-        out[col] = (cond / cond.index.get_level_values(1).map(base).values).to_dict()
-    return out
+# Prior pakar: kecocokan mekanik x jenis acara (lift, 1 = netral). Dipakai selama data in-app
+# masih sedikit, lalu otomatis tergeser oleh data nyata (rata-rata berbobot jumlah request).
+EVENT_PRIOR = {
+    "quiz":      {"kajian": 1.3, "kelas/sekolah": 1.3, "kantor": 0.9, "keluarga": 0.9, "komunitas": 1.0,
+                  "sosialisasi desa": 1.3, "seminar": 1.2},
+    "truefalse": {"kajian": 1.1, "kelas/sekolah": 1.2, "kantor": 1.0, "keluarga": 1.0, "komunitas": 1.0,
+                  "sosialisasi desa": 1.4, "seminar": 1.2},
+    "majority":  {"kajian": 0.9, "kelas/sekolah": 0.8, "kantor": 1.2, "keluarga": 1.4, "komunitas": 1.2,
+                  "sosialisasi desa": 0.8, "seminar": 0.8},
+    "estimate":  {"kajian": 0.9, "kelas/sekolah": 1.0, "kantor": 1.3, "keluarga": 1.1, "komunitas": 1.0,
+                  "sosialisasi desa": 1.1, "seminar": 1.0},
+    "open_vote": {"kajian": 0.7, "kelas/sekolah": 1.1, "kantor": 1.3, "keluarga": 1.2, "komunitas": 1.4,
+                  "sosialisasi desa": 0.7, "seminar": 0.7},
+}
+PRIOR_STRENGTH = 20
+
+
+def _affinity(game: dict, col: str, value: str) -> float:
+    prior = EVENT_PRIOR.get(game["mechanic"], {}).get(value, 1.0) if col == "event_type" else 1.0
+    rt = load_runtime_requests()
+    if not len(rt) or col not in rt:
+        return prior
+    base = (rt[col] == value).mean()
+    sub = rt[rt["game_id"] == game["id"]]
+    n = len(sub)
+    if n == 0 or base == 0:
+        return prior
+    lift = (sub[col] == value).mean() / base
+    return (prior * PRIOR_STRENGTH + lift * n) / (PRIOR_STRENGTH + n)
 
 
 def recommend(params: dict, k: int = 3) -> list[dict]:
     state = load_state()
     games = active_games(state)
-    pred = predict_demand().set_index("game_id")["pred"]
-    pmax = max(float(pred.max()), 1.0)
-    aff = _affinity()
+    pred = compute_scores().set_index("game_id")["score"]
     players = int(params.get("players") or 10)
     duration = int(params.get("duration_min") or 20)
     mode = params.get("mode") or "offline"
@@ -279,28 +343,27 @@ def recommend(params: dict, k: int = 3) -> list[dict]:
             continue
         if mode not in g.get("modes", ["offline", "online", "hybrid"]):
             continue
-        # skala log agar 1 game viral tidak mendominasi semua rekomendasi
-        demand = float(np.log1p(pred.get(g["id"], 0)) / np.log1p(pmax))
+        demand = float(pred.get(g["id"], 0))
         fit = 1.0
         for col, key in [("event_type", "event_type"), ("location", "location"), ("topic", "topic"),
                          ("mode", "mode")]:
             v = params.get(key)
             if v:
-                lift = aff[col].get((g["id"], v), 1.0)
+                lift = _affinity(g, col, v)
                 fit *= float(np.clip(lift, 0.6, 1.6)) ** (0.5 if col != "event_type" else 1.0)
                 if col == "event_type" and lift > 1.1:
-                    reasons.append(f"sering dipakai di acara {v}")
+                    reasons.append(f"cocok untuk acara {v}")
         if g["mechanic"] == "open_vote" and duration < 15:
             fit *= 0.7
         if g["mechanic"] == "open_vote" and players > 20:
             fit *= 0.6
         if g.get("custom"):
             reasons.append("game baru di slot multiverse")
-        if demand > 0.85:
+        if demand > 0.75:
             reasons.append("lagi rame minggu ini")
         score = 0.45 * demand + 0.55 * min(fit, 1.6) / 1.6
         res.append({"game_id": g["id"], "name": g["name"], "mechanic": g["mechanic"],
-                    "score": round(score, 3), "pred_requests": round(float(pred.get(g["id"], 0)), 1),
+                    "score": round(score, 3), "trend_score": round(100 * demand, 1),
                     "reasons": reasons or ["cocok dengan parameter acara"]})
     return sorted(res, key=lambda r: -r["score"])[:k]
 

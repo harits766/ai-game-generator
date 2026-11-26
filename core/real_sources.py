@@ -11,7 +11,7 @@ GAME_SOURCES: dict[str, dict] = {
     "kuis_kilat":       {"wiki": ["en:Kahoot!"], "gtrends": "kahoot"},
     "fakta_hoaks":      {"wiki": ["en:Fact-checking", "id:Hoaks"], "gtrends": "hoaks"},
     "satu_frekuensi":   {"wiki": ["en:Family_Feud"], "gtrends": "family 100"},
-    "tebak_angka":      {"wiki": ["en:Wits_&_Wagers"], "gtrends": "tebak angka"},
+    "tebak_angka":      {"wiki": ["en:Wits_&_Wagers", "en:Fermi_problem"], "gtrends": "tebak angka"},
     "adu_receh":        {"wiki": ["en:Cards_Against_Humanity"], "gtrends": "jokes bapak bapak"},
     "debat_kilat":      {"wiki": ["en:Debate", "id:Debat"], "gtrends": "debat"},
     "survival_kuis":    {"wiki": ["en:Squid_Game"], "gtrends": "squid game"},
